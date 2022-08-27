@@ -25,6 +25,7 @@ def parse_args():
     parser.add_argument("--model", type=str, required=True)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
     parser.add_argument("--epochs", type=int, default=2, required=False)
+    parser.add_argument("--n_trials", type=int, default=10, required=True)
     parser.add_argument("--lr", type=float, default=2e-5, required=False)
     parser.add_argument("--batch_size", type=int, default=16, required=False)
     parser.add_argument("--max_len", type=int, default=128, required=False)
@@ -111,7 +112,7 @@ else:
     test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
     data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'test': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
     dataset = load_dataset('csv', data_files=data_files)
-    n_trials = 10
+    n_trials = CFG.n_trials
     
 
 def hp_tuning(cfg):

@@ -12,6 +12,8 @@ python data-split-and-model-preparation.py
 ```
 # Model pretraining
 If you want to redo model pretraining by yourself, you can do easily.
+(If your GPU memory size is small, you may hit out of memory error during t5 pretraining. And if you can't solve it just by reducing batch_size, try putting **XLA_PYTHON_CLIENT_MEM_FRACTION=.8** before **python ./new_run_t5_mlm_flax.py**. This reduces GPU memory preallocation.)
+
 
 PubChem10m-t5
 ```
@@ -42,7 +44,7 @@ python ./new_run_t5_mlm_flax.py \
 ZINC-t5
 ```
 cd /pretraining/ZINC-t5
-XLA_PYTHON_CLIENT_MEM_FRACTION=.8 python ./new_run_t5_mlm_flax.py \
+python ./new_run_t5_mlm_flax.py \
     --output_dir="./ZINC-t5-base-output" \
     --model_type="t5" \
     --config_name="./ZINC-t5-base" \
@@ -83,7 +85,7 @@ python ./run_mlm.py \
     --evaluation_strategy "steps" \
     --eval_steps 25000 \
     --save_strategy "no" \
-    --logging_steps 200 \
+    --logging_steps 500 \
     --learning_rate 0.005 \
     --report_to "none" \
     --use_new_implementation \
@@ -91,7 +93,7 @@ python ./run_mlm.py \
     --disable_tqdm True
 ```
 
-
+ZINC-deberta
 ```
 cd /pretraining/ZINC-deberta
 python ./run_mlm.py \
@@ -109,10 +111,34 @@ python ./run_mlm.py \
     --evaluation_strategy "steps" \
     --eval_steps 25000 \
     --save_strategy "no" \
-    --logging_steps 200 \
+    --logging_steps 500 \
     --learning_rate 0.005 \
     --report_to "none" \
     --use_new_implementation \
     --load_best_model_at_end True \
     --disable_tqdm True
 ```
+
+# Hyperparameter tuning for model finetuning
+Before finetuning, you can tune hyperparameters(ex. learning rate, weight decay) that affect final results.
+データやモデルの場所は後から調節。
+```
+python hp_tuning.py \
+    --model='t5' \
+    --output_dir='output' \
+    --batch_size=4 \
+    --max_len=256 \
+    --epochs=2 \
+    --n_trials=10 \
+    --evaluation_strategy='epoch' \
+    --logging_strategy='epoch' \
+    --data_path='./' \
+    --pretrained_model_path='./ZINC-t5-base'
+```
+
+
+
+
+
+
+
