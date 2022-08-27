@@ -43,3 +43,10 @@ for smiles in tx['smiles']:
         pass
 df = pd.DataFrame({'smiles': list(lst)})
 df.to_csv('./data/pubchem-10m-canonicalized.csv', index=False)
+
+
+df = pd.read_csv('./data/all_ord_reaction_uniq.tsv', sep='\t', names=['id', 'product', 'reactant'])
+df['product'] = df['product'].apply(lambda x: canonicalize(x))
+df['reactant'] = df['reactant'].apply(lambda x: canonicalize(x))
+df.drop(['id'], inplace=True, axis=1)
+df.to_csv('./data/all_ord_reaction_uniq_canonicalized.csv', index=False)
