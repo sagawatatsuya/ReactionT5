@@ -12,7 +12,7 @@ python data-split-and-model-preparation.py
 ```
 # Model pretraining
 If you want to redo model pretraining by yourself, you can do easily.
-(If your GPU memory size is small, you may hit out of memory error during t5 pretraining. And if you can't solve it just by reducing batch_size, try putting **XLA_PYTHON_CLIENT_MEM_FRACTION=.8** before **python ./new_run_t5_mlm_flax.py**. This reduces GPU memory preallocation.)
+(If your GPU memory size is small, you may hit out of memory error during t5 pretraining. And if you can't solve it by reducing batch_size, try putting **XLA_PYTHON_CLIENT_MEM_FRACTION=.8** before **python ./new_run_t5_mlm_flax.py**. This reduces GPU memory preallocation.)
 
 
 PubChem10m-t5
@@ -136,8 +136,25 @@ python hp_tuning.py \
     --pretrained_model_path='./ZINC-t5-base'
 ```
 
-
-
+# Model finetuning
+```
+python hp_tuning.py \
+	--debug \
+	--model='t5' \
+	--epochs=3 \
+	--lr=2e-5
+	--batch_size=2 \
+	--max_len=128 \
+	--weight_decay=0.01 \
+	--evaluation_strategy='epoch' \
+	--save_strategy='epoch' \
+	--logging_strategy='epoch' \
+	--save_total_limit=3 \
+	--fp16=False \
+	--train=True
+	--data_path='../../data/' \
+	--pretrained_model_path='/data1/sagawa_notebook/7-2-PubChem10m-t5-pretraining/PubChem10m-t5-base-10epoch-220716'
+```
 
 
 
