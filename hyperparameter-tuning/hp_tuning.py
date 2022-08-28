@@ -21,7 +21,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_path", type=str, required=True)
     parser.add_argument("--output_dir", type=str, default='output',required=False)
-    parser.add_argument("--pretrained_model_path", type=str, required=True)
+    parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
     parser.add_argument("--model", type=str, required=True)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
     parser.add_argument("--epochs", type=int, default=2, required=False)
@@ -143,16 +143,25 @@ def hp_tuning(cfg):
         return {'bleu': result['score']}
     
     # load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(cfg.pretrained_model_path), return_tensors='pt')
+    try: # load pretrained tokenizer from local directory
+        tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(cfg.pretrained_model_name_or_path), return_tensors='pt')
+    except: # load pretrained tokenizer from huggingface model hub
+        tokenizer = AutoTokenizer.from_pretrained(cfg.pretrained_model_name_or_path, return_tensors='pt')
     tokenizer.add_tokens('.')
 
     def get_model():
         if cfg.model == 't5':
-            model = AutoModelForSeq2SeqLM.from_pretrained(os.path.abspath(cfg.pretrained_model_path), from_flax=True)
+            try: # load pretrained model from local directory
+                model = AutoModelForSeq2SeqLM.from_pretrained(os.path.abspath(cfg.pretrained_model_name_or_path), from_flax=True)
+            except: # load pretrained model from huggingface model hub
+                model = AutoModelForSeq2SeqLM.from_pretrained(cfg.pretrained_model_name_or_path, from_flax=True)
             model.resize_token_embeddings(len(tokenizer))
             
         elif cfg.model == 'deberta':
-            model = EncoderDecoderModel.from_encoder_decoder_pretrained(os.path.abspath(cfg.pretrained_model_path), 'roberta-large')
+            try: # load pretrained model from local directory
+                model = EncoderDecoderModel.from_encoder_decoder_pretrained(os.path.abspath(cfg.pretrained_model_name_or_path), 'roberta-large')
+            except: # load pretrained model from huggingface model hub
+                model = EncoderDecoderModel.from_encoder_decoder_pretrained(os.path.abspath(cfg.pretrained_model_name_or_path), 'roberta-large')
             model.encoder.resize_token_embeddings(len(tokenizer))
             model.decoder.resize_token_embeddings(len(tokenizer))
             config_encoder = model.config.encoder
