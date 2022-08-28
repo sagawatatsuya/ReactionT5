@@ -1,5 +1,5 @@
 # transformer-chemical-reaction-prediciton
-We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models from [here](https://huggingface.co/sagawa). Using these pretrained models, we conducted a chemical reaction prediction, where if models were given a product, they generate reactants which is necessary for the reaction.
+We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models [here](https://huggingface.co/sagawa). Using these pretrained models, we conducted a chemical reaction prediction, where if models were given a product, they generate reactants which is necessary for the reaction.
 # How to start with
 The data used for pretraining and finetuning are uploaded to google drive, and you can find them at following links. ([ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z), [PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view), [ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view))
 By executing the following command, you can download necessary data and preprocess them in one go.
@@ -129,7 +129,7 @@ python hp_tuning.py \
     --output_dir='output' \
     --batch_size=4 \
     --max_len=256 \
-    --epochs=2 \
+    --epochs=3 \
     --n_trials=10 \
     --evaluation_strategy='epoch' \
     --logging_strategy='epoch' \
@@ -138,7 +138,7 @@ python hp_tuning.py \
 ```
 
 # Model finetuning
-In this finetuning, we load pretrained model's weight to a Seq2Seq model and train it to generate reactants given products.
+In this finetuning, we load pretrained model's weight to a Seq2Seq model and train it to generate reactants from given products.
 T5 is encoder-decoder model, so we can use them as Seq2Seq model directly. However, DeBERTa is encoder model, and its decoder is not available, so we use RoBERTa's decoder instead.
 ```
 cd finetuning/
@@ -158,7 +158,3 @@ python finetuning.py \
 	--data_path='../../data/' \
 	--pretrained_model_name_or_path='sagawa/ZINC-t5'
 ```
-
-
-
-
