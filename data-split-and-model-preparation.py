@@ -2,7 +2,6 @@ import os
 import json
 import shutil
 import random
-import scipy as sp
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -11,7 +10,6 @@ import tokenizers
 import transformers
 from transformers import AutoTokenizer, T5Config
 from datasets import load_dataset
-%env TOKENIZERS_PARALLELISM=true
 import sentencepiece
 
 def seed_everything(seed=42):
@@ -71,6 +69,9 @@ with open('./data/pubchem-10m-valid.json', 'w') as fp:
         
 # ZINC data
 
+ZINC = pd.read_csv('./data/ZINC-canonicalized.csv')
+ZINC.columns = ['text']
+ZINC.to_csv('./data/ZINC-canonicalized.csv')
 # Initialize a dataset
 dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
 training_corpus = (

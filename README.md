@@ -17,7 +17,7 @@ If you want to redo model pretraining by yourself, you can do easily.
 
 PubChem10m-t5
 ```
-cd /pretraining/PubChem10m-t5
+cd pretraining/PubChem10m-t5
 python ./new_run_t5_mlm_flax.py \
     --output_dir="./PubChem10m-t5-base-output" \
     --model_type="t5" \
@@ -43,7 +43,7 @@ python ./new_run_t5_mlm_flax.py \
 
 ZINC-t5
 ```
-cd /pretraining/ZINC-t5
+cd pretraining/ZINC-t5
 python ./new_run_t5_mlm_flax.py \
     --output_dir="./ZINC-t5-base-output" \
     --model_type="t5" \
@@ -69,7 +69,7 @@ python ./new_run_t5_mlm_flax.py \
 
 PubChem10m-deberta
 ```
-cd /pretraining/PubChem10m-deberta
+cd pretraining/PubChem10m-deberta
 python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./PubChem10m-deberta-base" \
@@ -95,7 +95,7 @@ python ./run_mlm.py \
 
 ZINC-deberta
 ```
-cd /pretraining/ZINC-deberta
+cd pretraining/ZINC-deberta
 python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./ZINC-deberta-base" \
@@ -123,6 +123,7 @@ python ./run_mlm.py \
 Before finetuning, you can tune hyperparameters(ex. learning rate, weight decay) that affect final results.
 データやモデルの場所は後から調節。
 ```
+cd hyperparameter-tuning/
 python hp_tuning.py \
     --model='t5' \
     --output_dir='output' \
@@ -138,20 +139,20 @@ python hp_tuning.py \
 
 # Model finetuning
 ```
-python hp_tuning.py \
+cd finetuning/
+python finetuning.py \
 	--debug \
 	--model='t5' \
 	--epochs=3 \
 	--lr=2e-5
-	--batch_size=2 \
-	--max_len=128 \
+	--batch_size=4 \
+	--max_len=256 \
 	--weight_decay=0.01 \
 	--evaluation_strategy='epoch' \
 	--save_strategy='epoch' \
 	--logging_strategy='epoch' \
 	--save_total_limit=3 \
-	--fp16=False \
-	--train=True
+	--train \
 	--data_path='../../data/' \
 	--pretrained_model_path='/data1/sagawa_notebook/7-2-PubChem10m-t5-pretraining/PubChem10m-t5-base-10epoch-220716'
 ```
