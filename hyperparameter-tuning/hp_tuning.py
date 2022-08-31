@@ -9,8 +9,6 @@ from transformers import AutoTokenizer, AutoModel, AutoConfig, EncoderDecoderMod
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
-import ray
-from ray import tune
 import optuna
 from transformers.trainer_utils import HPSearchBackend, default_hp_space, PREFIX_CHECKPOINT_DIR, default_compute_objective, BestRun
 import gc

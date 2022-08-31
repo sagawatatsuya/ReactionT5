@@ -14,7 +14,6 @@ python data-split-and-model-preparation.py
 If you want to redo model pretraining by yourself, you can do easily.
 (If your GPU memory size is small, you may hit out of memory error during t5 pretraining. And if you can't solve it by reducing batch_size, try putting **XLA_PYTHON_CLIENT_MEM_FRACTION=.8** before **python ./new_run_t5_mlm_flax.py**. This reduces GPU memory preallocation.)
 
-
 PubChem10m-t5
 ```
 cd pretraining/PubChem10m-t5
@@ -84,7 +83,8 @@ python ./run_mlm.py \
     --overwrite_output_dir \
     --evaluation_strategy "steps" \
     --eval_steps 25000 \
-    --save_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps="25000" \
     --logging_steps 500 \
     --learning_rate 0.005 \
     --report_to "none" \
@@ -110,7 +110,8 @@ python ./run_mlm.py \
     --overwrite_output_dir \
     --evaluation_strategy "steps" \
     --eval_steps 25000 \
-    --save_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps="25000" \
     --logging_steps 500 \
     --learning_rate 0.005 \
     --report_to "none" \
@@ -133,7 +134,7 @@ python hp_tuning.py \
     --n_trials=10 \
     --evaluation_strategy='epoch' \
     --logging_strategy='epoch' \
-    --data_path='./' \
+    --data_path='../data/' \
     --pretrained_model_name_or_path='sagawa/ZINC-t5'
 ```
 
@@ -143,18 +144,18 @@ T5 is encoder-decoder model, so we can use them as Seq2Seq model directly. Howev
 ```
 cd finetuning/
 python finetuning.py \
-	--debug \
-	--model='t5' \
-	--epochs=3 \
-	--lr=2e-5
-	--batch_size=4 \
-	--max_len=256 \
-	--weight_decay=0.01 \
-	--evaluation_strategy='epoch' \
-	--save_strategy='epoch' \
-	--logging_strategy='epoch' \
-	--save_total_limit=3 \
-	--train \
-	--data_path='../../data/' \
-	--pretrained_model_name_or_path='sagawa/ZINC-t5'
+    --model='t5' \
+    --epochs=3 \
+    --lr=2e-5 \
+    --batch_size=4 \
+    --max_len=256 \
+    --weight_decay=0.01 \
+    --evaluation_strategy='epoch' \
+    --save_strategy='epoch' \
+    --logging_strategy='epoch' \
+    --save_total_limit=3 \
+    --train \
+    --data_path='../data/' \
+    --disable_tqdm \
+    --pretrained_model_name_or_path='sagawa/ZINC-t5'
 ```
