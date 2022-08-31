@@ -145,7 +145,7 @@ T5 is encoder-decoder model, so we can use them as Seq2Seq model directly. Howev
 cd finetuning/
 python finetuning.py \
     --model='t5' \
-    --epochs=3 \
+    --epochs=10 \
     --lr=2e-5 \
     --batch_size=4 \
     --max_len=256 \
