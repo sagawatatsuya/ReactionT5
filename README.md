@@ -1,18 +1,19 @@
 # transformer-chemical-reaction-prediciton
 We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models [here](https://huggingface.co/sagawa). Using these pretrained models, we conducted a chemical reaction prediction, where if models were given a product, they generate reactants which is necessary for the reaction.
 # How to start with
-The data used for pretraining and finetuning are uploaded to google drive, and you can find them at following links. ([ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z), [PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view), [ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view))
-By executing the following command, you can download necessary data and preprocess them in one go.
+The original data used for pretraining and finetuning are uploaded to google drive, and you can find them at following links. ([ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z), [PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view), [ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view))
+The preprocessed data is uploaded to [Hugging Face Hub](https://huggingface.co/sagawa) and we can use them, but if you want to download the data to you local directory, you can do by executing the following command, .
 ```
 python data-download-and-preprocess.py
 ```
-Then, by executing the following command, you can complete preparation for model pretraining and finetuning.
+Then, by executing the following command, you can complete preparation for model pretraining and finetuning. If you want to use your local data, remove **--load_dataset**.
 ```
-python data-split-and-model-preparation.py
+python data-split-and-model-preparation.py --load_dataset
 ```
 # Model pretraining
 If you want to redo model pretraining by yourself, you can do easily.
 (If your GPU memory size is small, you may hit out of memory error during t5 pretraining. And if you can't solve it by reducing batch_size, try putting **XLA_PYTHON_CLIENT_MEM_FRACTION=.8** before **python ./new_run_t5_mlm_flax.py**. This reduces GPU memory preallocation.)
+By changing **--dataset_name dataset_name** to **--train_file=train_file_path --validation_file=validation_file_path**, you can use your data for model training.
 
 PubChem10m-t5
 ```
@@ -22,8 +23,7 @@ python ./new_run_t5_mlm_flax.py \
     --model_type="t5" \
     --config_name="./PubChem10m-t5-base" \
     --tokenizer_name="./PubChem10m-t5-base" \
-    --train_file="../../data/pubchem-10m-canonicalized-train.csv" \
-    --validation_file="../../data/pubchem-10m-canonicalized-valid.csv" \
+    --dataset_name "sagawa/pubchem-10m-canonicalized" \
     --max_seq_length="512" \
     --per_device_train_batch_size="5" \
     --per_device_eval_batch_size="5" \
@@ -48,8 +48,7 @@ python ./new_run_t5_mlm_flax.py \
     --model_type="t5" \
     --config_name="./ZINC-t5-base" \
     --tokenizer_name="./ZINC-t5-base" \
-    --train_file="../../data/ZINC-canonicalized-train.csv" \
-    --validation_file="../../data/ZINC-canonicalized-valid.csv" \
+    --dataset_name "sagawa/ZINC-canonicalized" \
     --max_seq_length="512" \
     --per_device_train_batch_size="5" \
     --per_device_eval_batch_size="5" \
@@ -73,8 +72,7 @@ python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./PubChem10m-deberta-base" \
     --num_train_epochs 30 \
-    --train_file "../../data/pubchem-10m-train.json" \
-    --validation_file "../../data/pubchem-10m-valid.json" \
+    --dataset_name "sagawa/pubchem-10m-canonicalized" \
     --per_device_train_batch_size 5 \
     --max_seq_length 512 \
     --do_train \
@@ -100,8 +98,7 @@ python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./ZINC-deberta-base" \
     --num_train_epochs 30 \
-    --train_file "../../data/ZINC-train.json" \
-    --validation_file "../../data/ZINC-valid.json" \
+    --dataset_name "sagawa/ZINC-canonicalized" \
     --per_device_train_batch_size 5 \
     --max_seq_length 512 \
     --do_train \
@@ -134,7 +131,7 @@ python hp_tuning.py \
     --n_trials=10 \
     --evaluation_strategy='epoch' \
     --logging_strategy='epoch' \
-    --data_path='../data/' \
+    --dataset_name='sagawa/ord-uniq-canonicalized' \
     --pretrained_model_name_or_path='sagawa/ZINC-t5'
 ```
 
@@ -155,7 +152,7 @@ python finetuning.py \
     --logging_strategy='epoch' \
     --save_total_limit=3 \
     --train \
-    --data_path='../data/' \
+    --dataset_name='sagawa/ord-uniq-canonicalized' \
     --disable_tqdm \
     --pretrained_model_name_or_path='sagawa/ZINC-t5'
 ```

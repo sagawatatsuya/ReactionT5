@@ -6,6 +6,7 @@ from tqdm.auto import tqdm
 import torch
 import tokenizers
 from transformers import AutoTokenizer, AutoModel, AutoConfig, EncoderDecoderModel, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer, DataCollatorForSeq2Seq
+import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
@@ -17,7 +18,8 @@ disable_progress_bar()
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, required=True)
+    parser.add_argument("--data_path", type=str, required=False)
+    parser.add_argument("--dataset_name", type=str, required=False)
     parser.add_argument("--output_dir", type=str, default='output',required=False)
     parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
     parser.add_argument("--model", type=str, required=True)
@@ -95,22 +97,31 @@ def hyperparameter_search(trainer, n_trials, hp_space = None, compute_objective 
     trainer.hp_search_backend = None
     return best_run
 
-    
-
-if CFG.debug:
-    train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')[:100]
-    test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')[:100]
-    train.to_csv(CFG.data_path + 'ord-train-debug.csv', index=False)
-    test.to_csv(CFG.data_path + 'ord-test-debug.csv', index=False)
-    data_files = {'train': CFG.data_path + 'ord-train-debug.csv', 'test': CFG.data_path + 'ord-test-debug.csv'}
-    dataset = load_dataset('csv', data_files=data_files)
-    n_trials = 3
+   
+if CFG.dataset_name:
+    if CFG.debug:
+        dataset = load_dataset(CFG.dataset_name)
+        dataset['train'] = datasets.Dataset.from_dict(dataset["train"][:100])
+        dataset['validation'] = datasets.Dataset.from_dict(dataset["validation"][:100])
+        n_trials = 3
+    else:
+        dataset = load_dataset(CFG.dataset_name)
+        n_trials = CFG.n_trials
 else:
-    train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')
-    test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
-    data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'test': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
-    dataset = load_dataset('csv', data_files=data_files)
-    n_trials = CFG.n_trials
+    if CFG.debug:
+        train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')[:100]
+        test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')[:100]
+        train.to_csv(CFG.data_path + 'ord-train-debug.csv', index=False)
+        test.to_csv(CFG.data_path + 'ord-test-debug.csv', index=False)
+        data_files = {'train': CFG.data_path + 'ord-train-debug.csv', 'validation': CFG.data_path + 'ord-test-debug.csv'}
+        dataset = load_dataset('csv', data_files=data_files)
+        n_trials = 3
+    else:
+        train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')
+        test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
+        data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'validation': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
+        dataset = load_dataset('csv', data_files=data_files)
+        n_trials = CFG.n_trials
     
 
 def hp_tuning(cfg):
@@ -205,7 +216,7 @@ def hp_tuning(cfg):
         model_init=get_model,
         args=args,
         train_dataset=tokenized_datasets['train'],
-        eval_dataset=tokenized_datasets['test'],
+        eval_dataset=tokenized_datasets['validation'],
         data_collator=data_collator,
         tokenizer=tokenizer,
         compute_metrics=compute_metrics,

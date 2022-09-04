@@ -11,6 +11,7 @@ import torch
 import tokenizers
 import transformers
 from transformers import AutoTokenizer, EncoderDecoderModel, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
+import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
@@ -20,7 +21,8 @@ disable_progress_bar()
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--train", action='store_true', default=False, required=False)
-    parser.add_argument("--data_path", type=str, required=True)
+    parser.add_argument("--data_path", type=str, required=False)
+    parser.add_argument("--dataset_name", type=str, required=False)
     parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
     parser.add_argument("--model", type=str, required=True)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
@@ -53,18 +55,26 @@ def seed_everything(seed=42):
 seed_everything(seed=CFG.seed)  
     
 
-if CFG.debug:
-    train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')[:100]
-    test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')[:100]
-    train.to_csv(CFG.data_path + 'ord-train-debug.csv', index=False)
-    test.to_csv(CFG.data_path + 'ord-test-debug.csv', index=False)
-    data_files = {'train': CFG.data_path + 'ord-train-debug.csv', 'test': CFG.data_path + 'ord-test-debug.csv'}
-    dataset = load_dataset('csv', data_files=data_files)
+if CFG.dataset_name:
+    if CFG.debug:
+        dataset = load_dataset(CFG.dataset_name)
+        dataset['train'] = datasets.Dataset.from_dict(dataset["train"][:100])
+        dataset['validation'] = datasets.Dataset.from_dict(dataset["validation"][:100])
+    else:
+        dataset = load_dataset(CFG.dataset_name)
 else:
-    train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')
-    test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
-    data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'test': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
-    dataset = load_dataset('csv', data_files=data_files)
+    if CFG.debug:
+        train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')[:100]
+        test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')[:100]
+        train.to_csv(CFG.data_path + 'ord-train-debug.csv', index=False)
+        test.to_csv(CFG.data_path + 'ord-test-debug.csv', index=False)
+        data_files = {'train': CFG.data_path + 'ord-train-debug.csv', 'validation': CFG.data_path + 'ord-test-debug.csv'}
+        dataset = load_dataset('csv', data_files=data_files)
+    else:
+        train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')
+        test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
+        data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'validation': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
+        dataset = load_dataset('csv', data_files=data_files)
 
 
 def preprocess_function(examples):
@@ -151,7 +161,7 @@ trainer = Seq2SeqTrainer(
     model,
     args,
     train_dataset=tokenized_datasets['train'],
-    eval_dataset=tokenized_datasets['test'],
+    eval_dataset=tokenized_datasets['validation'],
     data_collator=data_collator,
     tokenizer=tokenizer,
     compute_metrics=compute_metrics,
