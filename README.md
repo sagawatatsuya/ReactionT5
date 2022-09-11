@@ -132,7 +132,10 @@ python hp_tuning.py \
     --evaluation_strategy='epoch' \
     --logging_strategy='epoch' \
     --dataset_name='sagawa/ord-uniq-canonicalized' \
-    --pretrained_model_name_or_path='sagawa/ZINC-t5'
+    --pretrained_model_name_or_path='sagawa/ZINC-t5' \
+    --multitask \
+    --shuffle_augmentation=1 \
+    --noncanonical_augmentation=1
 ```
 
 # Model finetuning
@@ -154,5 +157,8 @@ python finetuning.py \
     --train \
     --dataset_name='sagawa/ord-uniq-canonicalized' \
     --disable_tqdm \
-    --pretrained_model_name_or_path='sagawa/ZINC-t5'
+    --pretrained_model_name_or_path='sagawa/ZINC-t5' \
+    --multitask \
+    --shuffle_augmentation=1 \
+    --noncanonical_augmentation=1
 ```

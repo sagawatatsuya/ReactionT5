@@ -37,6 +37,9 @@ def parse_args():
     parser.add_argument("--save_total_limit", type=int, default=3, required=False)
     parser.add_argument("--fp16", action='store_true', default=False, required=False)
     parser.add_argument("--disable_tqdm", action="store_true", default=False, required=False)
+    parser.add_argument("--multitask", action="store_true", default=False, required=False)
+    parser.add_argument("--shuffle_augmentation", type=int, default=0, required=False)
+    parser.add_argument("--noncanonical_augmentation", type=int, default=0, required=False)
     parser.add_argument("--seed", type=int, default=42, required=False)
 
     return parser.parse_args()
@@ -75,6 +78,46 @@ else:
         test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
         data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'validation': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
         dataset = load_dataset('csv', data_files=data_files)
+        
+if CFG.shuffle_augmentation:
+    dataset['train'].set_format(type='pandas')
+    df = dataset['train'][:]
+    df['split_reactant'] = df['reactant'].apply(lambda x: x.split('.'))
+    dfs = [df[['product', 'reactant']]]
+    for i in range(CFG.shuffle_augmentation):
+        df[f'shuffled_reactant{i}'] = df['split_reactant'].apply(lambda x: '.'.join(random.sample(x, len(x))))
+        dfs.append(df[['product', f'shuffled_reactant{i}']].rename(columns={f'shuffled_reactant{i}': 'reactant'}))
+    df = pd.concat(dfs, axis=0).drop_duplicates().reset_index(drop=True)
+    dataset['train'] = datasets.Dataset.from_pandas(df)
+        
+if CFG.noncanonical_augmentation:
+    from rdkit import Chem, RDLogger
+    RDLogger.DisableLog('rdApp.*')
+    def randomize(smiles):
+        lis = []
+        for smile in smiles:
+            mol = Chem.MolFromSmiles(smile)
+            smi = Chem.MolToSmiles(mol, doRandom=True)
+            lis.append(smi)
+        return '.'.join(lis)
+    
+    dataset['train'].set_format(type='pandas')
+    df = dataset['train'][:]
+    dfs = [df[['product', 'reactant']]]
+    df['split_reactant'] =df['reactant'].apply(lambda x: x.split('.'))
+    for i in range(CFG.noncanonical_augmentation):
+        df[f'randomized_reactant{i}'] = df['split_reactant'].apply(randomize)
+        dfs.append(df[['product', f'randomized_reactant{i}']].rename(columns={f'randomized_reactant{i}': 'reactant'}))
+    df = pd.concat(dfs, axis=0).drop_duplicates().reset_index(drop=True)
+    dataset['train'] = datasets.Dataset.from_pandas(df)
+
+# if multitask, reactant prediction and product prediction are conducted at the same time.         
+if CFG.multitask:
+    dataset['train'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['train']['product']]+['Product:'+i for i in dataset['train']['reactant']], 'reactant': dataset['train']['reactant']+dataset['train']['product']})
+else:
+    dataset['train'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['train']['product']], 'reactant': dataset['train']['reactant']})
+dataset['validation'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['validation']['product']], 'reactant': dataset['validation']['reactant']})
+dataset['test'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['test']['product']], 'reactant': dataset['test']['reactant']})
 
 
 def preprocess_function(examples):
@@ -108,6 +151,11 @@ try: # load pretrained tokenizer from local directory
     tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors='pt')
 except: # load pretrained tokenizer from huggingface model hub
     tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
+    
+if CFG.multitask:
+    tokenizer.add_special_tokens({'additional_special_tokens':tokenizer.additional_special_tokens + ['Product:', 'Reactants:']})
+else:
+    tokenizer.add_special_tokens({'additional_special_tokens':tokenizer.additional_special_tokens + ['Reactants:']})
 tokenizer.add_tokens('.')
 
 #load model
