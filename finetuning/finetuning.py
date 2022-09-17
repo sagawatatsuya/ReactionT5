@@ -117,7 +117,10 @@ if CFG.multitask:
 else:
     dataset['train'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['train']['product']], 'reactant': dataset['train']['reactant']})
 dataset['validation'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['validation']['product']], 'reactant': dataset['validation']['reactant']})
-dataset['test'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['test']['product']], 'reactant': dataset['test']['reactant']})
+try:
+    dataset['test'] = datasets.Dataset.from_dict({'product':['Reactants:'+i for i in dataset['test']['product']], 'reactant': dataset['test']['reactant']})
+except:
+    pass
 
 
 def preprocess_function(examples):

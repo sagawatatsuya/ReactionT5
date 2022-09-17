@@ -1,6 +1,21 @@
 # transformer-chemical-reaction-prediciton
 We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models [here](https://huggingface.co/sagawa). Using these pretrained models, we conducted a chemical reaction prediction, where if models were given a product, they generate reactants which is necessary for the reaction.
 # How to start with
+First, you have to install libraries. You can use requirements.yaml. If torch and jax version doesn't fit your environment, change and run following command. 
+```
+conda install -c conda-forge rdkit
+conda install -c conda-forge gdown
+conda install scikit-learn
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+pip install tokenizers==0.12.1
+pip install transformers==4.21.0
+pip install datasets
+pip install sentencepiece==0.1.96
+pip install "jax[cuda11_cudnn82]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+pip install flax
+conda install -c conda-forge optuna
+```
+
 The original data used for pretraining and finetuning are uploaded to google drive, and you can find them at following links. ([ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z), [PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view), [ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view))
 The preprocessed data is uploaded to [Hugging Face Hub](https://huggingface.co/sagawa) and we can use them, but if you want to download the data to you local directory, you can do by executing the following command, .
 ```
