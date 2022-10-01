@@ -17,17 +17,17 @@ conda install -c conda-forge optuna
 ```
 
 The original data used for pretraining and finetuning are uploaded to google drive, and you can find them at following links. ([ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z), [PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view), [ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view))
-The preprocessed data is uploaded to [Hugging Face Hub](https://huggingface.co/sagawa) and we can use them, but if you want to download the data to you local directory, you can do by executing the following command, .
+The preprocessed data is uploaded to [Hugging Face Hub](https://huggingface.co/sagawa), and you can use them. Also you can download the data to your local directory by executing the following command.
 ```
 python data-download-and-preprocess.py
 ```
 Then, by executing the following command, you can complete preparation for model pretraining and finetuning. 
 ```
-python data-split-and-model-preparation.py --load_dataset
-```
-If you want to use your local data, remove **--load_dataset**.
-```
 python data-split-and-model-preparation.py
+```
+In our experiments, character-level tokenizers outperformed normal tokenizers. If you want to use character-level tokenizers, put **--use_character_level_tokenizer**
+```
+python data-split-and-model-preparation.py --use_character_level_tokenizer
 ```
 
 # Model pretraining
@@ -103,6 +103,7 @@ python ./run_mlm.py \
     --eval_steps 25000 \
     --save_strategy "steps" \
     --save_steps="25000" \
+    --save_total_limit=2 \
     --logging_steps 500 \
     --learning_rate 0.005 \
     --report_to "none" \
@@ -129,6 +130,7 @@ python ./run_mlm.py \
     --eval_steps 25000 \
     --save_strategy "steps" \
     --save_steps="25000" \
+    --save_total_limit=2 \
     --logging_steps 500 \
     --learning_rate 0.005 \
     --report_to "none" \
