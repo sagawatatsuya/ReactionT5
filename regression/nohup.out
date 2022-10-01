@@ -3513,3 +3513,966 @@ Epoch: [3][77400/109002] Elapsed 365m 16s (remain 149m 8s) Loss: 0.0055(0.0101) 
 Epoch: [3][77500/109002] Elapsed 365m 45s (remain 148m 40s) Loss: 0.0058(0.0101) Grad: 0.2695  LR: 0.00001639  
 Epoch: [3][77600/109002] Elapsed 366m 14s (remain 148m 11s) Loss: 0.0076(0.0101) Grad: 0.3759  LR: 0.00001638  
 Epoch: [3][77700/109002] Elapsed 366m 43s (remain 147m 43s) Loss: 0.0104(0.0101) Grad: 0.2529  LR: 0.00001638  
+Epoch: [3][77800/109002] Elapsed 367m 11s (remain 147m 15s) Loss: 0.0025(0.0101) Grad: 0.2797  LR: 0.00001638  
+Epoch: [3][77900/109002] Elapsed 367m 40s (remain 146m 47s) Loss: 0.0077(0.0101) Grad: 0.5001  LR: 0.00001638  
+Epoch: [3][78000/109002] Elapsed 368m 9s (remain 146m 19s) Loss: 0.0104(0.0101) Grad: 0.2889  LR: 0.00001638  
+Epoch: [3][78100/109002] Elapsed 368m 38s (remain 145m 51s) Loss: 0.0061(0.0101) Grad: 0.3644  LR: 0.00001638  
+Epoch: [3][78200/109002] Elapsed 369m 7s (remain 145m 23s) Loss: 0.0109(0.0101) Grad: 0.4887  LR: 0.00001638  
+Epoch: [3][78300/109002] Elapsed 369m 36s (remain 144m 55s) Loss: 0.0224(0.0101) Grad: 0.4672  LR: 0.00001638  
+Epoch: [3][78400/109002] Elapsed 370m 4s (remain 144m 26s) Loss: 0.0045(0.0101) Grad: 0.4563  LR: 0.00001637  
+Epoch: [3][78500/109002] Elapsed 370m 33s (remain 143m 58s) Loss: 0.0044(0.0101) Grad: 0.3790  LR: 0.00001637  
+Epoch: [3][78600/109002] Elapsed 371m 2s (remain 143m 30s) Loss: 0.0086(0.0101) Grad: 0.2611  LR: 0.00001637  
+Epoch: [3][78700/109002] Elapsed 371m 31s (remain 143m 2s) Loss: 0.0065(0.0101) Grad: 0.3467  LR: 0.00001637  
+Epoch: [3][78800/109002] Elapsed 372m 0s (remain 142m 34s) Loss: 0.0086(0.0101) Grad: 0.6187  LR: 0.00001637  
+Epoch: [3][78900/109002] Elapsed 372m 28s (remain 142m 6s) Loss: 0.0177(0.0101) Grad: 0.4171  LR: 0.00001637  
+Epoch: [3][79000/109002] Elapsed 372m 57s (remain 141m 38s) Loss: 0.0159(0.0101) Grad: 0.4018  LR: 0.00001637  
+Epoch: [3][79100/109002] Elapsed 373m 26s (remain 141m 9s) Loss: 0.0088(0.0101) Grad: 0.5050  LR: 0.00001637  
+Epoch: [3][79200/109002] Elapsed 373m 55s (remain 140m 41s) Loss: 0.0032(0.0101) Grad: 0.1705  LR: 0.00001636  
+Epoch: [3][79300/109002] Elapsed 374m 24s (remain 140m 13s) Loss: 0.0088(0.0101) Grad: 0.4191  LR: 0.00001636  
+Epoch: [3][79400/109002] Elapsed 374m 53s (remain 139m 45s) Loss: 0.0092(0.0101) Grad: 0.4665  LR: 0.00001636  
+Epoch: [3][79500/109002] Elapsed 375m 21s (remain 139m 17s) Loss: 0.0128(0.0101) Grad: 0.2355  LR: 0.00001636  
+Epoch: [3][79600/109002] Elapsed 375m 50s (remain 138m 49s) Loss: 0.0109(0.0101) Grad: 0.4272  LR: 0.00001636  
+Epoch: [3][79700/109002] Elapsed 376m 19s (remain 138m 21s) Loss: 0.0068(0.0101) Grad: 0.3456  LR: 0.00001636  
+Epoch: [3][79800/109002] Elapsed 376m 48s (remain 137m 52s) Loss: 0.0081(0.0101) Grad: 0.2317  LR: 0.00001636  
+Epoch: [3][79900/109002] Elapsed 377m 17s (remain 137m 24s) Loss: 0.0024(0.0101) Grad: 0.3557  LR: 0.00001636  
+Epoch: [3][80000/109002] Elapsed 377m 46s (remain 136m 56s) Loss: 0.0033(0.0101) Grad: 0.3950  LR: 0.00001635  
+Epoch: [3][80100/109002] Elapsed 378m 14s (remain 136m 28s) Loss: 0.0119(0.0101) Grad: 0.2765  LR: 0.00001635  
+Epoch: [3][80200/109002] Elapsed 378m 43s (remain 136m 0s) Loss: 0.0074(0.0101) Grad: 0.3496  LR: 0.00001635  
+Epoch: [3][80300/109002] Elapsed 379m 12s (remain 135m 32s) Loss: 0.0154(0.0101) Grad: 0.3902  LR: 0.00001635  
+Epoch: [3][80400/109002] Elapsed 379m 41s (remain 135m 4s) Loss: 0.0051(0.0101) Grad: 0.2241  LR: 0.00001635  
+Epoch: [3][80500/109002] Elapsed 380m 10s (remain 134m 35s) Loss: 0.0107(0.0101) Grad: 0.3844  LR: 0.00001635  
+Epoch: [3][80600/109002] Elapsed 380m 39s (remain 134m 7s) Loss: 0.0019(0.0101) Grad: 0.3158  LR: 0.00001635  
+Epoch: [3][80700/109002] Elapsed 381m 7s (remain 133m 39s) Loss: 0.0032(0.0101) Grad: 0.1347  LR: 0.00001635  
+Epoch: [3][80800/109002] Elapsed 381m 36s (remain 133m 11s) Loss: 0.0137(0.0101) Grad: 0.3989  LR: 0.00001634  
+Epoch: [3][80900/109002] Elapsed 382m 5s (remain 132m 43s) Loss: 0.0066(0.0101) Grad: 0.4144  LR: 0.00001634  
+Epoch: [3][81000/109002] Elapsed 382m 34s (remain 132m 15s) Loss: 0.0036(0.0101) Grad: 0.2025  LR: 0.00001634  
+Epoch: [3][81100/109002] Elapsed 383m 3s (remain 131m 46s) Loss: 0.0192(0.0101) Grad: 0.5303  LR: 0.00001634  
+Epoch: [3][81200/109002] Elapsed 383m 32s (remain 131m 18s) Loss: 0.0097(0.0101) Grad: 0.4254  LR: 0.00001634  
+Epoch: [3][81300/109002] Elapsed 384m 0s (remain 130m 50s) Loss: 0.0079(0.0101) Grad: 0.2367  LR: 0.00001634  
+Epoch: [3][81400/109002] Elapsed 384m 29s (remain 130m 22s) Loss: 0.0037(0.0101) Grad: 0.2821  LR: 0.00001634  
+Epoch: [3][81500/109002] Elapsed 384m 58s (remain 129m 54s) Loss: 0.0104(0.0101) Grad: 0.4850  LR: 0.00001634  
+Epoch: [3][81600/109002] Elapsed 385m 27s (remain 129m 26s) Loss: 0.0067(0.0101) Grad: 0.2139  LR: 0.00001634  
+Epoch: [3][81700/109002] Elapsed 385m 56s (remain 128m 57s) Loss: 0.0136(0.0101) Grad: 0.4819  LR: 0.00001633  
+Epoch: [3][81800/109002] Elapsed 386m 25s (remain 128m 29s) Loss: 0.0146(0.0101) Grad: 0.4439  LR: 0.00001633  
+Epoch: [3][81900/109002] Elapsed 386m 53s (remain 128m 1s) Loss: 0.0215(0.0101) Grad: 0.4035  LR: 0.00001633  
+Epoch: [3][82000/109002] Elapsed 387m 22s (remain 127m 33s) Loss: 0.0037(0.0101) Grad: 0.2858  LR: 0.00001633  
+Epoch: [3][82100/109002] Elapsed 387m 51s (remain 127m 5s) Loss: 0.0020(0.0101) Grad: 0.3914  LR: 0.00001633  
+Epoch: [3][82200/109002] Elapsed 388m 20s (remain 126m 36s) Loss: 0.0189(0.0101) Grad: 0.4014  LR: 0.00001633  
+Epoch: [3][82300/109002] Elapsed 388m 48s (remain 126m 8s) Loss: 0.0197(0.0101) Grad: 0.5965  LR: 0.00001633  
+Epoch: [3][82400/109002] Elapsed 389m 17s (remain 125m 40s) Loss: 0.0089(0.0101) Grad: 0.5002  LR: 0.00001633  
+Epoch: [3][82500/109002] Elapsed 389m 46s (remain 125m 12s) Loss: 0.0153(0.0101) Grad: 0.2741  LR: 0.00001632  
+Epoch: [3][82600/109002] Elapsed 390m 15s (remain 124m 44s) Loss: 0.0045(0.0101) Grad: 0.3357  LR: 0.00001632  
+Epoch: [3][82700/109002] Elapsed 390m 44s (remain 124m 15s) Loss: 0.0373(0.0101) Grad: 0.6627  LR: 0.00001632  
+Epoch: [3][82800/109002] Elapsed 391m 13s (remain 123m 47s) Loss: 0.0031(0.0101) Grad: 0.1056  LR: 0.00001632  
+Epoch: [3][82900/109002] Elapsed 391m 41s (remain 123m 19s) Loss: 0.0444(0.0101) Grad: 0.6433  LR: 0.00001632  
+Epoch: [3][83000/109002] Elapsed 392m 10s (remain 122m 51s) Loss: 0.0057(0.0101) Grad: 0.3894  LR: 0.00001632  
+Epoch: [3][83100/109002] Elapsed 392m 39s (remain 122m 23s) Loss: 0.0045(0.0101) Grad: 0.1401  LR: 0.00001632  
+Epoch: [3][83200/109002] Elapsed 393m 8s (remain 121m 54s) Loss: 0.0483(0.0101) Grad: 0.6411  LR: 0.00001632  
+Epoch: [3][83300/109002] Elapsed 393m 37s (remain 121m 26s) Loss: 0.0015(0.0101) Grad: 0.3252  LR: 0.00001631  
+Epoch: [3][83400/109002] Elapsed 394m 6s (remain 120m 58s) Loss: 0.0066(0.0101) Grad: 0.2275  LR: 0.00001631  
+Epoch: [3][83500/109002] Elapsed 394m 35s (remain 120m 30s) Loss: 0.0161(0.0101) Grad: 0.4586  LR: 0.00001631  
+Epoch: [3][83600/109002] Elapsed 395m 3s (remain 120m 2s) Loss: 0.0023(0.0101) Grad: 0.1681  LR: 0.00001631  
+Epoch: [3][83700/109002] Elapsed 395m 32s (remain 119m 33s) Loss: 0.0036(0.0101) Grad: 0.1078  LR: 0.00001631  
+Epoch: [3][83800/109002] Elapsed 396m 1s (remain 119m 5s) Loss: 0.0093(0.0101) Grad: 0.3319  LR: 0.00001631  
+Epoch: [3][83900/109002] Elapsed 396m 29s (remain 118m 37s) Loss: 0.0106(0.0101) Grad: 0.4856  LR: 0.00001631  
+Epoch: [3][84000/109002] Elapsed 396m 57s (remain 118m 8s) Loss: 0.0177(0.0101) Grad: 0.3487  LR: 0.00001631  
+Epoch: [3][84100/109002] Elapsed 397m 26s (remain 117m 40s) Loss: 0.0075(0.0101) Grad: 0.3800  LR: 0.00001630  
+Epoch: [3][84200/109002] Elapsed 397m 54s (remain 117m 12s) Loss: 0.0035(0.0101) Grad: 0.3972  LR: 0.00001630  
+Epoch: [3][84300/109002] Elapsed 398m 22s (remain 116m 43s) Loss: 0.0013(0.0101) Grad: 0.0939  LR: 0.00001630  
+Epoch: [3][84400/109002] Elapsed 398m 51s (remain 116m 15s) Loss: 0.0147(0.0101) Grad: 0.3036  LR: 0.00001630  
+Epoch: [3][84500/109002] Elapsed 399m 19s (remain 115m 47s) Loss: 0.0329(0.0101) Grad: 0.6423  LR: 0.00001630  
+Epoch: [3][84600/109002] Elapsed 399m 48s (remain 115m 18s) Loss: 0.0067(0.0101) Grad: 0.2904  LR: 0.00001630  
+Epoch: [3][84700/109002] Elapsed 400m 16s (remain 114m 50s) Loss: 0.0112(0.0101) Grad: 0.4166  LR: 0.00001630  
+Epoch: [3][84800/109002] Elapsed 400m 44s (remain 114m 22s) Loss: 0.0070(0.0101) Grad: 0.8894  LR: 0.00001630  
+Epoch: [3][84900/109002] Elapsed 401m 13s (remain 113m 53s) Loss: 0.0106(0.0101) Grad: 0.2336  LR: 0.00001629  
+Epoch: [3][85000/109002] Elapsed 401m 41s (remain 113m 25s) Loss: 0.0104(0.0101) Grad: 0.4404  LR: 0.00001629  
+Epoch: [3][85100/109002] Elapsed 402m 10s (remain 112m 57s) Loss: 0.0275(0.0101) Grad: 0.5066  LR: 0.00001629  
+Epoch: [3][85200/109002] Elapsed 402m 39s (remain 112m 28s) Loss: 0.0115(0.0101) Grad: 0.3159  LR: 0.00001629  
+Epoch: [3][85300/109002] Elapsed 403m 8s (remain 112m 0s) Loss: 0.0087(0.0101) Grad: 0.3138  LR: 0.00001629  
+Epoch: [3][85400/109002] Elapsed 403m 37s (remain 111m 32s) Loss: 0.0103(0.0101) Grad: 0.3980  LR: 0.00001629  
+Epoch: [3][85500/109002] Elapsed 404m 6s (remain 111m 4s) Loss: 0.0040(0.0101) Grad: 0.1707  LR: 0.00001629  
+Epoch: [3][85600/109002] Elapsed 404m 34s (remain 110m 36s) Loss: 0.0081(0.0101) Grad: 0.3902  LR: 0.00001629  
+Epoch: [3][85700/109002] Elapsed 405m 3s (remain 110m 7s) Loss: 0.0108(0.0101) Grad: 0.3518  LR: 0.00001629  
+Epoch: [3][85800/109002] Elapsed 405m 32s (remain 109m 39s) Loss: 0.0199(0.0101) Grad: 0.3236  LR: 0.00001628  
+Epoch: [3][85900/109002] Elapsed 406m 1s (remain 109m 11s) Loss: 0.0147(0.0101) Grad: 0.3967  LR: 0.00001628  
+Epoch: [3][86000/109002] Elapsed 406m 30s (remain 108m 43s) Loss: 0.0053(0.0101) Grad: 0.4522  LR: 0.00001628  
+Epoch: [3][86100/109002] Elapsed 406m 59s (remain 108m 14s) Loss: 0.0092(0.0101) Grad: 0.2354  LR: 0.00001628  
+Epoch: [3][86200/109002] Elapsed 407m 27s (remain 107m 46s) Loss: 0.0046(0.0101) Grad: 0.3958  LR: 0.00001628  
+Epoch: [3][86300/109002] Elapsed 407m 56s (remain 107m 18s) Loss: 0.0090(0.0101) Grad: 0.4115  LR: 0.00001628  
+Epoch: [3][86400/109002] Elapsed 408m 25s (remain 106m 50s) Loss: 0.0046(0.0101) Grad: 0.1598  LR: 0.00001628  
+Epoch: [3][86500/109002] Elapsed 408m 54s (remain 106m 21s) Loss: 0.0058(0.0101) Grad: 0.3193  LR: 0.00001628  
+Epoch: [3][86600/109002] Elapsed 409m 23s (remain 105m 53s) Loss: 0.0054(0.0101) Grad: 0.3160  LR: 0.00001627  
+Epoch: [3][86700/109002] Elapsed 409m 52s (remain 105m 25s) Loss: 0.0292(0.0101) Grad: 0.4289  LR: 0.00001627  
+Epoch: [3][86800/109002] Elapsed 410m 21s (remain 104m 57s) Loss: 0.0038(0.0101) Grad: 0.2353  LR: 0.00001627  
+Epoch: [3][86900/109002] Elapsed 410m 49s (remain 104m 29s) Loss: 0.0066(0.0101) Grad: 0.4175  LR: 0.00001627  
+Epoch: [3][87000/109002] Elapsed 411m 18s (remain 104m 0s) Loss: 0.0117(0.0101) Grad: 0.2925  LR: 0.00001627  
+Epoch: [3][87100/109002] Elapsed 411m 47s (remain 103m 32s) Loss: 0.0174(0.0101) Grad: 0.3097  LR: 0.00001627  
+Epoch: [3][87200/109002] Elapsed 412m 16s (remain 103m 4s) Loss: 0.0100(0.0101) Grad: 0.3673  LR: 0.00001627  
+Epoch: [3][87300/109002] Elapsed 412m 45s (remain 102m 36s) Loss: 0.0150(0.0101) Grad: 0.3029  LR: 0.00001627  
+Epoch: [3][87400/109002] Elapsed 413m 14s (remain 102m 7s) Loss: 0.0209(0.0101) Grad: 0.4711  LR: 0.00001626  
+Epoch: [3][87500/109002] Elapsed 413m 43s (remain 101m 39s) Loss: 0.0077(0.0101) Grad: 0.3780  LR: 0.00001626  
+Epoch: [3][87600/109002] Elapsed 414m 11s (remain 101m 11s) Loss: 0.0137(0.0101) Grad: 0.4047  LR: 0.00001626  
+Epoch: [3][87700/109002] Elapsed 414m 40s (remain 100m 43s) Loss: 0.0007(0.0101) Grad: 0.2612  LR: 0.00001626  
+Epoch: [3][87800/109002] Elapsed 415m 9s (remain 100m 14s) Loss: 0.0083(0.0101) Grad: 0.3871  LR: 0.00001626  
+Epoch: [3][87900/109002] Elapsed 415m 38s (remain 99m 46s) Loss: 0.0223(0.0101) Grad: 0.3847  LR: 0.00001626  
+Epoch: [3][88000/109002] Elapsed 416m 7s (remain 99m 18s) Loss: 0.0070(0.0101) Grad: 0.3264  LR: 0.00001626  
+Epoch: [3][88100/109002] Elapsed 416m 36s (remain 98m 50s) Loss: 0.0208(0.0101) Grad: 0.4679  LR: 0.00001626  
+Epoch: [3][88200/109002] Elapsed 417m 5s (remain 98m 21s) Loss: 0.0040(0.0101) Grad: 0.2040  LR: 0.00001625  
+Epoch: [3][88300/109002] Elapsed 417m 34s (remain 97m 53s) Loss: 0.0045(0.0101) Grad: 0.3507  LR: 0.00001625  
+Epoch: [3][88400/109002] Elapsed 418m 3s (remain 97m 25s) Loss: 0.0010(0.0101) Grad: 0.4068  LR: 0.00001625  
+Epoch: [3][88500/109002] Elapsed 418m 31s (remain 96m 57s) Loss: 0.0231(0.0101) Grad: 0.3902  LR: 0.00001625  
+Epoch: [3][88600/109002] Elapsed 419m 0s (remain 96m 28s) Loss: 0.0170(0.0101) Grad: 0.4990  LR: 0.00001625  
+Epoch: [3][88700/109002] Elapsed 419m 29s (remain 96m 0s) Loss: 0.0038(0.0101) Grad: 0.4642  LR: 0.00001625  
+Epoch: [3][88800/109002] Elapsed 419m 58s (remain 95m 32s) Loss: 0.0145(0.0101) Grad: 0.3779  LR: 0.00001625  
+Epoch: [3][88900/109002] Elapsed 420m 27s (remain 95m 3s) Loss: 0.0133(0.0101) Grad: 0.3187  LR: 0.00001625  
+Epoch: [3][89000/109002] Elapsed 420m 55s (remain 94m 35s) Loss: 0.0076(0.0101) Grad: 0.4725  LR: 0.00001624  
+Epoch: [3][89100/109002] Elapsed 421m 23s (remain 94m 7s) Loss: 0.0009(0.0101) Grad: 0.0982  LR: 0.00001624  
+Epoch: [3][89200/109002] Elapsed 421m 52s (remain 93m 38s) Loss: 0.0042(0.0101) Grad: 0.2919  LR: 0.00001624  
+Epoch: [3][89300/109002] Elapsed 422m 20s (remain 93m 10s) Loss: 0.0172(0.0101) Grad: 0.5528  LR: 0.00001624  
+Epoch: [3][89400/109002] Elapsed 422m 48s (remain 92m 41s) Loss: 0.0027(0.0101) Grad: 0.1182  LR: 0.00001624  
+Epoch: [3][89500/109002] Elapsed 423m 16s (remain 92m 13s) Loss: 0.0067(0.0101) Grad: 0.2845  LR: 0.00001624  
+Epoch: [3][89600/109002] Elapsed 423m 44s (remain 91m 44s) Loss: 0.0009(0.0101) Grad: 0.3364  LR: 0.00001624  
+Epoch: [3][89700/109002] Elapsed 424m 12s (remain 91m 16s) Loss: 0.0127(0.0101) Grad: 0.2768  LR: 0.00001624  
+Epoch: [3][89800/109002] Elapsed 424m 40s (remain 90m 48s) Loss: 0.0035(0.0101) Grad: 0.1837  LR: 0.00001623  
+Epoch: [3][89900/109002] Elapsed 425m 7s (remain 90m 19s) Loss: 0.0227(0.0101) Grad: 0.6020  LR: 0.00001623  
+Epoch: [3][90000/109002] Elapsed 425m 35s (remain 89m 51s) Loss: 0.0112(0.0101) Grad: 0.2427  LR: 0.00001623  
+Epoch: [3][90100/109002] Elapsed 426m 2s (remain 89m 22s) Loss: 0.0073(0.0101) Grad: 0.3320  LR: 0.00001623  
+Epoch: [3][90200/109002] Elapsed 426m 30s (remain 88m 53s) Loss: 0.0047(0.0101) Grad: 0.2110  LR: 0.00001623  
+Epoch: [3][90300/109002] Elapsed 426m 57s (remain 88m 25s) Loss: 0.0129(0.0101) Grad: 0.4022  LR: 0.00001623  
+Epoch: [3][90400/109002] Elapsed 427m 25s (remain 87m 56s) Loss: 0.0141(0.0101) Grad: 0.4295  LR: 0.00001623  
+Epoch: [3][90500/109002] Elapsed 427m 52s (remain 87m 28s) Loss: 0.0111(0.0101) Grad: 0.3567  LR: 0.00001623  
+Epoch: [3][90600/109002] Elapsed 428m 20s (remain 86m 59s) Loss: 0.0146(0.0101) Grad: 0.3463  LR: 0.00001623  
+Epoch: [3][90700/109002] Elapsed 428m 47s (remain 86m 31s) Loss: 0.0072(0.0101) Grad: 0.5609  LR: 0.00001622  
+Epoch: [3][90800/109002] Elapsed 429m 15s (remain 86m 2s) Loss: 0.0035(0.0101) Grad: 0.2826  LR: 0.00001622  
+Epoch: [3][90900/109002] Elapsed 429m 42s (remain 85m 34s) Loss: 0.0163(0.0101) Grad: 0.3643  LR: 0.00001622  
+Epoch: [3][91000/109002] Elapsed 430m 9s (remain 85m 5s) Loss: 0.0018(0.0101) Grad: 0.2284  LR: 0.00001622  
+Epoch: [3][91100/109002] Elapsed 430m 36s (remain 84m 36s) Loss: 0.0045(0.0101) Grad: 0.2854  LR: 0.00001622  
+Epoch: [3][91200/109002] Elapsed 431m 4s (remain 84m 8s) Loss: 0.0050(0.0101) Grad: 0.2330  LR: 0.00001622  
+Epoch: [3][91300/109002] Elapsed 431m 31s (remain 83m 39s) Loss: 0.0048(0.0101) Grad: 0.5399  LR: 0.00001622  
+Epoch: [3][91400/109002] Elapsed 431m 58s (remain 83m 11s) Loss: 0.0180(0.0101) Grad: 0.4677  LR: 0.00001622  
+Epoch: [3][91500/109002] Elapsed 432m 25s (remain 82m 42s) Loss: 0.0075(0.0101) Grad: 0.2984  LR: 0.00001621  
+Epoch: [3][91600/109002] Elapsed 432m 53s (remain 82m 14s) Loss: 0.0074(0.0101) Grad: 0.4041  LR: 0.00001621  
+Epoch: [3][91700/109002] Elapsed 433m 20s (remain 81m 45s) Loss: 0.0120(0.0101) Grad: 0.3509  LR: 0.00001621  
+Epoch: [3][91800/109002] Elapsed 433m 47s (remain 81m 16s) Loss: 0.0175(0.0101) Grad: 0.3090  LR: 0.00001621  
+Epoch: [3][91900/109002] Elapsed 434m 14s (remain 80m 48s) Loss: 0.0080(0.0101) Grad: 0.3278  LR: 0.00001621  
+Epoch: [3][92000/109002] Elapsed 434m 41s (remain 80m 19s) Loss: 0.0082(0.0101) Grad: 0.4005  LR: 0.00001621  
+Epoch: [3][92100/109002] Elapsed 435m 8s (remain 79m 51s) Loss: 0.0115(0.0101) Grad: 0.2611  LR: 0.00001621  
+Epoch: [3][92200/109002] Elapsed 435m 35s (remain 79m 22s) Loss: 0.0085(0.0101) Grad: 0.2814  LR: 0.00001621  
+Epoch: [3][92300/109002] Elapsed 436m 2s (remain 78m 53s) Loss: 0.0028(0.0101) Grad: 0.5280  LR: 0.00001620  
+Epoch: [3][92400/109002] Elapsed 436m 29s (remain 78m 25s) Loss: 0.0051(0.0101) Grad: 0.2240  LR: 0.00001620  
+Epoch: [3][92500/109002] Elapsed 436m 57s (remain 77m 56s) Loss: 0.0110(0.0101) Grad: 0.4624  LR: 0.00001620  
+Epoch: [3][92600/109002] Elapsed 437m 24s (remain 77m 28s) Loss: 0.0200(0.0101) Grad: 0.4954  LR: 0.00001620  
+Epoch: [3][92700/109002] Elapsed 437m 51s (remain 76m 59s) Loss: 0.0046(0.0101) Grad: 0.2004  LR: 0.00001620  
+Epoch: [3][92800/109002] Elapsed 438m 18s (remain 76m 31s) Loss: 0.0073(0.0101) Grad: 0.3463  LR: 0.00001620  
+Epoch: [3][92900/109002] Elapsed 438m 46s (remain 76m 2s) Loss: 0.0085(0.0101) Grad: 0.4444  LR: 0.00001620  
+Epoch: [3][93000/109002] Elapsed 439m 13s (remain 75m 34s) Loss: 0.0089(0.0101) Grad: 0.3184  LR: 0.00001620  
+Epoch: [3][93100/109002] Elapsed 439m 40s (remain 75m 5s) Loss: 0.0013(0.0101) Grad: 0.5956  LR: 0.00001619  
+Epoch: [3][93200/109002] Elapsed 440m 8s (remain 74m 37s) Loss: 0.0106(0.0101) Grad: 0.5917  LR: 0.00001619  
+Epoch: [3][93300/109002] Elapsed 440m 36s (remain 74m 8s) Loss: 0.0055(0.0101) Grad: 0.2002  LR: 0.00001619  
+Epoch: [3][93400/109002] Elapsed 441m 3s (remain 73m 40s) Loss: 0.0183(0.0101) Grad: 0.4625  LR: 0.00001619  
+Epoch: [3][93500/109002] Elapsed 441m 31s (remain 73m 11s) Loss: 0.0055(0.0101) Grad: 0.5515  LR: 0.00001619  
+Epoch: [3][93600/109002] Elapsed 441m 59s (remain 72m 43s) Loss: 0.0060(0.0101) Grad: 0.2151  LR: 0.00001619  
+Epoch: [3][93700/109002] Elapsed 442m 26s (remain 72m 15s) Loss: 0.0142(0.0101) Grad: 0.5061  LR: 0.00001619  
+Epoch: [3][93800/109002] Elapsed 442m 54s (remain 71m 46s) Loss: 0.0064(0.0101) Grad: 0.3911  LR: 0.00001619  
+Epoch: [3][93900/109002] Elapsed 443m 22s (remain 71m 18s) Loss: 0.0122(0.0101) Grad: 0.3023  LR: 0.00001618  
+Epoch: [3][94000/109002] Elapsed 443m 50s (remain 70m 49s) Loss: 0.0105(0.0101) Grad: 0.5247  LR: 0.00001618  
+Epoch: [3][94100/109002] Elapsed 444m 18s (remain 70m 21s) Loss: 0.0167(0.0101) Grad: 0.3430  LR: 0.00001618  
+Epoch: [3][94200/109002] Elapsed 444m 45s (remain 69m 52s) Loss: 0.0133(0.0101) Grad: 0.2943  LR: 0.00001618  
+Epoch: [3][94300/109002] Elapsed 445m 13s (remain 69m 24s) Loss: 0.0208(0.0101) Grad: 0.6496  LR: 0.00001618  
+Epoch: [3][94400/109002] Elapsed 445m 41s (remain 68m 56s) Loss: 0.0045(0.0101) Grad: 0.5856  LR: 0.00001618  
+Epoch: [3][94500/109002] Elapsed 446m 9s (remain 68m 27s) Loss: 0.0041(0.0101) Grad: 0.1748  LR: 0.00001618  
+Epoch: [3][94600/109002] Elapsed 446m 37s (remain 67m 59s) Loss: 0.0015(0.0101) Grad: 0.3316  LR: 0.00001618  
+Epoch: [3][94700/109002] Elapsed 447m 6s (remain 67m 31s) Loss: 0.0213(0.0101) Grad: 0.5219  LR: 0.00001617  
+Epoch: [3][94800/109002] Elapsed 447m 34s (remain 67m 2s) Loss: 0.0121(0.0101) Grad: 0.3113  LR: 0.00001617  
+Epoch: [3][94900/109002] Elapsed 448m 2s (remain 66m 34s) Loss: 0.0054(0.0101) Grad: 0.2643  LR: 0.00001617  
+Epoch: [3][95000/109002] Elapsed 448m 30s (remain 66m 6s) Loss: 0.0083(0.0101) Grad: 0.3970  LR: 0.00001617  
+Epoch: [3][95100/109002] Elapsed 448m 58s (remain 65m 37s) Loss: 0.0140(0.0101) Grad: 0.3273  LR: 0.00001617  
+Epoch: [3][95200/109002] Elapsed 449m 27s (remain 65m 9s) Loss: 0.0059(0.0101) Grad: 0.1539  LR: 0.00001617  
+Epoch: [3][95300/109002] Elapsed 449m 55s (remain 64m 40s) Loss: 0.0105(0.0101) Grad: 0.3022  LR: 0.00001617  
+Epoch: [3][95400/109002] Elapsed 450m 23s (remain 64m 12s) Loss: 0.0131(0.0101) Grad: 0.3408  LR: 0.00001617  
+Epoch: [3][95500/109002] Elapsed 450m 51s (remain 63m 44s) Loss: 0.0048(0.0101) Grad: 0.2981  LR: 0.00001617  
+Epoch: [3][95600/109002] Elapsed 451m 19s (remain 63m 15s) Loss: 0.0092(0.0101) Grad: 0.4047  LR: 0.00001616  
+Epoch: [3][95700/109002] Elapsed 451m 48s (remain 62m 47s) Loss: 0.0160(0.0101) Grad: 0.3014  LR: 0.00001616  
+Epoch: [3][95800/109002] Elapsed 452m 16s (remain 62m 19s) Loss: 0.0157(0.0101) Grad: 0.3955  LR: 0.00001616  
+Epoch: [3][95900/109002] Elapsed 452m 44s (remain 61m 50s) Loss: 0.0149(0.0101) Grad: 0.4691  LR: 0.00001616  
+Epoch: [3][96000/109002] Elapsed 453m 12s (remain 61m 22s) Loss: 0.0095(0.0101) Grad: 0.2098  LR: 0.00001616  
+Epoch: [3][96100/109002] Elapsed 453m 41s (remain 60m 54s) Loss: 0.0066(0.0101) Grad: 0.2611  LR: 0.00001616  
+Epoch: [3][96200/109002] Elapsed 454m 9s (remain 60m 25s) Loss: 0.0040(0.0101) Grad: 0.4679  LR: 0.00001616  
+Epoch: [3][96300/109002] Elapsed 454m 37s (remain 59m 57s) Loss: 0.0084(0.0101) Grad: 0.2200  LR: 0.00001616  
+Epoch: [3][96400/109002] Elapsed 455m 5s (remain 59m 29s) Loss: 0.0057(0.0101) Grad: 0.3259  LR: 0.00001615  
+Epoch: [3][96500/109002] Elapsed 455m 34s (remain 59m 0s) Loss: 0.0200(0.0101) Grad: 0.4321  LR: 0.00001615  
+Epoch: [3][96600/109002] Elapsed 456m 2s (remain 58m 32s) Loss: 0.0124(0.0101) Grad: 0.3903  LR: 0.00001615  
+Epoch: [3][96700/109002] Elapsed 456m 30s (remain 58m 4s) Loss: 0.0053(0.0101) Grad: 0.3092  LR: 0.00001615  
+Epoch: [3][96800/109002] Elapsed 456m 58s (remain 57m 35s) Loss: 0.0025(0.0101) Grad: 0.7675  LR: 0.00001615  
+Epoch: [3][96900/109002] Elapsed 457m 27s (remain 57m 7s) Loss: 0.0082(0.0101) Grad: 0.2590  LR: 0.00001615  
+Epoch: [3][97000/109002] Elapsed 457m 55s (remain 56m 39s) Loss: 0.0046(0.0101) Grad: 0.2760  LR: 0.00001615  
+Epoch: [3][97100/109002] Elapsed 458m 23s (remain 56m 10s) Loss: 0.0025(0.0101) Grad: 0.3825  LR: 0.00001615  
+Epoch: [3][97200/109002] Elapsed 458m 51s (remain 55m 42s) Loss: 0.0101(0.0101) Grad: 0.2042  LR: 0.00001614  
+Epoch: [3][97300/109002] Elapsed 459m 19s (remain 55m 14s) Loss: 0.0041(0.0101) Grad: 0.3882  LR: 0.00001614  
+Epoch: [3][97400/109002] Elapsed 459m 48s (remain 54m 45s) Loss: 0.0067(0.0101) Grad: 0.5835  LR: 0.00001614  
+Epoch: [3][97500/109002] Elapsed 460m 16s (remain 54m 17s) Loss: 0.0060(0.0101) Grad: 0.3133  LR: 0.00001614  
+Epoch: [3][97600/109002] Elapsed 460m 45s (remain 53m 49s) Loss: 0.0041(0.0101) Grad: 0.2828  LR: 0.00001614  
+Epoch: [3][97700/109002] Elapsed 461m 13s (remain 53m 21s) Loss: 0.0016(0.0101) Grad: 0.4698  LR: 0.00001614  
+Epoch: [3][97800/109002] Elapsed 461m 42s (remain 52m 52s) Loss: 0.0163(0.0101) Grad: 0.3950  LR: 0.00001614  
+Epoch: [3][97900/109002] Elapsed 462m 10s (remain 52m 24s) Loss: 0.0185(0.0101) Grad: 0.6018  LR: 0.00001614  
+Epoch: [3][98000/109002] Elapsed 462m 38s (remain 51m 56s) Loss: 0.0099(0.0101) Grad: 0.4005  LR: 0.00001613  
+Epoch: [3][98100/109002] Elapsed 463m 7s (remain 51m 27s) Loss: 0.0030(0.0101) Grad: 0.1725  LR: 0.00001613  
+Epoch: [3][98200/109002] Elapsed 463m 35s (remain 50m 59s) Loss: 0.0173(0.0101) Grad: 0.3602  LR: 0.00001613  
+Epoch: [3][98300/109002] Elapsed 464m 4s (remain 50m 31s) Loss: 0.0116(0.0101) Grad: 0.4418  LR: 0.00001613  
+Epoch: [3][98400/109002] Elapsed 464m 32s (remain 50m 2s) Loss: 0.0253(0.0101) Grad: 0.4993  LR: 0.00001613  
+Epoch: [3][98500/109002] Elapsed 465m 1s (remain 49m 34s) Loss: 0.0052(0.0101) Grad: 0.3057  LR: 0.00001613  
+Epoch: [3][98600/109002] Elapsed 465m 29s (remain 49m 6s) Loss: 0.0059(0.0101) Grad: 0.3931  LR: 0.00001613  
+Epoch: [3][98700/109002] Elapsed 465m 57s (remain 48m 37s) Loss: 0.0244(0.0101) Grad: 0.4203  LR: 0.00001613  
+Epoch: [3][98800/109002] Elapsed 466m 25s (remain 48m 9s) Loss: 0.0040(0.0101) Grad: 0.4969  LR: 0.00001612  
+Epoch: [3][98900/109002] Elapsed 466m 53s (remain 47m 41s) Loss: 0.0205(0.0101) Grad: 0.4436  LR: 0.00001612  
+Epoch: [3][99000/109002] Elapsed 467m 21s (remain 47m 12s) Loss: 0.0048(0.0101) Grad: 0.1788  LR: 0.00001612  
+Epoch: [3][99100/109002] Elapsed 467m 49s (remain 46m 44s) Loss: 0.0104(0.0101) Grad: 0.3173  LR: 0.00001612  
+Epoch: [3][99200/109002] Elapsed 468m 17s (remain 46m 15s) Loss: 0.0094(0.0101) Grad: 0.6789  LR: 0.00001612  
+Epoch: [3][99300/109002] Elapsed 468m 44s (remain 45m 47s) Loss: 0.0066(0.0101) Grad: 0.2721  LR: 0.00001612  
+Epoch: [3][99400/109002] Elapsed 469m 11s (remain 45m 19s) Loss: 0.0125(0.0101) Grad: 0.3130  LR: 0.00001612  
+Epoch: [3][99500/109002] Elapsed 469m 39s (remain 44m 50s) Loss: 0.0063(0.0101) Grad: 0.5443  LR: 0.00001612  
+Epoch: [3][99600/109002] Elapsed 470m 6s (remain 44m 22s) Loss: 0.0189(0.0101) Grad: 0.3740  LR: 0.00001612  
+Epoch: [3][99700/109002] Elapsed 470m 34s (remain 43m 53s) Loss: 0.0110(0.0101) Grad: 0.3594  LR: 0.00001611  
+Epoch: [3][99800/109002] Elapsed 471m 1s (remain 43m 25s) Loss: 0.0074(0.0101) Grad: 0.4201  LR: 0.00001611  
+Epoch: [3][99900/109002] Elapsed 471m 28s (remain 42m 57s) Loss: 0.0209(0.0101) Grad: 0.3907  LR: 0.00001611  
+Epoch: [3][100000/109002] Elapsed 471m 56s (remain 42m 28s) Loss: 0.0155(0.0101) Grad: 0.3795  LR: 0.00001611  
+Epoch: [3][100100/109002] Elapsed 472m 23s (remain 42m 0s) Loss: 0.0083(0.0101) Grad: 0.3912  LR: 0.00001611  
+Epoch: [3][100200/109002] Elapsed 472m 50s (remain 41m 31s) Loss: 0.0054(0.0101) Grad: 0.1835  LR: 0.00001611  
+Epoch: [3][100300/109002] Elapsed 473m 18s (remain 41m 3s) Loss: 0.0054(0.0101) Grad: 0.3028  LR: 0.00001611  
+Epoch: [3][100400/109002] Elapsed 473m 45s (remain 40m 35s) Loss: 0.0155(0.0101) Grad: 0.5055  LR: 0.00001611  
+Epoch: [3][100500/109002] Elapsed 474m 12s (remain 40m 6s) Loss: 0.0041(0.0101) Grad: 0.2028  LR: 0.00001610  
+Epoch: [3][100600/109002] Elapsed 474m 39s (remain 39m 38s) Loss: 0.0182(0.0101) Grad: 0.4047  LR: 0.00001610  
+Epoch: [3][100700/109002] Elapsed 475m 7s (remain 39m 9s) Loss: 0.0064(0.0101) Grad: 0.3470  LR: 0.00001610  
+Epoch: [3][100800/109002] Elapsed 475m 34s (remain 38m 41s) Loss: 0.0145(0.0101) Grad: 0.3736  LR: 0.00001610  
+Epoch: [3][100900/109002] Elapsed 476m 1s (remain 38m 13s) Loss: 0.0124(0.0101) Grad: 0.4796  LR: 0.00001610  
+Epoch: [3][101000/109002] Elapsed 476m 28s (remain 37m 44s) Loss: 0.0065(0.0101) Grad: 0.4713  LR: 0.00001610  
+Epoch: [3][101100/109002] Elapsed 476m 55s (remain 37m 16s) Loss: 0.0109(0.0101) Grad: 0.2512  LR: 0.00001610  
+Epoch: [3][101200/109002] Elapsed 477m 23s (remain 36m 47s) Loss: 0.0080(0.0101) Grad: 0.3447  LR: 0.00001610  
+Epoch: [3][101300/109002] Elapsed 477m 50s (remain 36m 19s) Loss: 0.0118(0.0101) Grad: 0.5426  LR: 0.00001609  
+Epoch: [3][101400/109002] Elapsed 478m 17s (remain 35m 51s) Loss: 0.0050(0.0101) Grad: 0.2083  LR: 0.00001609  
+Epoch: [3][101500/109002] Elapsed 478m 44s (remain 35m 22s) Loss: 0.0480(0.0101) Grad: 0.6755  LR: 0.00001609  
+Epoch: [3][101600/109002] Elapsed 479m 11s (remain 34m 54s) Loss: 0.0039(0.0101) Grad: 0.6005  LR: 0.00001609  
+Epoch: [3][101700/109002] Elapsed 479m 38s (remain 34m 25s) Loss: 0.0126(0.0101) Grad: 0.2759  LR: 0.00001609  
+Epoch: [3][101800/109002] Elapsed 480m 5s (remain 33m 57s) Loss: 0.0019(0.0101) Grad: 0.2308  LR: 0.00001609  
+Epoch: [3][101900/109002] Elapsed 480m 32s (remain 33m 29s) Loss: 0.0104(0.0101) Grad: 0.4847  LR: 0.00001609  
+Epoch: [3][102000/109002] Elapsed 480m 59s (remain 33m 0s) Loss: 0.0110(0.0101) Grad: 0.3149  LR: 0.00001609  
+Epoch: [3][102100/109002] Elapsed 481m 26s (remain 32m 32s) Loss: 0.0131(0.0101) Grad: 0.5045  LR: 0.00001608  
+Epoch: [3][102200/109002] Elapsed 481m 53s (remain 32m 4s) Loss: 0.0108(0.0101) Grad: 0.3690  LR: 0.00001608  
+Epoch: [3][102300/109002] Elapsed 482m 20s (remain 31m 35s) Loss: 0.0127(0.0101) Grad: 0.2622  LR: 0.00001608  
+Epoch: [3][102400/109002] Elapsed 482m 47s (remain 31m 7s) Loss: 0.0085(0.0101) Grad: 0.2659  LR: 0.00001608  
+Epoch: [3][102500/109002] Elapsed 483m 14s (remain 30m 38s) Loss: 0.0090(0.0101) Grad: 0.3944  LR: 0.00001608  
+Epoch: [3][102600/109002] Elapsed 483m 41s (remain 30m 10s) Loss: 0.0080(0.0101) Grad: 0.1845  LR: 0.00001608  
+Epoch: [3][102700/109002] Elapsed 484m 8s (remain 29m 42s) Loss: 0.0191(0.0101) Grad: 0.7415  LR: 0.00001608  
+Epoch: [3][102800/109002] Elapsed 484m 35s (remain 29m 13s) Loss: 0.0287(0.0101) Grad: 0.5006  LR: 0.00001608  
+Epoch: [3][102900/109002] Elapsed 485m 1s (remain 28m 45s) Loss: 0.0070(0.0101) Grad: 0.2489  LR: 0.00001607  
+Epoch: [3][103000/109002] Elapsed 485m 28s (remain 28m 17s) Loss: 0.0102(0.0101) Grad: 0.6294  LR: 0.00001607  
+Epoch: [3][103100/109002] Elapsed 485m 55s (remain 27m 48s) Loss: 0.0147(0.0101) Grad: 0.5366  LR: 0.00001607  
+Epoch: [3][103200/109002] Elapsed 486m 22s (remain 27m 20s) Loss: 0.0046(0.0101) Grad: 0.2947  LR: 0.00001607  
+Epoch: [3][103300/109002] Elapsed 486m 49s (remain 26m 52s) Loss: 0.0072(0.0101) Grad: 0.3004  LR: 0.00001607  
+Epoch: [3][103400/109002] Elapsed 487m 16s (remain 26m 23s) Loss: 0.0085(0.0101) Grad: 0.3528  LR: 0.00001607  
+Epoch: [3][103500/109002] Elapsed 487m 42s (remain 25m 55s) Loss: 0.0091(0.0101) Grad: 0.2988  LR: 0.00001607  
+Epoch: [3][103600/109002] Elapsed 488m 9s (remain 25m 26s) Loss: 0.0124(0.0101) Grad: 0.3143  LR: 0.00001607  
+Epoch: [3][103700/109002] Elapsed 488m 35s (remain 24m 58s) Loss: 0.0049(0.0101) Grad: 0.4028  LR: 0.00001606  
+Epoch: [3][103800/109002] Elapsed 489m 1s (remain 24m 30s) Loss: 0.0017(0.0101) Grad: 0.0562  LR: 0.00001606  
+Epoch: [3][103900/109002] Elapsed 489m 27s (remain 24m 1s) Loss: 0.0271(0.0101) Grad: 0.4274  LR: 0.00001606  
+Epoch: [3][104000/109002] Elapsed 489m 54s (remain 23m 33s) Loss: 0.0167(0.0101) Grad: 0.5826  LR: 0.00001606  
+Epoch: [3][104100/109002] Elapsed 490m 20s (remain 23m 5s) Loss: 0.0182(0.0101) Grad: 0.4472  LR: 0.00001606  
+Epoch: [3][104200/109002] Elapsed 490m 46s (remain 22m 36s) Loss: 0.0078(0.0101) Grad: 0.3671  LR: 0.00001606  
+Epoch: [3][104300/109002] Elapsed 491m 12s (remain 22m 8s) Loss: 0.0168(0.0101) Grad: 0.5927  LR: 0.00001606  
+Epoch: [3][104400/109002] Elapsed 491m 38s (remain 21m 40s) Loss: 0.0052(0.0101) Grad: 0.2235  LR: 0.00001606  
+Epoch: [3][104500/109002] Elapsed 492m 4s (remain 21m 11s) Loss: 0.0078(0.0101) Grad: 0.2826  LR: 0.00001606  
+Epoch: [3][104600/109002] Elapsed 492m 30s (remain 20m 43s) Loss: 0.0127(0.0101) Grad: 0.4066  LR: 0.00001605  
+Epoch: [3][104700/109002] Elapsed 492m 56s (remain 20m 14s) Loss: 0.0238(0.0101) Grad: 0.5295  LR: 0.00001605  
+Epoch: [3][104800/109002] Elapsed 493m 22s (remain 19m 46s) Loss: 0.0127(0.0101) Grad: 0.3263  LR: 0.00001605  
+Epoch: [3][104900/109002] Elapsed 493m 48s (remain 19m 18s) Loss: 0.0061(0.0101) Grad: 0.4717  LR: 0.00001605  
+Epoch: [3][105000/109002] Elapsed 494m 14s (remain 18m 49s) Loss: 0.0115(0.0101) Grad: 0.3213  LR: 0.00001605  
+Epoch: [3][105100/109002] Elapsed 494m 39s (remain 18m 21s) Loss: 0.0054(0.0101) Grad: 0.3755  LR: 0.00001605  
+Epoch: [3][105200/109002] Elapsed 495m 5s (remain 17m 53s) Loss: 0.0037(0.0101) Grad: 0.6336  LR: 0.00001605  
+Epoch: [3][105300/109002] Elapsed 495m 31s (remain 17m 24s) Loss: 0.0197(0.0101) Grad: 0.3960  LR: 0.00001605  
+Epoch: [3][105400/109002] Elapsed 495m 57s (remain 16m 56s) Loss: 0.0082(0.0101) Grad: 0.2995  LR: 0.00001604  
+Epoch: [3][105500/109002] Elapsed 496m 23s (remain 16m 28s) Loss: 0.0165(0.0101) Grad: 0.3894  LR: 0.00001604  
+Epoch: [3][105600/109002] Elapsed 496m 49s (remain 16m 0s) Loss: 0.0042(0.0101) Grad: 0.1732  LR: 0.00001604  
+Epoch: [3][105700/109002] Elapsed 497m 14s (remain 15m 31s) Loss: 0.0148(0.0101) Grad: 0.6388  LR: 0.00001604  
+Epoch: [3][105800/109002] Elapsed 497m 40s (remain 15m 3s) Loss: 0.0056(0.0101) Grad: 0.5375  LR: 0.00001604  
+Epoch: [3][105900/109002] Elapsed 498m 6s (remain 14m 35s) Loss: 0.0098(0.0101) Grad: 0.2469  LR: 0.00001604  
+Epoch: [3][106000/109002] Elapsed 498m 32s (remain 14m 6s) Loss: 0.0078(0.0101) Grad: 0.5802  LR: 0.00001604  
+Epoch: [3][106100/109002] Elapsed 498m 58s (remain 13m 38s) Loss: 0.0060(0.0101) Grad: 0.3643  LR: 0.00001604  
+Epoch: [3][106200/109002] Elapsed 499m 23s (remain 13m 10s) Loss: 0.0019(0.0101) Grad: 0.1191  LR: 0.00001603  
+Epoch: [3][106300/109002] Elapsed 499m 49s (remain 12m 42s) Loss: 0.0062(0.0101) Grad: 0.4491  LR: 0.00001603  
+Epoch: [3][106400/109002] Elapsed 500m 15s (remain 12m 13s) Loss: 0.0222(0.0101) Grad: 0.5625  LR: 0.00001603  
+Epoch: [3][106500/109002] Elapsed 500m 41s (remain 11m 45s) Loss: 0.0150(0.0101) Grad: 0.2739  LR: 0.00001603  
+Epoch: [3][106600/109002] Elapsed 501m 7s (remain 11m 17s) Loss: 0.0104(0.0101) Grad: 0.4208  LR: 0.00001603  
+Epoch: [3][106700/109002] Elapsed 501m 32s (remain 10m 48s) Loss: 0.0036(0.0101) Grad: 0.3717  LR: 0.00001603  
+Epoch: [3][106800/109002] Elapsed 501m 58s (remain 10m 20s) Loss: 0.0049(0.0101) Grad: 0.1484  LR: 0.00001603  
+Epoch: [3][106900/109002] Elapsed 502m 24s (remain 9m 52s) Loss: 0.0092(0.0101) Grad: 0.4525  LR: 0.00001603  
+Epoch: [3][107000/109002] Elapsed 502m 50s (remain 9m 24s) Loss: 0.0023(0.0101) Grad: 0.6299  LR: 0.00001602  
+Epoch: [3][107100/109002] Elapsed 503m 16s (remain 8m 55s) Loss: 0.0195(0.0101) Grad: 0.3147  LR: 0.00001602  
+Epoch: [3][107200/109002] Elapsed 503m 41s (remain 8m 27s) Loss: 0.0207(0.0101) Grad: 0.4742  LR: 0.00001602  
+Epoch: [3][107300/109002] Elapsed 504m 7s (remain 7m 59s) Loss: 0.0049(0.0101) Grad: 0.2614  LR: 0.00001602  
+Epoch: [3][107400/109002] Elapsed 504m 33s (remain 7m 31s) Loss: 0.0117(0.0101) Grad: 0.4399  LR: 0.00001602  
+Epoch: [3][107500/109002] Elapsed 504m 59s (remain 7m 3s) Loss: 0.0045(0.0101) Grad: 0.3110  LR: 0.00001602  
+Epoch: [3][107600/109002] Elapsed 505m 25s (remain 6m 34s) Loss: 0.0047(0.0101) Grad: 0.7984  LR: 0.00001602  
+Epoch: [3][107700/109002] Elapsed 505m 50s (remain 6m 6s) Loss: 0.0033(0.0101) Grad: 0.1697  LR: 0.00001602  
+Epoch: [3][107800/109002] Elapsed 506m 16s (remain 5m 38s) Loss: 0.0264(0.0101) Grad: 0.7066  LR: 0.00001601  
+Epoch: [3][107900/109002] Elapsed 506m 42s (remain 5m 10s) Loss: 0.0102(0.0101) Grad: 0.5959  LR: 0.00001601  
+Epoch: [3][108000/109002] Elapsed 507m 8s (remain 4m 42s) Loss: 0.0084(0.0101) Grad: 0.2859  LR: 0.00001601  
+Epoch: [3][108100/109002] Elapsed 507m 33s (remain 4m 13s) Loss: 0.0065(0.0101) Grad: 0.3216  LR: 0.00001601  
+Epoch: [3][108200/109002] Elapsed 507m 59s (remain 3m 45s) Loss: 0.0132(0.0101) Grad: 0.4511  LR: 0.00001601  
+Epoch: [3][108300/109002] Elapsed 508m 25s (remain 3m 17s) Loss: 0.0026(0.0101) Grad: 0.1196  LR: 0.00001601  
+Epoch: [3][108400/109002] Elapsed 508m 51s (remain 2m 49s) Loss: 0.0020(0.0101) Grad: 0.2976  LR: 0.00001601  
+Epoch: [3][108500/109002] Elapsed 509m 17s (remain 2m 21s) Loss: 0.0097(0.0101) Grad: 0.4585  LR: 0.00001601  
+Epoch: [3][108600/109002] Elapsed 509m 42s (remain 1m 52s) Loss: 0.0172(0.0101) Grad: 0.4139  LR: 0.00001600  
+Epoch: [3][108700/109002] Elapsed 510m 8s (remain 1m 24s) Loss: 0.0012(0.0101) Grad: 0.1080  LR: 0.00001600  
+Epoch: [3][108800/109002] Elapsed 510m 34s (remain 0m 56s) Loss: 0.0303(0.0101) Grad: 0.5907  LR: 0.00001600  
+Epoch: [3][108900/109002] Elapsed 511m 0s (remain 0m 28s) Loss: 0.0226(0.0101) Grad: 0.6054  LR: 0.00001600  
+Epoch: [3][109000/109002] Elapsed 511m 26s (remain 0m 0s) Loss: 0.0096(0.0100) Grad: 0.3145  LR: 0.00001600  
+Epoch: [3][109001/109002] Elapsed 511m 26s (remain 0m 0s) Loss: 0.0231(0.0100) Grad: 0.5525  LR: 0.00001600  
+EVAL: [0/27283] Elapsed 0m 0s (remain 188m 8s) Loss: 0.0046(0.0046) 
+EVAL: [100/27283] Elapsed 0m 9s (remain 42m 25s) Loss: 0.0363(0.0097) 
+EVAL: [200/27283] Elapsed 0m 18s (remain 41m 35s) Loss: 0.0073(0.0107) 
+EVAL: [300/27283] Elapsed 0m 27s (remain 41m 12s) Loss: 0.0103(0.0108) 
+EVAL: [400/27283] Elapsed 0m 36s (remain 40m 56s) Loss: 0.0022(0.0110) 
+EVAL: [500/27283] Elapsed 0m 45s (remain 40m 50s) Loss: 0.0084(0.0113) 
+EVAL: [600/27283] Elapsed 0m 55s (remain 40m 43s) Loss: 0.0047(0.0116) 
+EVAL: [700/27283] Elapsed 1m 4s (remain 40m 35s) Loss: 0.0098(0.0120) 
+EVAL: [800/27283] Elapsed 1m 13s (remain 40m 26s) Loss: 0.0103(0.0122) 
+EVAL: [900/27283] Elapsed 1m 22s (remain 40m 16s) Loss: 0.0080(0.0124) 
+EVAL: [1000/27283] Elapsed 1m 31s (remain 40m 7s) Loss: 0.0270(0.0123) 
+EVAL: [1100/27283] Elapsed 1m 40s (remain 39m 57s) Loss: 0.0047(0.0127) 
+EVAL: [1200/27283] Elapsed 1m 49s (remain 39m 48s) Loss: 0.0021(0.0163) 
+EVAL: [1300/27283] Elapsed 1m 59s (remain 39m 38s) Loss: 0.0073(0.0161) 
+EVAL: [1400/27283] Elapsed 2m 8s (remain 39m 29s) Loss: 0.0041(0.0158) 
+EVAL: [1500/27283] Elapsed 2m 17s (remain 39m 19s) Loss: 0.0078(0.0156) 
+EVAL: [1600/27283] Elapsed 2m 26s (remain 39m 10s) Loss: 0.0053(0.0153) 
+EVAL: [1700/27283] Elapsed 2m 35s (remain 39m 1s) Loss: 0.0030(0.0152) 
+EVAL: [1800/27283] Elapsed 2m 44s (remain 38m 51s) Loss: 0.0102(0.0150) 
+EVAL: [1900/27283] Elapsed 2m 53s (remain 38m 42s) Loss: 0.0056(0.0149) 
+EVAL: [2000/27283] Elapsed 3m 3s (remain 38m 33s) Loss: 0.0048(0.0149) 
+EVAL: [2100/27283] Elapsed 3m 12s (remain 38m 24s) Loss: 0.0067(0.0160) 
+EVAL: [2200/27283] Elapsed 3m 21s (remain 38m 14s) Loss: 0.0614(0.0160) 
+EVAL: [2300/27283] Elapsed 3m 30s (remain 38m 5s) Loss: 0.0080(0.0158) 
+EVAL: [2400/27283] Elapsed 3m 39s (remain 37m 56s) Loss: 0.0180(0.0156) 
+EVAL: [2500/27283] Elapsed 3m 48s (remain 37m 47s) Loss: 0.0093(0.0155) 
+EVAL: [2600/27283] Elapsed 3m 57s (remain 37m 38s) Loss: 0.0024(0.0155) 
+EVAL: [2700/27283] Elapsed 4m 7s (remain 37m 29s) Loss: 0.0379(0.0154) 
+EVAL: [2800/27283] Elapsed 4m 16s (remain 37m 19s) Loss: 0.0108(0.0152) 
+EVAL: [2900/27283] Elapsed 4m 25s (remain 37m 10s) Loss: 0.0057(0.0150) 
+EVAL: [3000/27283] Elapsed 4m 34s (remain 37m 1s) Loss: 0.0033(0.0150) 
+EVAL: [3100/27283] Elapsed 4m 43s (remain 36m 52s) Loss: 0.0120(0.0150) 
+EVAL: [3200/27283] Elapsed 4m 52s (remain 36m 43s) Loss: 0.0194(0.0149) 
+EVAL: [3300/27283] Elapsed 5m 1s (remain 36m 34s) Loss: 0.0119(0.0151) 
+EVAL: [3400/27283] Elapsed 5m 11s (remain 36m 24s) Loss: 0.0203(0.0151) 
+EVAL: [3500/27283] Elapsed 5m 20s (remain 36m 15s) Loss: 0.0317(0.0151) 
+EVAL: [3600/27283] Elapsed 5m 29s (remain 36m 6s) Loss: 0.0025(0.0151) 
+EVAL: [3700/27283] Elapsed 5m 38s (remain 35m 57s) Loss: 0.0055(0.0153) 
+EVAL: [3800/27283] Elapsed 5m 47s (remain 35m 48s) Loss: 0.0038(0.0152) 
+EVAL: [3900/27283] Elapsed 5m 56s (remain 35m 39s) Loss: 0.0176(0.0151) 
+EVAL: [4000/27283] Elapsed 6m 6s (remain 35m 29s) Loss: 0.0088(0.0151) 
+EVAL: [4100/27283] Elapsed 6m 15s (remain 35m 20s) Loss: 0.0079(0.0151) 
+EVAL: [4200/27283] Elapsed 6m 24s (remain 35m 11s) Loss: 0.0440(0.0150) 
+EVAL: [4300/27283] Elapsed 6m 33s (remain 35m 2s) Loss: 0.0353(0.0151) 
+EVAL: [4400/27283] Elapsed 6m 42s (remain 34m 53s) Loss: 0.0294(0.0151) 
+EVAL: [4500/27283] Elapsed 6m 51s (remain 34m 44s) Loss: 0.0279(0.0151) 
+EVAL: [4600/27283] Elapsed 7m 1s (remain 34m 35s) Loss: 0.0159(0.0150) 
+EVAL: [4700/27283] Elapsed 7m 10s (remain 34m 26s) Loss: 0.0221(0.0150) 
+EVAL: [4800/27283] Elapsed 7m 19s (remain 34m 17s) Loss: 0.0135(0.0149) 
+EVAL: [4900/27283] Elapsed 7m 28s (remain 34m 8s) Loss: 0.0103(0.0158) 
+EVAL: [5000/27283] Elapsed 7m 37s (remain 33m 59s) Loss: 0.0109(0.0158) 
+EVAL: [5100/27283] Elapsed 7m 46s (remain 33m 50s) Loss: 0.0300(0.0157) 
+EVAL: [5200/27283] Elapsed 7m 56s (remain 33m 41s) Loss: 0.0052(0.0157) 
+EVAL: [5300/27283] Elapsed 8m 5s (remain 33m 32s) Loss: 0.0075(0.0156) 
+EVAL: [5400/27283] Elapsed 8m 14s (remain 33m 23s) Loss: 0.0217(0.0156) 
+EVAL: [5500/27283] Elapsed 8m 23s (remain 33m 14s) Loss: 0.0019(0.0155) 
+EVAL: [5600/27283] Elapsed 8m 32s (remain 33m 5s) Loss: 0.0028(0.0154) 
+EVAL: [5700/27283] Elapsed 8m 41s (remain 32m 55s) Loss: 0.0092(0.0155) 
+EVAL: [5800/27283] Elapsed 8m 51s (remain 32m 46s) Loss: 0.0049(0.0153) 
+EVAL: [5900/27283] Elapsed 9m 0s (remain 32m 37s) Loss: 0.0029(0.0153) 
+EVAL: [6000/27283] Elapsed 9m 9s (remain 32m 28s) Loss: 0.0097(0.0153) 
+EVAL: [6100/27283] Elapsed 9m 18s (remain 32m 19s) Loss: 0.0015(0.0153) 
+EVAL: [6200/27283] Elapsed 9m 27s (remain 32m 10s) Loss: 0.0087(0.0157) 
+EVAL: [6300/27283] Elapsed 9m 37s (remain 32m 1s) Loss: 0.0055(0.0157) 
+EVAL: [6400/27283] Elapsed 9m 46s (remain 31m 52s) Loss: 0.0109(0.0156) 
+EVAL: [6500/27283] Elapsed 9m 55s (remain 31m 43s) Loss: 0.0146(0.0155) 
+EVAL: [6600/27283] Elapsed 10m 4s (remain 31m 34s) Loss: 0.0053(0.0155) 
+EVAL: [6700/27283] Elapsed 10m 13s (remain 31m 25s) Loss: 0.0042(0.0154) 
+EVAL: [6800/27283] Elapsed 10m 22s (remain 31m 16s) Loss: 0.0388(0.0154) 
+EVAL: [6900/27283] Elapsed 10m 32s (remain 31m 6s) Loss: 0.0150(0.0153) 
+EVAL: [7000/27283] Elapsed 10m 41s (remain 30m 57s) Loss: 0.0241(0.0153) 
+EVAL: [7100/27283] Elapsed 10m 50s (remain 30m 48s) Loss: 0.0010(0.0153) 
+EVAL: [7200/27283] Elapsed 10m 59s (remain 30m 39s) Loss: 0.0064(0.0153) 
+EVAL: [7300/27283] Elapsed 11m 8s (remain 30m 30s) Loss: 0.0139(0.0152) 
+EVAL: [7400/27283] Elapsed 11m 17s (remain 30m 21s) Loss: 0.0107(0.0152) 
+EVAL: [7500/27283] Elapsed 11m 27s (remain 30m 12s) Loss: 0.0003(0.0152) 
+EVAL: [7600/27283] Elapsed 11m 36s (remain 30m 3s) Loss: 0.0060(0.0151) 
+EVAL: [7700/27283] Elapsed 11m 45s (remain 29m 53s) Loss: 0.0030(0.0151) 
+EVAL: [7800/27283] Elapsed 11m 54s (remain 29m 44s) Loss: 0.0052(0.0151) 
+EVAL: [7900/27283] Elapsed 12m 3s (remain 29m 35s) Loss: 0.0105(0.0151) 
+EVAL: [8000/27283] Elapsed 12m 13s (remain 29m 26s) Loss: 0.0123(0.0150) 
+EVAL: [8100/27283] Elapsed 12m 22s (remain 29m 17s) Loss: 0.0132(0.0150) 
+EVAL: [8200/27283] Elapsed 12m 31s (remain 29m 8s) Loss: 0.0113(0.0153) 
+EVAL: [8300/27283] Elapsed 12m 40s (remain 28m 59s) Loss: 0.0040(0.0153) 
+EVAL: [8400/27283] Elapsed 12m 49s (remain 28m 50s) Loss: 0.0120(0.0153) 
+EVAL: [8500/27283] Elapsed 12m 58s (remain 28m 40s) Loss: 0.0162(0.0152) 
+EVAL: [8600/27283] Elapsed 13m 8s (remain 28m 31s) Loss: 0.0210(0.0152) 
+EVAL: [8700/27283] Elapsed 13m 17s (remain 28m 22s) Loss: 0.0193(0.0152) 
+EVAL: [8800/27283] Elapsed 13m 26s (remain 28m 13s) Loss: 0.0144(0.0151) 
+EVAL: [8900/27283] Elapsed 13m 35s (remain 28m 4s) Loss: 0.0038(0.0151) 
+EVAL: [9000/27283] Elapsed 13m 44s (remain 27m 55s) Loss: 0.0041(0.0151) 
+EVAL: [9100/27283] Elapsed 13m 53s (remain 27m 46s) Loss: 0.0244(0.0151) 
+EVAL: [9200/27283] Elapsed 14m 3s (remain 27m 36s) Loss: 0.0205(0.0150) 
+EVAL: [9300/27283] Elapsed 14m 12s (remain 27m 27s) Loss: 0.0375(0.0150) 
+EVAL: [9400/27283] Elapsed 14m 21s (remain 27m 18s) Loss: 0.0100(0.0150) 
+EVAL: [9500/27283] Elapsed 14m 30s (remain 27m 9s) Loss: 0.0099(0.0150) 
+EVAL: [9600/27283] Elapsed 14m 39s (remain 27m 0s) Loss: 0.0169(0.0150) 
+EVAL: [9700/27283] Elapsed 14m 48s (remain 26m 51s) Loss: 0.0035(0.0150) 
+EVAL: [9800/27283] Elapsed 14m 58s (remain 26m 42s) Loss: 0.0233(0.0149) 
+EVAL: [9900/27283] Elapsed 15m 7s (remain 26m 32s) Loss: 0.0058(0.0149) 
+EVAL: [10000/27283] Elapsed 15m 16s (remain 26m 23s) Loss: 0.0294(0.0149) 
+EVAL: [10100/27283] Elapsed 15m 25s (remain 26m 14s) Loss: 0.0026(0.0148) 
+EVAL: [10200/27283] Elapsed 15m 34s (remain 26m 5s) Loss: 0.0077(0.0148) 
+EVAL: [10300/27283] Elapsed 15m 44s (remain 25m 56s) Loss: 0.0063(0.0148) 
+EVAL: [10400/27283] Elapsed 15m 53s (remain 25m 47s) Loss: 0.0198(0.0148) 
+EVAL: [10500/27283] Elapsed 16m 2s (remain 25m 37s) Loss: 0.0312(0.0147) 
+EVAL: [10600/27283] Elapsed 16m 11s (remain 25m 28s) Loss: 0.0197(0.0147) 
+EVAL: [10700/27283] Elapsed 16m 20s (remain 25m 19s) Loss: 0.0135(0.0148) 
+EVAL: [10800/27283] Elapsed 16m 29s (remain 25m 10s) Loss: 0.0074(0.0148) 
+EVAL: [10900/27283] Elapsed 16m 39s (remain 25m 1s) Loss: 0.0003(0.0147) 
+EVAL: [11000/27283] Elapsed 16m 48s (remain 24m 52s) Loss: 0.0107(0.0149) 
+EVAL: [11100/27283] Elapsed 16m 57s (remain 24m 43s) Loss: 0.0198(0.0149) 
+EVAL: [11200/27283] Elapsed 17m 6s (remain 24m 33s) Loss: 0.0044(0.0149) 
+EVAL: [11300/27283] Elapsed 17m 15s (remain 24m 24s) Loss: 0.0142(0.0149) 
+EVAL: [11400/27283] Elapsed 17m 24s (remain 24m 15s) Loss: 0.0079(0.0150) 
+EVAL: [11500/27283] Elapsed 17m 34s (remain 24m 6s) Loss: 0.0052(0.0150) 
+EVAL: [11600/27283] Elapsed 17m 43s (remain 23m 57s) Loss: 0.0069(0.0150) 
+EVAL: [11700/27283] Elapsed 17m 52s (remain 23m 48s) Loss: 0.0079(0.0150) 
+EVAL: [11800/27283] Elapsed 18m 1s (remain 23m 38s) Loss: 0.0063(0.0150) 
+EVAL: [11900/27283] Elapsed 18m 10s (remain 23m 29s) Loss: 0.0224(0.0150) 
+EVAL: [12000/27283] Elapsed 18m 19s (remain 23m 20s) Loss: 0.0197(0.0152) 
+EVAL: [12100/27283] Elapsed 18m 29s (remain 23m 11s) Loss: 0.0476(0.0153) 
+EVAL: [12200/27283] Elapsed 18m 38s (remain 23m 2s) Loss: 0.0045(0.0155) 
+EVAL: [12300/27283] Elapsed 18m 47s (remain 22m 53s) Loss: 0.0175(0.0156) 
+EVAL: [12400/27283] Elapsed 18m 56s (remain 22m 44s) Loss: 0.0292(0.0156) 
+EVAL: [12500/27283] Elapsed 19m 5s (remain 22m 34s) Loss: 0.0057(0.0156) 
+EVAL: [12600/27283] Elapsed 19m 15s (remain 22m 25s) Loss: 0.0842(0.0158) 
+EVAL: [12700/27283] Elapsed 19m 24s (remain 22m 16s) Loss: 0.1087(0.0163) 
+EVAL: [12800/27283] Elapsed 19m 33s (remain 22m 7s) Loss: 0.0802(0.0167) 
+EVAL: [12900/27283] Elapsed 19m 42s (remain 21m 58s) Loss: 0.0500(0.0171) 
+EVAL: [13000/27283] Elapsed 19m 51s (remain 21m 49s) Loss: 0.1127(0.0175) 
+EVAL: [13100/27283] Elapsed 20m 0s (remain 21m 40s) Loss: 0.0540(0.0178) 
+EVAL: [13200/27283] Elapsed 20m 10s (remain 21m 30s) Loss: 0.0758(0.0181) 
+EVAL: [13300/27283] Elapsed 20m 19s (remain 21m 21s) Loss: 0.0080(0.0181) 
+EVAL: [13400/27283] Elapsed 20m 28s (remain 21m 12s) Loss: 0.0369(0.0180) 
+EVAL: [13500/27283] Elapsed 20m 37s (remain 21m 3s) Loss: 0.0265(0.0180) 
+EVAL: [13600/27283] Elapsed 20m 46s (remain 20m 54s) Loss: 0.0017(0.0179) 
+EVAL: [13700/27283] Elapsed 20m 56s (remain 20m 45s) Loss: 0.0116(0.0179) 
+EVAL: [13800/27283] Elapsed 21m 5s (remain 20m 35s) Loss: 0.0076(0.0178) 
+EVAL: [13900/27283] Elapsed 21m 14s (remain 20m 26s) Loss: 0.0141(0.0180) 
+EVAL: [14000/27283] Elapsed 21m 23s (remain 20m 17s) Loss: 0.0076(0.0180) 
+EVAL: [14100/27283] Elapsed 21m 32s (remain 20m 8s) Loss: 0.0140(0.0179) 
+EVAL: [14200/27283] Elapsed 21m 41s (remain 19m 59s) Loss: 0.0053(0.0179) 
+EVAL: [14300/27283] Elapsed 21m 51s (remain 19m 50s) Loss: 0.0013(0.0179) 
+EVAL: [14400/27283] Elapsed 22m 0s (remain 19m 40s) Loss: 0.0286(0.0178) 
+EVAL: [14500/27283] Elapsed 22m 9s (remain 19m 31s) Loss: 0.0042(0.0177) 
+EVAL: [14600/27283] Elapsed 22m 18s (remain 19m 22s) Loss: 0.0322(0.0177) 
+EVAL: [14700/27283] Elapsed 22m 27s (remain 19m 13s) Loss: 0.0068(0.0177) 
+EVAL: [14800/27283] Elapsed 22m 36s (remain 19m 4s) Loss: 0.0122(0.0177) 
+EVAL: [14900/27283] Elapsed 22m 46s (remain 18m 55s) Loss: 0.0077(0.0176) 
+EVAL: [15000/27283] Elapsed 22m 55s (remain 18m 45s) Loss: 0.0286(0.0176) 
+EVAL: [15100/27283] Elapsed 23m 4s (remain 18m 36s) Loss: 0.0033(0.0176) 
+EVAL: [15200/27283] Elapsed 23m 13s (remain 18m 27s) Loss: 0.0178(0.0176) 
+EVAL: [15300/27283] Elapsed 23m 22s (remain 18m 18s) Loss: 0.0123(0.0176) 
+EVAL: [15400/27283] Elapsed 23m 31s (remain 18m 9s) Loss: 0.0134(0.0175) 
+EVAL: [15500/27283] Elapsed 23m 41s (remain 18m 0s) Loss: 0.0019(0.0175) 
+EVAL: [15600/27283] Elapsed 23m 50s (remain 17m 50s) Loss: 0.0053(0.0175) 
+EVAL: [15700/27283] Elapsed 23m 59s (remain 17m 41s) Loss: 0.0153(0.0175) 
+EVAL: [15800/27283] Elapsed 24m 8s (remain 17m 32s) Loss: 0.0464(0.0174) 
+EVAL: [15900/27283] Elapsed 24m 17s (remain 17m 23s) Loss: 0.0186(0.0174) 
+EVAL: [16000/27283] Elapsed 24m 26s (remain 17m 14s) Loss: 0.0039(0.0174) 
+EVAL: [16100/27283] Elapsed 24m 36s (remain 17m 5s) Loss: 0.0149(0.0174) 
+EVAL: [16200/27283] Elapsed 24m 45s (remain 16m 56s) Loss: 0.0232(0.0174) 
+EVAL: [16300/27283] Elapsed 24m 54s (remain 16m 46s) Loss: 0.0033(0.0173) 
+EVAL: [16400/27283] Elapsed 25m 3s (remain 16m 37s) Loss: 0.0249(0.0173) 
+EVAL: [16500/27283] Elapsed 25m 12s (remain 16m 28s) Loss: 0.0136(0.0173) 
+EVAL: [16600/27283] Elapsed 25m 22s (remain 16m 19s) Loss: 0.0512(0.0174) 
+EVAL: [16700/27283] Elapsed 25m 31s (remain 16m 10s) Loss: 0.0018(0.0174) 
+EVAL: [16800/27283] Elapsed 25m 40s (remain 16m 1s) Loss: 0.0069(0.0173) 
+EVAL: [16900/27283] Elapsed 25m 49s (remain 15m 51s) Loss: 0.0230(0.0173) 
+EVAL: [17000/27283] Elapsed 25m 58s (remain 15m 42s) Loss: 0.0044(0.0172) 
+EVAL: [17100/27283] Elapsed 26m 7s (remain 15m 33s) Loss: 0.0027(0.0172) 
+EVAL: [17200/27283] Elapsed 26m 17s (remain 15m 24s) Loss: 0.0004(0.0172) 
+EVAL: [17300/27283] Elapsed 26m 26s (remain 15m 15s) Loss: 0.0501(0.0171) 
+EVAL: [17400/27283] Elapsed 26m 35s (remain 15m 6s) Loss: 0.0192(0.0171) 
+EVAL: [17500/27283] Elapsed 26m 44s (remain 14m 56s) Loss: 0.0066(0.0171) 
+EVAL: [17600/27283] Elapsed 26m 53s (remain 14m 47s) Loss: 0.0214(0.0170) 
+EVAL: [17700/27283] Elapsed 27m 3s (remain 14m 38s) Loss: 0.0246(0.0170) 
+EVAL: [17800/27283] Elapsed 27m 12s (remain 14m 29s) Loss: 0.0120(0.0170) 
+EVAL: [17900/27283] Elapsed 27m 21s (remain 14m 20s) Loss: 0.0044(0.0172) 
+EVAL: [18000/27283] Elapsed 27m 30s (remain 14m 11s) Loss: 0.0084(0.0171) 
+EVAL: [18100/27283] Elapsed 27m 39s (remain 14m 2s) Loss: 0.0035(0.0171) 
+EVAL: [18200/27283] Elapsed 27m 49s (remain 13m 52s) Loss: 0.0054(0.0171) 
+EVAL: [18300/27283] Elapsed 27m 58s (remain 13m 43s) Loss: 0.0302(0.0171) 
+EVAL: [18400/27283] Elapsed 28m 7s (remain 13m 34s) Loss: 0.0219(0.0170) 
+EVAL: [18500/27283] Elapsed 28m 16s (remain 13m 25s) Loss: 0.0181(0.0170) 
+EVAL: [18600/27283] Elapsed 28m 25s (remain 13m 16s) Loss: 0.0146(0.0170) 
+EVAL: [18700/27283] Elapsed 28m 35s (remain 13m 7s) Loss: 0.0042(0.0170) 
+EVAL: [18800/27283] Elapsed 28m 44s (remain 12m 57s) Loss: 0.0459(0.0173) 
+EVAL: [18900/27283] Elapsed 28m 53s (remain 12m 48s) Loss: 0.0042(0.0173) 
+EVAL: [19000/27283] Elapsed 29m 2s (remain 12m 39s) Loss: 0.0052(0.0173) 
+EVAL: [19100/27283] Elapsed 29m 12s (remain 12m 30s) Loss: 0.0012(0.0173) 
+EVAL: [19200/27283] Elapsed 29m 21s (remain 12m 21s) Loss: 0.0094(0.0173) 
+EVAL: [19300/27283] Elapsed 29m 30s (remain 12m 12s) Loss: 0.0102(0.0173) 
+EVAL: [19400/27283] Elapsed 29m 39s (remain 12m 3s) Loss: 0.0105(0.0172) 
+EVAL: [19500/27283] Elapsed 29m 48s (remain 11m 53s) Loss: 0.1154(0.0173) 
+EVAL: [19600/27283] Elapsed 29m 58s (remain 11m 44s) Loss: 0.0034(0.0176) 
+EVAL: [19700/27283] Elapsed 30m 7s (remain 11m 35s) Loss: 0.0157(0.0175) 
+EVAL: [19800/27283] Elapsed 30m 16s (remain 11m 26s) Loss: 0.0032(0.0175) 
+EVAL: [19900/27283] Elapsed 30m 25s (remain 11m 17s) Loss: 0.0034(0.0175) 
+EVAL: [20000/27283] Elapsed 30m 35s (remain 11m 8s) Loss: 0.0130(0.0188) 
+EVAL: [20100/27283] Elapsed 30m 44s (remain 10m 58s) Loss: 0.0111(0.0189) 
+EVAL: [20200/27283] Elapsed 30m 53s (remain 10m 49s) Loss: 0.0073(0.0189) 
+EVAL: [20300/27283] Elapsed 31m 2s (remain 10m 40s) Loss: 0.0031(0.0188) 
+EVAL: [20400/27283] Elapsed 31m 12s (remain 10m 31s) Loss: 0.0118(0.0188) 
+EVAL: [20500/27283] Elapsed 31m 21s (remain 10m 22s) Loss: 0.0066(0.0187) 
+EVAL: [20600/27283] Elapsed 31m 30s (remain 10m 13s) Loss: 0.0244(0.0187) 
+EVAL: [20700/27283] Elapsed 31m 40s (remain 10m 4s) Loss: 0.0101(0.0187) 
+EVAL: [20800/27283] Elapsed 31m 49s (remain 9m 54s) Loss: 0.0003(0.0187) 
+EVAL: [20900/27283] Elapsed 31m 58s (remain 9m 45s) Loss: 0.0025(0.0186) 
+EVAL: [21000/27283] Elapsed 32m 7s (remain 9m 36s) Loss: 0.0062(0.0186) 
+EVAL: [21100/27283] Elapsed 32m 17s (remain 9m 27s) Loss: 0.0008(0.0186) 
+EVAL: [21200/27283] Elapsed 32m 26s (remain 9m 18s) Loss: 0.0038(0.0185) 
+EVAL: [21300/27283] Elapsed 32m 35s (remain 9m 9s) Loss: 0.0085(0.0186) 
+EVAL: [21400/27283] Elapsed 32m 44s (remain 9m 0s) Loss: 0.0018(0.0185) 
+EVAL: [21500/27283] Elapsed 32m 54s (remain 8m 50s) Loss: 0.0095(0.0187) 
+EVAL: [21600/27283] Elapsed 33m 3s (remain 8m 41s) Loss: 0.0141(0.0186) 
+EVAL: [21700/27283] Elapsed 33m 12s (remain 8m 32s) Loss: 0.0034(0.0186) 
+EVAL: [21800/27283] Elapsed 33m 22s (remain 8m 23s) Loss: 0.0014(0.0186) 
+EVAL: [21900/27283] Elapsed 33m 31s (remain 8m 14s) Loss: 0.0020(0.0185) 
+EVAL: [22000/27283] Elapsed 33m 40s (remain 8m 5s) Loss: 0.0217(0.0185) 
+Epoch 3 - avg_train_loss: 0.0100  avg_val_loss: 0.0175  time: 33198s
+EVAL: [22100/27283] Elapsed 33m 49s (remain 7m 55s) Loss: 0.0073(0.0184) 
+EVAL: [22200/27283] Elapsed 33m 59s (remain 7m 46s) Loss: 0.0119(0.0184) 
+EVAL: [22300/27283] Elapsed 34m 8s (remain 7m 37s) Loss: 0.0044(0.0184) 
+EVAL: [22400/27283] Elapsed 34m 17s (remain 7m 28s) Loss: 0.0023(0.0183) 
+EVAL: [22500/27283] Elapsed 34m 26s (remain 7m 19s) Loss: 0.0101(0.0183) 
+EVAL: [22600/27283] Elapsed 34m 36s (remain 7m 10s) Loss: 0.0117(0.0184) 
+EVAL: [22700/27283] Elapsed 34m 45s (remain 7m 0s) Loss: 0.0306(0.0184) 
+EVAL: [22800/27283] Elapsed 34m 54s (remain 6m 51s) Loss: 0.0018(0.0184) 
+EVAL: [22900/27283] Elapsed 35m 4s (remain 6m 42s) Loss: 0.0041(0.0183) 
+EVAL: [23000/27283] Elapsed 35m 13s (remain 6m 33s) Loss: 0.0635(0.0183) 
+EVAL: [23100/27283] Elapsed 35m 22s (remain 6m 24s) Loss: 0.0284(0.0183) 
+EVAL: [23200/27283] Elapsed 35m 31s (remain 6m 15s) Loss: 0.0331(0.0183) 
+EVAL: [23300/27283] Elapsed 35m 41s (remain 6m 5s) Loss: 0.0124(0.0182) 
+EVAL: [23400/27283] Elapsed 35m 50s (remain 5m 56s) Loss: 0.0179(0.0182) 
+EVAL: [23500/27283] Elapsed 35m 59s (remain 5m 47s) Loss: 0.0203(0.0182) 
+EVAL: [23600/27283] Elapsed 36m 9s (remain 5m 38s) Loss: 0.0672(0.0182) 
+EVAL: [23700/27283] Elapsed 36m 18s (remain 5m 29s) Loss: 0.0281(0.0182) 
+EVAL: [23800/27283] Elapsed 36m 27s (remain 5m 20s) Loss: 0.0045(0.0182) 
+EVAL: [23900/27283] Elapsed 36m 36s (remain 5m 10s) Loss: 0.0159(0.0182) 
+EVAL: [24000/27283] Elapsed 36m 46s (remain 5m 1s) Loss: 0.0085(0.0181) 
+EVAL: [24100/27283] Elapsed 36m 55s (remain 4m 52s) Loss: 0.0031(0.0181) 
+EVAL: [24200/27283] Elapsed 37m 4s (remain 4m 43s) Loss: 0.0013(0.0181) 
+EVAL: [24300/27283] Elapsed 37m 13s (remain 4m 34s) Loss: 0.0094(0.0180) 
+EVAL: [24400/27283] Elapsed 37m 23s (remain 4m 24s) Loss: 0.0174(0.0180) 
+EVAL: [24500/27283] Elapsed 37m 32s (remain 4m 15s) Loss: 0.0012(0.0180) 
+EVAL: [24600/27283] Elapsed 37m 41s (remain 4m 6s) Loss: 0.0153(0.0180) 
+EVAL: [24700/27283] Elapsed 37m 51s (remain 3m 57s) Loss: 0.0123(0.0180) 
+EVAL: [24800/27283] Elapsed 38m 0s (remain 3m 48s) Loss: 0.0123(0.0180) 
+EVAL: [24900/27283] Elapsed 38m 9s (remain 3m 39s) Loss: 0.0241(0.0181) 
+EVAL: [25000/27283] Elapsed 38m 18s (remain 3m 29s) Loss: 0.0093(0.0181) 
+EVAL: [25100/27283] Elapsed 38m 28s (remain 3m 20s) Loss: 0.0065(0.0181) 
+EVAL: [25200/27283] Elapsed 38m 37s (remain 3m 11s) Loss: 0.0070(0.0181) 
+EVAL: [25300/27283] Elapsed 38m 46s (remain 3m 2s) Loss: 0.0278(0.0180) 
+EVAL: [25400/27283] Elapsed 38m 56s (remain 2m 53s) Loss: 0.0112(0.0180) 
+EVAL: [25500/27283] Elapsed 39m 5s (remain 2m 43s) Loss: 0.0182(0.0180) 
+EVAL: [25600/27283] Elapsed 39m 14s (remain 2m 34s) Loss: 0.0048(0.0180) 
+EVAL: [25700/27283] Elapsed 39m 24s (remain 2m 25s) Loss: 0.0207(0.0180) 
+EVAL: [25800/27283] Elapsed 39m 33s (remain 2m 16s) Loss: 0.0039(0.0179) 
+EVAL: [25900/27283] Elapsed 39m 42s (remain 2m 7s) Loss: 0.0026(0.0179) 
+EVAL: [26000/27283] Elapsed 39m 51s (remain 1m 57s) Loss: 0.0038(0.0179) 
+EVAL: [26100/27283] Elapsed 40m 1s (remain 1m 48s) Loss: 0.0153(0.0179) 
+EVAL: [26200/27283] Elapsed 40m 10s (remain 1m 39s) Loss: 0.0075(0.0178) 
+EVAL: [26300/27283] Elapsed 40m 19s (remain 1m 30s) Loss: 0.0011(0.0178) 
+EVAL: [26400/27283] Elapsed 40m 29s (remain 1m 21s) Loss: 0.0099(0.0178) 
+EVAL: [26500/27283] Elapsed 40m 38s (remain 1m 11s) Loss: 0.0050(0.0178) 
+EVAL: [26600/27283] Elapsed 40m 47s (remain 1m 2s) Loss: 0.0299(0.0178) 
+EVAL: [26700/27283] Elapsed 40m 56s (remain 0m 53s) Loss: 0.0026(0.0177) 
+EVAL: [26800/27283] Elapsed 41m 6s (remain 0m 44s) Loss: 0.0059(0.0177) 
+EVAL: [26900/27283] Elapsed 41m 15s (remain 0m 35s) Loss: 0.0106(0.0177) 
+EVAL: [27000/27283] Elapsed 41m 24s (remain 0m 25s) Loss: 0.0019(0.0176) 
+EVAL: [27100/27283] Elapsed 41m 34s (remain 0m 16s) Loss: 0.0110(0.0176) 
+EVAL: [27200/27283] Elapsed 41m 43s (remain 0m 7s) Loss: 0.0003(0.0175) 
+EVAL: [27282/27283] Elapsed 41m 50s (remain 0m 0s) Loss: 0.0016(0.0175) 
+Epoch: [4][0/109002] Elapsed 0m 0s (remain 1203m 42s) Loss: 0.0051(0.0051) Grad: 0.2438  LR: 0.00001600  
+Epoch: [4][100/109002] Elapsed 0m 26s (remain 483m 30s) Loss: 0.0128(0.0088) Grad: 0.4289  LR: 0.00001600  
+Epoch: [4][200/109002] Elapsed 0m 53s (remain 480m 26s) Loss: 0.0019(0.0090) Grad: 0.3060  LR: 0.00001600  
+Epoch: [4][300/109002] Elapsed 1m 19s (remain 478m 48s) Loss: 0.0194(0.0084) Grad: 0.3965  LR: 0.00001600  
+Epoch: [4][400/109002] Elapsed 1m 45s (remain 477m 50s) Loss: 0.0367(0.0086) Grad: 0.6062  LR: 0.00001600  
+Epoch: [4][500/109002] Elapsed 2m 12s (remain 477m 7s) Loss: 0.0105(0.0084) Grad: 0.4464  LR: 0.00001599  
+Epoch: [4][600/109002] Elapsed 2m 38s (remain 476m 26s) Loss: 0.0164(0.0084) Grad: 0.3812  LR: 0.00001599  
+Epoch: [4][700/109002] Elapsed 3m 4s (remain 475m 24s) Loss: 0.0090(0.0084) Grad: 0.4573  LR: 0.00001599  
+Epoch: [4][800/109002] Elapsed 3m 31s (remain 475m 13s) Loss: 0.0056(0.0085) Grad: 0.4561  LR: 0.00001599  
+Epoch: [4][900/109002] Elapsed 3m 57s (remain 474m 29s) Loss: 0.0116(0.0084) Grad: 0.2428  LR: 0.00001599  
+Epoch: [4][1000/109002] Elapsed 4m 23s (remain 473m 48s) Loss: 0.0031(0.0083) Grad: 0.2842  LR: 0.00001599  
+Epoch: [4][1100/109002] Elapsed 4m 49s (remain 473m 11s) Loss: 0.0103(0.0084) Grad: 0.7230  LR: 0.00001599  
+Epoch: [4][1200/109002] Elapsed 5m 16s (remain 473m 6s) Loss: 0.0104(0.0084) Grad: 0.2420  LR: 0.00001599  
+Epoch: [4][1300/109002] Elapsed 5m 42s (remain 472m 32s) Loss: 0.0056(0.0083) Grad: 0.4039  LR: 0.00001598  
+Epoch: [4][1400/109002] Elapsed 6m 8s (remain 472m 0s) Loss: 0.0080(0.0083) Grad: 0.4683  LR: 0.00001598  
+Epoch: [4][1500/109002] Elapsed 6m 34s (remain 471m 29s) Loss: 0.0141(0.0084) Grad: 0.3167  LR: 0.00001598  
+Epoch: [4][1600/109002] Elapsed 7m 1s (remain 471m 2s) Loss: 0.0186(0.0084) Grad: 0.4920  LR: 0.00001598  
+Epoch: [4][1700/109002] Elapsed 7m 27s (remain 470m 40s) Loss: 0.0057(0.0084) Grad: 0.3978  LR: 0.00001598  
+Epoch: [4][1800/109002] Elapsed 7m 54s (remain 470m 16s) Loss: 0.0062(0.0084) Grad: 0.2531  LR: 0.00001598  
+Epoch: [4][1900/109002] Elapsed 8m 20s (remain 469m 52s) Loss: 0.0069(0.0084) Grad: 0.4924  LR: 0.00001598  
+Epoch: [4][2000/109002] Elapsed 8m 46s (remain 469m 28s) Loss: 0.0061(0.0084) Grad: 0.3996  LR: 0.00001598  
+Epoch: [4][2100/109002] Elapsed 9m 13s (remain 469m 3s) Loss: 0.0063(0.0084) Grad: 0.2189  LR: 0.00001597  
+Epoch: [4][2200/109002] Elapsed 9m 39s (remain 468m 38s) Loss: 0.0017(0.0084) Grad: 0.2022  LR: 0.00001597  
+Epoch: [4][2300/109002] Elapsed 10m 5s (remain 468m 15s) Loss: 0.0016(0.0084) Grad: 0.4330  LR: 0.00001597  
+Epoch: [4][2400/109002] Elapsed 10m 32s (remain 467m 50s) Loss: 0.0051(0.0084) Grad: 0.2160  LR: 0.00001597  
+Epoch: [4][2500/109002] Elapsed 10m 58s (remain 467m 24s) Loss: 0.0038(0.0084) Grad: 0.3472  LR: 0.00001597  
+Epoch: [4][2600/109002] Elapsed 11m 24s (remain 467m 0s) Loss: 0.0150(0.0084) Grad: 0.5638  LR: 0.00001597  
+Epoch: [4][2700/109002] Elapsed 11m 51s (remain 466m 34s) Loss: 0.0057(0.0085) Grad: 0.2429  LR: 0.00001597  
+Epoch: [4][2800/109002] Elapsed 12m 17s (remain 466m 8s) Loss: 0.0041(0.0084) Grad: 0.1807  LR: 0.00001597  
+Epoch: [4][2900/109002] Elapsed 12m 44s (remain 465m 43s) Loss: 0.0118(0.0084) Grad: 0.5245  LR: 0.00001596  
+Epoch: [4][3000/109002] Elapsed 13m 10s (remain 465m 17s) Loss: 0.0010(0.0084) Grad: 0.1243  LR: 0.00001596  
+Epoch: [4][3100/109002] Elapsed 13m 36s (remain 464m 51s) Loss: 0.0053(0.0085) Grad: 0.3196  LR: 0.00001596  
+Epoch: [4][3200/109002] Elapsed 14m 3s (remain 464m 26s) Loss: 0.0052(0.0084) Grad: 0.2905  LR: 0.00001596  
+Epoch: [4][3300/109002] Elapsed 14m 29s (remain 464m 0s) Loss: 0.0017(0.0084) Grad: 0.0870  LR: 0.00001596  
+Epoch: [4][3400/109002] Elapsed 14m 55s (remain 463m 34s) Loss: 0.0057(0.0084) Grad: 0.3535  LR: 0.00001596  
+Epoch: [4][3500/109002] Elapsed 15m 22s (remain 463m 9s) Loss: 0.0143(0.0084) Grad: 0.7595  LR: 0.00001596  
+Epoch: [4][3600/109002] Elapsed 15m 48s (remain 462m 43s) Loss: 0.0114(0.0084) Grad: 0.3658  LR: 0.00001596  
+Epoch: [4][3700/109002] Elapsed 16m 14s (remain 462m 18s) Loss: 0.0038(0.0084) Grad: 0.3429  LR: 0.00001595  
+Epoch: [4][3800/109002] Elapsed 16m 41s (remain 461m 52s) Loss: 0.0167(0.0084) Grad: 0.5350  LR: 0.00001595  
+Epoch: [4][3900/109002] Elapsed 17m 7s (remain 461m 27s) Loss: 0.0059(0.0084) Grad: 0.1671  LR: 0.00001595  
+Epoch: [4][4000/109002] Elapsed 17m 34s (remain 461m 1s) Loss: 0.0013(0.0084) Grad: 0.2957  LR: 0.00001595  
+Epoch: [4][4100/109002] Elapsed 18m 0s (remain 460m 36s) Loss: 0.0042(0.0084) Grad: 0.6346  LR: 0.00001595  
+Epoch: [4][4200/109002] Elapsed 18m 26s (remain 460m 10s) Loss: 0.0048(0.0084) Grad: 0.1835  LR: 0.00001595  
+Epoch: [4][4300/109002] Elapsed 18m 53s (remain 459m 44s) Loss: 0.0093(0.0084) Grad: 0.3846  LR: 0.00001595  
+Epoch: [4][4400/109002] Elapsed 19m 19s (remain 459m 19s) Loss: 0.0064(0.0084) Grad: 0.3933  LR: 0.00001595  
+Epoch: [4][4500/109002] Elapsed 19m 45s (remain 458m 54s) Loss: 0.0060(0.0084) Grad: 0.2460  LR: 0.00001594  
+Epoch: [4][4600/109002] Elapsed 20m 12s (remain 458m 28s) Loss: 0.0007(0.0084) Grad: 0.3643  LR: 0.00001594  
+Epoch: [4][4700/109002] Elapsed 20m 38s (remain 458m 2s) Loss: 0.0096(0.0084) Grad: 0.4506  LR: 0.00001594  
+Epoch: [4][4800/109002] Elapsed 21m 5s (remain 457m 37s) Loss: 0.0094(0.0084) Grad: 0.2783  LR: 0.00001594  
+Epoch: [4][4900/109002] Elapsed 21m 31s (remain 457m 10s) Loss: 0.0090(0.0084) Grad: 0.3977  LR: 0.00001594  
+Epoch: [4][5000/109002] Elapsed 21m 57s (remain 456m 44s) Loss: 0.0062(0.0084) Grad: 0.5264  LR: 0.00001594  
+Epoch: [4][5100/109002] Elapsed 22m 24s (remain 456m 18s) Loss: 0.0026(0.0084) Grad: 0.1496  LR: 0.00001594  
+Epoch: [4][5200/109002] Elapsed 22m 50s (remain 455m 53s) Loss: 0.0085(0.0084) Grad: 0.2538  LR: 0.00001594  
+Epoch: [4][5300/109002] Elapsed 23m 16s (remain 455m 27s) Loss: 0.0052(0.0084) Grad: 0.2623  LR: 0.00001594  
+Epoch: [4][5400/109002] Elapsed 23m 43s (remain 455m 2s) Loss: 0.0168(0.0084) Grad: 0.4449  LR: 0.00001593  
+Epoch: [4][5500/109002] Elapsed 24m 9s (remain 454m 36s) Loss: 0.0097(0.0084) Grad: 0.4274  LR: 0.00001593  
+Epoch: [4][5600/109002] Elapsed 24m 36s (remain 454m 10s) Loss: 0.0038(0.0084) Grad: 0.3273  LR: 0.00001593  
+Epoch: [4][5700/109002] Elapsed 25m 2s (remain 453m 46s) Loss: 0.0090(0.0084) Grad: 0.2739  LR: 0.00001593  
+Epoch: [4][5800/109002] Elapsed 25m 29s (remain 453m 21s) Loss: 0.0109(0.0084) Grad: 0.3063  LR: 0.00001593  
+Epoch: [4][5900/109002] Elapsed 25m 55s (remain 452m 56s) Loss: 0.0033(0.0084) Grad: 0.4489  LR: 0.00001593  
+Epoch: [4][6000/109002] Elapsed 26m 21s (remain 452m 31s) Loss: 0.0053(0.0084) Grad: 0.2383  LR: 0.00001593  
+Epoch: [4][6100/109002] Elapsed 26m 48s (remain 452m 6s) Loss: 0.0114(0.0084) Grad: 0.6934  LR: 0.00001593  
+Epoch: [4][6200/109002] Elapsed 27m 14s (remain 451m 42s) Loss: 0.0206(0.0084) Grad: 0.4800  LR: 0.00001592  
+Epoch: [4][6300/109002] Elapsed 27m 41s (remain 451m 17s) Loss: 0.0064(0.0084) Grad: 0.2506  LR: 0.00001592  
+Epoch: [4][6400/109002] Elapsed 28m 7s (remain 450m 52s) Loss: 0.0018(0.0084) Grad: 0.1892  LR: 0.00001592  
+Epoch: [4][6500/109002] Elapsed 28m 34s (remain 450m 27s) Loss: 0.0181(0.0084) Grad: 0.5349  LR: 0.00001592  
+Epoch: [4][6600/109002] Elapsed 29m 0s (remain 450m 3s) Loss: 0.0012(0.0084) Grad: 0.0740  LR: 0.00001592  
+Epoch: [4][6700/109002] Elapsed 29m 27s (remain 449m 38s) Loss: 0.0129(0.0083) Grad: 0.4543  LR: 0.00001592  
+Epoch: [4][6800/109002] Elapsed 29m 53s (remain 449m 13s) Loss: 0.0090(0.0083) Grad: 0.2558  LR: 0.00001592  
+Epoch: [4][6900/109002] Elapsed 30m 20s (remain 448m 48s) Loss: 0.0040(0.0083) Grad: 0.1667  LR: 0.00001592  
+Epoch: [4][7000/109002] Elapsed 30m 46s (remain 448m 22s) Loss: 0.0091(0.0083) Grad: 0.4169  LR: 0.00001591  
+Epoch: [4][7100/109002] Elapsed 31m 12s (remain 447m 57s) Loss: 0.0159(0.0083) Grad: 0.5061  LR: 0.00001591  
+Epoch: [4][7200/109002] Elapsed 31m 39s (remain 447m 32s) Loss: 0.0103(0.0083) Grad: 0.3403  LR: 0.00001591  
+Epoch: [4][7300/109002] Elapsed 32m 5s (remain 447m 7s) Loss: 0.0046(0.0083) Grad: 0.2747  LR: 0.00001591  
+Epoch: [4][7400/109002] Elapsed 32m 32s (remain 446m 42s) Loss: 0.0025(0.0084) Grad: 0.3160  LR: 0.00001591  
+Epoch: [4][7500/109002] Elapsed 32m 58s (remain 446m 17s) Loss: 0.0102(0.0084) Grad: 0.2535  LR: 0.00001591  
+Epoch: [4][7600/109002] Elapsed 33m 25s (remain 445m 51s) Loss: 0.0033(0.0084) Grad: 0.5194  LR: 0.00001591  
+Epoch: [4][7700/109002] Elapsed 33m 51s (remain 445m 26s) Loss: 0.0039(0.0083) Grad: 0.5047  LR: 0.00001591  
+Epoch: [4][7800/109002] Elapsed 34m 18s (remain 445m 1s) Loss: 0.0050(0.0083) Grad: 0.2088  LR: 0.00001590  
+Epoch: [4][7900/109002] Elapsed 34m 44s (remain 444m 35s) Loss: 0.0135(0.0084) Grad: 0.5767  LR: 0.00001590  
+Epoch: [4][8000/109002] Elapsed 35m 11s (remain 444m 9s) Loss: 0.0064(0.0084) Grad: 0.4923  LR: 0.00001590  
+Epoch: [4][8100/109002] Elapsed 35m 37s (remain 443m 44s) Loss: 0.0095(0.0083) Grad: 0.3701  LR: 0.00001590  
+Epoch: [4][8200/109002] Elapsed 36m 4s (remain 443m 18s) Loss: 0.0136(0.0083) Grad: 0.3793  LR: 0.00001590  
+Epoch: [4][8300/109002] Elapsed 36m 30s (remain 442m 53s) Loss: 0.0199(0.0083) Grad: 0.5487  LR: 0.00001590  
+Epoch: [4][8400/109002] Elapsed 36m 56s (remain 442m 28s) Loss: 0.0123(0.0083) Grad: 0.3456  LR: 0.00001590  
+Epoch: [4][8500/109002] Elapsed 37m 23s (remain 442m 2s) Loss: 0.0148(0.0083) Grad: 0.3772  LR: 0.00001590  
+Epoch: [4][8600/109002] Elapsed 37m 49s (remain 441m 37s) Loss: 0.0066(0.0083) Grad: 0.3275  LR: 0.00001589  
+Epoch: [4][8700/109002] Elapsed 38m 16s (remain 441m 11s) Loss: 0.0010(0.0084) Grad: 0.1134  LR: 0.00001589  
+Epoch: [4][8800/109002] Elapsed 38m 42s (remain 440m 45s) Loss: 0.0139(0.0084) Grad: 0.5306  LR: 0.00001589  
+Epoch: [4][8900/109002] Elapsed 39m 9s (remain 440m 20s) Loss: 0.0118(0.0084) Grad: 0.7990  LR: 0.00001589  
+Epoch: [4][9000/109002] Elapsed 39m 35s (remain 439m 54s) Loss: 0.0054(0.0084) Grad: 0.1599  LR: 0.00001589  
+Epoch: [4][9100/109002] Elapsed 40m 2s (remain 439m 28s) Loss: 0.0085(0.0084) Grad: 0.7379  LR: 0.00001589  
+Epoch: [4][9200/109002] Elapsed 40m 28s (remain 439m 3s) Loss: 0.0111(0.0084) Grad: 0.4825  LR: 0.00001589  
+Epoch: [4][9300/109002] Elapsed 40m 55s (remain 438m 37s) Loss: 0.0050(0.0084) Grad: 0.1915  LR: 0.00001589  
+Epoch: [4][9400/109002] Elapsed 41m 21s (remain 438m 11s) Loss: 0.0060(0.0084) Grad: 0.3539  LR: 0.00001589  
+Epoch: [4][9500/109002] Elapsed 41m 48s (remain 437m 46s) Loss: 0.0092(0.0084) Grad: 0.7832  LR: 0.00001588  
+Epoch: [4][9600/109002] Elapsed 42m 14s (remain 437m 19s) Loss: 0.0028(0.0084) Grad: 0.1490  LR: 0.00001588  
+Epoch: [4][9700/109002] Elapsed 42m 40s (remain 436m 54s) Loss: 0.0031(0.0084) Grad: 0.2801  LR: 0.00001588  
+Epoch: [4][9800/109002] Elapsed 43m 7s (remain 436m 28s) Loss: 0.0239(0.0084) Grad: 0.6075  LR: 0.00001588  
+Epoch: [4][9900/109002] Elapsed 43m 33s (remain 436m 3s) Loss: 0.0030(0.0084) Grad: 0.1985  LR: 0.00001588  
+Epoch: [4][10000/109002] Elapsed 44m 0s (remain 435m 37s) Loss: 0.0030(0.0084) Grad: 0.3267  LR: 0.00001588  
+Epoch: [4][10100/109002] Elapsed 44m 26s (remain 435m 12s) Loss: 0.0037(0.0083) Grad: 0.4713  LR: 0.00001588  
+Epoch: [4][10200/109002] Elapsed 44m 53s (remain 434m 46s) Loss: 0.0083(0.0084) Grad: 0.3356  LR: 0.00001588  
+Epoch: [4][10300/109002] Elapsed 45m 19s (remain 434m 18s) Loss: 0.0134(0.0084) Grad: 0.4455  LR: 0.00001587  
+Epoch: [4][10400/109002] Elapsed 45m 46s (remain 433m 53s) Loss: 0.0199(0.0084) Grad: 0.4913  LR: 0.00001587  
+Epoch: [4][10500/109002] Elapsed 46m 12s (remain 433m 27s) Loss: 0.0033(0.0084) Grad: 0.1417  LR: 0.00001587  
+Epoch: [4][10600/109002] Elapsed 46m 39s (remain 433m 1s) Loss: 0.0047(0.0084) Grad: 0.4077  LR: 0.00001587  
+Epoch: [4][10700/109002] Elapsed 47m 5s (remain 432m 39s) Loss: 0.0108(0.0084) Grad: 0.4441  LR: 0.00001587  
+Epoch: [4][10800/109002] Elapsed 47m 32s (remain 432m 16s) Loss: 0.0031(0.0084) Grad: 0.1469  LR: 0.00001587  
+Epoch: [4][10900/109002] Elapsed 47m 59s (remain 431m 51s) Loss: 0.0046(0.0084) Grad: 0.3838  LR: 0.00001587  
+Epoch: [4][11000/109002] Elapsed 48m 25s (remain 431m 25s) Loss: 0.0095(0.0084) Grad: 0.6152  LR: 0.00001587  
+Epoch: [4][11100/109002] Elapsed 48m 51s (remain 430m 56s) Loss: 0.0097(0.0084) Grad: 0.2116  LR: 0.00001586  
+Epoch: [4][11200/109002] Elapsed 49m 18s (remain 430m 30s) Loss: 0.0050(0.0084) Grad: 0.4421  LR: 0.00001586  
+Epoch: [4][11300/109002] Elapsed 49m 44s (remain 430m 3s) Loss: 0.0092(0.0084) Grad: 0.7500  LR: 0.00001586  
+Epoch: [4][11400/109002] Elapsed 50m 10s (remain 429m 35s) Loss: 0.0008(0.0084) Grad: 0.1065  LR: 0.00001586  
+Epoch: [4][11500/109002] Elapsed 50m 37s (remain 429m 7s) Loss: 0.0142(0.0084) Grad: 0.5636  LR: 0.00001586  
+Epoch: [4][11600/109002] Elapsed 51m 3s (remain 428m 39s) Loss: 0.0091(0.0084) Grad: 0.4677  LR: 0.00001586  
+Epoch: [4][11700/109002] Elapsed 51m 29s (remain 428m 11s) Loss: 0.0034(0.0084) Grad: 0.2162  LR: 0.00001586  
+Epoch: [4][11800/109002] Elapsed 51m 55s (remain 427m 43s) Loss: 0.0243(0.0084) Grad: 0.2682  LR: 0.00001586  
+Epoch: [4][11900/109002] Elapsed 52m 22s (remain 427m 16s) Loss: 0.0167(0.0084) Grad: 0.8427  LR: 0.00001585  
+Epoch: [4][12000/109002] Elapsed 52m 48s (remain 426m 48s) Loss: 0.0010(0.0084) Grad: 0.0927  LR: 0.00001585  
+Epoch: [4][12100/109002] Elapsed 53m 14s (remain 426m 20s) Loss: 0.0052(0.0084) Grad: 0.3308  LR: 0.00001585  
+Epoch: [4][12200/109002] Elapsed 53m 40s (remain 425m 52s) Loss: 0.0212(0.0084) Grad: 0.6087  LR: 0.00001585  
+Epoch: [4][12300/109002] Elapsed 54m 7s (remain 425m 25s) Loss: 0.0022(0.0084) Grad: 0.1312  LR: 0.00001585  
+Epoch: [4][12400/109002] Elapsed 54m 33s (remain 424m 57s) Loss: 0.0055(0.0084) Grad: 0.2023  LR: 0.00001585  
+Epoch: [4][12500/109002] Elapsed 54m 59s (remain 424m 31s) Loss: 0.0030(0.0084) Grad: 0.5304  LR: 0.00001585  
+Epoch: [4][12600/109002] Elapsed 55m 26s (remain 424m 7s) Loss: 0.0298(0.0084) Grad: 0.4320  LR: 0.00001585  
+Epoch: [4][12700/109002] Elapsed 55m 53s (remain 423m 44s) Loss: 0.0180(0.0084) Grad: 0.4175  LR: 0.00001584  
+Epoch: [4][12800/109002] Elapsed 56m 19s (remain 423m 20s) Loss: 0.0052(0.0084) Grad: 0.4593  LR: 0.00001584  
+Epoch: [4][12900/109002] Elapsed 56m 46s (remain 422m 56s) Loss: 0.0016(0.0084) Grad: 0.1349  LR: 0.00001584  
+Epoch: [4][13000/109002] Elapsed 57m 13s (remain 422m 33s) Loss: 0.0218(0.0084) Grad: 0.6544  LR: 0.00001584  
+Epoch: [4][13100/109002] Elapsed 57m 40s (remain 422m 9s) Loss: 0.0042(0.0084) Grad: 0.5534  LR: 0.00001584  
+Epoch: [4][13200/109002] Elapsed 58m 7s (remain 421m 46s) Loss: 0.0125(0.0084) Grad: 0.3337  LR: 0.00001584  
+Epoch: [4][13300/109002] Elapsed 58m 33s (remain 421m 22s) Loss: 0.0050(0.0084) Grad: 0.2790  LR: 0.00001584  
+Epoch: [4][13400/109002] Elapsed 59m 0s (remain 420m 58s) Loss: 0.0048(0.0084) Grad: 0.5302  LR: 0.00001584  
+Epoch: [4][13500/109002] Elapsed 59m 27s (remain 420m 34s) Loss: 0.0124(0.0084) Grad: 0.3740  LR: 0.00001583  
+Epoch: [4][13600/109002] Elapsed 59m 54s (remain 420m 10s) Loss: 0.0031(0.0084) Grad: 0.2574  LR: 0.00001583  
+Epoch: [4][13700/109002] Elapsed 60m 20s (remain 419m 46s) Loss: 0.0050(0.0084) Grad: 0.3771  LR: 0.00001583  
+Epoch: [4][13800/109002] Elapsed 60m 47s (remain 419m 22s) Loss: 0.0042(0.0084) Grad: 0.1676  LR: 0.00001583  
+Epoch: [4][13900/109002] Elapsed 61m 14s (remain 418m 58s) Loss: 0.0061(0.0084) Grad: 0.3500  LR: 0.00001583  
+Epoch: [4][14000/109002] Elapsed 61m 41s (remain 418m 34s) Loss: 0.0172(0.0084) Grad: 0.4427  LR: 0.00001583  
+Epoch: [4][14100/109002] Elapsed 62m 8s (remain 418m 10s) Loss: 0.0025(0.0084) Grad: 0.1479  LR: 0.00001583  
+Epoch: [4][14200/109002] Elapsed 62m 34s (remain 417m 45s) Loss: 0.0033(0.0084) Grad: 0.5232  LR: 0.00001583  
+Epoch: [4][14300/109002] Elapsed 63m 1s (remain 417m 21s) Loss: 0.0161(0.0084) Grad: 0.5758  LR: 0.00001583  
+Epoch: [4][14400/109002] Elapsed 63m 28s (remain 416m 56s) Loss: 0.0015(0.0084) Grad: 0.1054  LR: 0.00001582  
+Epoch: [4][14500/109002] Elapsed 63m 55s (remain 416m 32s) Loss: 0.0064(0.0084) Grad: 0.3892  LR: 0.00001582  
+Epoch: [4][14600/109002] Elapsed 64m 21s (remain 416m 7s) Loss: 0.0050(0.0084) Grad: 0.6127  LR: 0.00001582  
+Epoch: [4][14700/109002] Elapsed 64m 48s (remain 415m 43s) Loss: 0.0006(0.0084) Grad: 0.0659  LR: 0.00001582  
+Epoch: [4][14800/109002] Elapsed 65m 15s (remain 415m 18s) Loss: 0.0126(0.0084) Grad: 0.4432  LR: 0.00001582  
+Epoch: [4][14900/109002] Elapsed 65m 42s (remain 414m 54s) Loss: 0.0045(0.0084) Grad: 0.7234  LR: 0.00001582  
+Epoch: [4][15000/109002] Elapsed 66m 8s (remain 414m 29s) Loss: 0.0117(0.0084) Grad: 0.4260  LR: 0.00001582  
+Epoch: [4][15100/109002] Elapsed 66m 35s (remain 414m 5s) Loss: 0.0045(0.0084) Grad: 0.3470  LR: 0.00001582  
+Epoch: [4][15200/109002] Elapsed 67m 2s (remain 413m 40s) Loss: 0.0101(0.0084) Grad: 0.4574  LR: 0.00001581  
+Epoch: [4][15300/109002] Elapsed 67m 29s (remain 413m 16s) Loss: 0.0140(0.0084) Grad: 0.3592  LR: 0.00001581  
+Epoch: [4][15400/109002] Elapsed 67m 55s (remain 412m 51s) Loss: 0.0128(0.0084) Grad: 0.5890  LR: 0.00001581  
+Epoch: [4][15500/109002] Elapsed 68m 22s (remain 412m 26s) Loss: 0.0045(0.0084) Grad: 0.4440  LR: 0.00001581  
+Epoch: [4][15600/109002] Elapsed 68m 49s (remain 412m 2s) Loss: 0.0272(0.0084) Grad: 0.3427  LR: 0.00001581  
+Epoch: [4][15700/109002] Elapsed 69m 16s (remain 411m 37s) Loss: 0.0082(0.0084) Grad: 0.3393  LR: 0.00001581  
+Epoch: [4][15800/109002] Elapsed 69m 42s (remain 411m 12s) Loss: 0.0049(0.0084) Grad: 0.4128  LR: 0.00001581  
+Epoch: [4][15900/109002] Elapsed 70m 9s (remain 410m 47s) Loss: 0.0047(0.0084) Grad: 0.1529  LR: 0.00001581  
+Epoch: [4][16000/109002] Elapsed 70m 36s (remain 410m 22s) Loss: 0.0248(0.0084) Grad: 0.4419  LR: 0.00001580  
+Epoch: [4][16100/109002] Elapsed 71m 3s (remain 409m 58s) Loss: 0.0027(0.0084) Grad: 0.5663  LR: 0.00001580  
+Epoch: [4][16200/109002] Elapsed 71m 29s (remain 409m 33s) Loss: 0.0027(0.0084) Grad: 0.1570  LR: 0.00001580  
+Epoch: [4][16300/109002] Elapsed 71m 56s (remain 409m 8s) Loss: 0.0092(0.0084) Grad: 0.2943  LR: 0.00001580  
+Epoch: [4][16400/109002] Elapsed 72m 23s (remain 408m 43s) Loss: 0.0066(0.0084) Grad: 0.3771  LR: 0.00001580  
+Epoch: [4][16500/109002] Elapsed 72m 50s (remain 408m 18s) Loss: 0.0105(0.0084) Grad: 0.2802  LR: 0.00001580  
+Epoch: [4][16600/109002] Elapsed 73m 16s (remain 407m 53s) Loss: 0.0132(0.0084) Grad: 0.4357  LR: 0.00001580  
+Epoch: [4][16700/109002] Elapsed 73m 43s (remain 407m 28s) Loss: 0.0058(0.0084) Grad: 0.3240  LR: 0.00001580  
+Epoch: [4][16800/109002] Elapsed 74m 10s (remain 407m 3s) Loss: 0.0017(0.0084) Grad: 0.1290  LR: 0.00001579  
+Epoch: [4][16900/109002] Elapsed 74m 37s (remain 406m 38s) Loss: 0.0091(0.0084) Grad: 0.2172  LR: 0.00001579  
+Epoch: [4][17000/109002] Elapsed 75m 4s (remain 406m 13s) Loss: 0.0048(0.0084) Grad: 0.5504  LR: 0.00001579  
+Epoch: [4][17100/109002] Elapsed 75m 30s (remain 405m 48s) Loss: 0.0037(0.0084) Grad: 0.1628  LR: 0.00001579  
+Epoch: [4][17200/109002] Elapsed 75m 57s (remain 405m 23s) Loss: 0.0072(0.0084) Grad: 0.3794  LR: 0.00001579  
+Epoch: [4][17300/109002] Elapsed 76m 24s (remain 404m 58s) Loss: 0.0112(0.0084) Grad: 0.5179  LR: 0.00001579  
+Epoch: [4][17400/109002] Elapsed 76m 51s (remain 404m 33s) Loss: 0.0013(0.0084) Grad: 0.0991  LR: 0.00001579  
+Epoch: [4][17500/109002] Elapsed 77m 17s (remain 404m 8s) Loss: 0.0064(0.0084) Grad: 0.3720  LR: 0.00001579  
+Epoch: [4][17600/109002] Elapsed 77m 44s (remain 403m 43s) Loss: 0.0042(0.0084) Grad: 0.4146  LR: 0.00001578  
+Epoch: [4][17700/109002] Elapsed 78m 11s (remain 403m 17s) Loss: 0.0098(0.0084) Grad: 0.3836  LR: 0.00001578  
+Epoch: [4][17800/109002] Elapsed 78m 38s (remain 402m 52s) Loss: 0.0087(0.0084) Grad: 0.3759  LR: 0.00001578  
+Epoch: [4][17900/109002] Elapsed 79m 4s (remain 402m 27s) Loss: 0.0059(0.0084) Grad: 0.6063  LR: 0.00001578  
+Epoch: [4][18000/109002] Elapsed 79m 31s (remain 402m 2s) Loss: 0.0037(0.0083) Grad: 0.1531  LR: 0.00001578  
+Epoch: [4][18100/109002] Elapsed 79m 58s (remain 401m 36s) Loss: 0.0049(0.0084) Grad: 0.3250  LR: 0.00001578  
+Epoch: [4][18200/109002] Elapsed 80m 25s (remain 401m 11s) Loss: 0.0114(0.0084) Grad: 0.3841  LR: 0.00001578  
+Epoch: [4][18300/109002] Elapsed 80m 51s (remain 400m 46s) Loss: 0.0031(0.0083) Grad: 0.2029  LR: 0.00001578  
+Epoch: [4][18400/109002] Elapsed 81m 18s (remain 400m 21s) Loss: 0.0132(0.0083) Grad: 0.5153  LR: 0.00001577  
+Epoch: [4][18500/109002] Elapsed 81m 45s (remain 399m 56s) Loss: 0.0023(0.0083) Grad: 0.3548  LR: 0.00001577  
+Epoch: [4][18600/109002] Elapsed 82m 12s (remain 399m 30s) Loss: 0.0027(0.0084) Grad: 0.1618  LR: 0.00001577  
+Epoch: [4][18700/109002] Elapsed 82m 39s (remain 399m 5s) Loss: 0.0033(0.0084) Grad: 0.3571  LR: 0.00001577  
+Epoch: [4][18800/109002] Elapsed 83m 5s (remain 398m 40s) Loss: 0.0094(0.0084) Grad: 0.6456  LR: 0.00001577  
+Epoch: [4][18900/109002] Elapsed 83m 32s (remain 398m 15s) Loss: 0.0031(0.0084) Grad: 0.1310  LR: 0.00001577  
+Epoch: [4][19000/109002] Elapsed 83m 59s (remain 397m 49s) Loss: 0.0060(0.0084) Grad: 0.2727  LR: 0.00001577  
+Epoch: [4][19100/109002] Elapsed 84m 26s (remain 397m 24s) Loss: 0.0023(0.0084) Grad: 0.2449  LR: 0.00001577  
+Epoch: [4][19200/109002] Elapsed 84m 52s (remain 396m 59s) Loss: 0.0078(0.0084) Grad: 0.1948  LR: 0.00001577  
+Epoch: [4][19300/109002] Elapsed 85m 19s (remain 396m 33s) Loss: 0.0062(0.0084) Grad: 0.3474  LR: 0.00001576  
+Epoch: [4][19400/109002] Elapsed 85m 46s (remain 396m 8s) Loss: 0.0035(0.0084) Grad: 0.5934  LR: 0.00001576  
+Epoch: [4][19500/109002] Elapsed 86m 13s (remain 395m 43s) Loss: 0.0041(0.0084) Grad: 0.1810  LR: 0.00001576  
+Epoch: [4][19600/109002] Elapsed 86m 40s (remain 395m 17s) Loss: 0.0021(0.0084) Grad: 0.4298  LR: 0.00001576  
+Epoch: [4][19700/109002] Elapsed 87m 6s (remain 394m 52s) Loss: 0.0061(0.0084) Grad: 0.3241  LR: 0.00001576  
+Epoch: [4][19800/109002] Elapsed 87m 33s (remain 394m 26s) Loss: 0.0118(0.0084) Grad: 0.2520  LR: 0.00001576  
+Epoch: [4][19900/109002] Elapsed 88m 0s (remain 394m 1s) Loss: 0.0091(0.0084) Grad: 0.4059  LR: 0.00001576  
+Epoch: [4][20000/109002] Elapsed 88m 27s (remain 393m 35s) Loss: 0.0033(0.0084) Grad: 0.4486  LR: 0.00001576  
+Epoch: [4][20100/109002] Elapsed 88m 53s (remain 393m 10s) Loss: 0.0023(0.0084) Grad: 0.1485  LR: 0.00001575  
+Epoch: [4][20200/109002] Elapsed 89m 20s (remain 392m 44s) Loss: 0.0187(0.0084) Grad: 0.5033  LR: 0.00001575  
+Epoch: [4][20300/109002] Elapsed 89m 47s (remain 392m 19s) Loss: 0.0008(0.0084) Grad: 0.6877  LR: 0.00001575  
+Epoch: [4][20400/109002] Elapsed 90m 14s (remain 391m 53s) Loss: 0.0046(0.0084) Grad: 0.2654  LR: 0.00001575  
+Epoch: [4][20500/109002] Elapsed 90m 40s (remain 391m 27s) Loss: 0.0079(0.0084) Grad: 0.4164  LR: 0.00001575  
+Epoch: [4][20600/109002] Elapsed 91m 7s (remain 391m 2s) Loss: 0.0109(0.0084) Grad: 0.5216  LR: 0.00001575  
+Epoch: [4][20700/109002] Elapsed 91m 34s (remain 390m 36s) Loss: 0.0030(0.0084) Grad: 0.1347  LR: 0.00001575  
+Epoch: [4][20800/109002] Elapsed 92m 1s (remain 390m 10s) Loss: 0.0123(0.0084) Grad: 0.3749  LR: 0.00001575  
+Epoch: [4][20900/109002] Elapsed 92m 27s (remain 389m 45s) Loss: 0.0047(0.0084) Grad: 0.4107  LR: 0.00001574  
+Epoch: [4][21000/109002] Elapsed 92m 54s (remain 389m 19s) Loss: 0.0042(0.0084) Grad: 0.2027  LR: 0.00001574  
+Epoch: [4][21100/109002] Elapsed 93m 21s (remain 388m 53s) Loss: 0.0098(0.0084) Grad: 0.4027  LR: 0.00001574  
+Epoch: [4][21200/109002] Elapsed 93m 48s (remain 388m 28s) Loss: 0.0088(0.0084) Grad: 0.5039  LR: 0.00001574  
+Epoch: [4][21300/109002] Elapsed 94m 14s (remain 388m 2s) Loss: 0.0091(0.0084) Grad: 0.3762  LR: 0.00001574  
+Epoch: [4][21400/109002] Elapsed 94m 41s (remain 387m 36s) Loss: 0.0209(0.0084) Grad: 0.5066  LR: 0.00001574  
+Epoch: [4][21500/109002] Elapsed 95m 8s (remain 387m 11s) Loss: 0.0050(0.0084) Grad: 0.4530  LR: 0.00001574  
+Epoch: [4][21600/109002] Elapsed 95m 35s (remain 386m 45s) Loss: 0.0132(0.0084) Grad: 0.3317  LR: 0.00001574  
+Epoch: [4][21700/109002] Elapsed 96m 1s (remain 386m 19s) Loss: 0.0112(0.0084) Grad: 0.4437  LR: 0.00001573  
+Epoch: [4][21800/109002] Elapsed 96m 28s (remain 385m 53s) Loss: 0.0038(0.0084) Grad: 0.2600  LR: 0.00001573  
+Epoch: [4][21900/109002] Elapsed 96m 55s (remain 385m 28s) Loss: 0.0069(0.0084) Grad: 0.2904  LR: 0.00001573  
+Epoch: [4][22000/109002] Elapsed 97m 22s (remain 385m 2s) Loss: 0.0264(0.0084) Grad: 0.5454  LR: 0.00001573  
+Epoch: [4][22100/109002] Elapsed 97m 48s (remain 384m 36s) Loss: 0.0115(0.0084) Grad: 0.3748  LR: 0.00001573  
+Epoch: [4][22200/109002] Elapsed 98m 15s (remain 384m 10s) Loss: 0.0083(0.0084) Grad: 0.2786  LR: 0.00001573  
+Epoch: [4][22300/109002] Elapsed 98m 42s (remain 383m 45s) Loss: 0.0124(0.0084) Grad: 0.5008  LR: 0.00001573  
+Epoch: [4][22400/109002] Elapsed 99m 9s (remain 383m 19s) Loss: 0.0318(0.0084) Grad: 0.5613  LR: 0.00001573  
+Epoch: [4][22500/109002] Elapsed 99m 35s (remain 382m 53s) Loss: 0.0175(0.0084) Grad: 0.4500  LR: 0.00001572  
+Epoch: [4][22600/109002] Elapsed 100m 2s (remain 382m 27s) Loss: 0.0216(0.0084) Grad: 0.5545  LR: 0.00001572  
+Epoch: [4][22700/109002] Elapsed 100m 29s (remain 382m 1s) Loss: 0.0046(0.0084) Grad: 0.4695  LR: 0.00001572  
+Epoch: [4][22800/109002] Elapsed 100m 56s (remain 381m 36s) Loss: 0.0242(0.0084) Grad: 0.4601  LR: 0.00001572  
+Epoch: [4][22900/109002] Elapsed 101m 22s (remain 381m 10s) Loss: 0.0047(0.0084) Grad: 0.3241  LR: 0.00001572  
+Epoch: [4][23000/109002] Elapsed 101m 49s (remain 380m 44s) Loss: 0.0275(0.0084) Grad: 0.5474  LR: 0.00001572  
+Epoch: [4][23100/109002] Elapsed 102m 16s (remain 380m 18s) Loss: 0.0062(0.0084) Grad: 0.2208  LR: 0.00001572  
+Epoch: [4][23200/109002] Elapsed 102m 43s (remain 379m 52s) Loss: 0.0111(0.0084) Grad: 0.2875  LR: 0.00001572  
+Epoch: [4][23300/109002] Elapsed 103m 10s (remain 379m 26s) Loss: 0.0195(0.0084) Grad: 0.8389  LR: 0.00001571  
+Epoch: [4][23400/109002] Elapsed 103m 37s (remain 379m 2s) Loss: 0.0044(0.0084) Grad: 0.2709  LR: 0.00001571  
+Epoch: [4][23500/109002] Elapsed 104m 4s (remain 378m 38s) Loss: 0.0206(0.0084) Grad: 0.4359  LR: 0.00001571  
+Epoch: [4][23600/109002] Elapsed 104m 31s (remain 378m 13s) Loss: 0.0016(0.0084) Grad: 0.6735  LR: 0.00001571  
+Epoch: [4][23700/109002] Elapsed 104m 58s (remain 377m 47s) Loss: 0.0056(0.0084) Grad: 0.2191  LR: 0.00001571  
+Epoch: [4][23800/109002] Elapsed 105m 25s (remain 377m 21s) Loss: 0.0407(0.0084) Grad: 0.5279  LR: 0.00001571  
+Epoch: [4][23900/109002] Elapsed 105m 51s (remain 376m 56s) Loss: 0.0038(0.0084) Grad: 0.4071  LR: 0.00001571  
+Epoch: [4][24000/109002] Elapsed 106m 18s (remain 376m 30s) Loss: 0.0058(0.0084) Grad: 0.2038  LR: 0.00001571  
+Epoch: [4][24100/109002] Elapsed 106m 45s (remain 376m 5s) Loss: 0.0156(0.0084) Grad: 0.4177  LR: 0.00001571  
+Epoch: [4][24200/109002] Elapsed 107m 12s (remain 375m 40s) Loss: 0.0066(0.0084) Grad: 0.4223  LR: 0.00001570  
+Epoch: [4][24300/109002] Elapsed 107m 39s (remain 375m 14s) Loss: 0.0313(0.0084) Grad: 0.5787  LR: 0.00001570  
+Epoch: [4][24400/109002] Elapsed 108m 6s (remain 374m 49s) Loss: 0.0028(0.0084) Grad: 0.2098  LR: 0.00001570  
+Epoch: [4][24500/109002] Elapsed 108m 33s (remain 374m 24s) Loss: 0.0018(0.0084) Grad: 0.5475  LR: 0.00001570  
+Epoch: [4][24600/109002] Elapsed 109m 0s (remain 373m 59s) Loss: 0.0060(0.0084) Grad: 0.2234  LR: 0.00001570  
+Epoch: [4][24700/109002] Elapsed 109m 27s (remain 373m 34s) Loss: 0.0141(0.0084) Grad: 0.4150  LR: 0.00001570  
+Epoch: [4][24800/109002] Elapsed 109m 54s (remain 373m 8s) Loss: 0.0016(0.0084) Grad: 0.4839  LR: 0.00001570  
+Epoch: [4][24900/109002] Elapsed 110m 21s (remain 372m 43s) Loss: 0.0126(0.0084) Grad: 0.4142  LR: 0.00001570  
+Epoch: [4][25000/109002] Elapsed 110m 47s (remain 372m 15s) Loss: 0.0127(0.0084) Grad: 0.6296  LR: 0.00001569  
+Epoch: [4][25100/109002] Elapsed 111m 14s (remain 371m 49s) Loss: 0.0017(0.0084) Grad: 0.3671  LR: 0.00001569  
+Epoch: [4][25200/109002] Elapsed 111m 41s (remain 371m 24s) Loss: 0.0085(0.0084) Grad: 0.2237  LR: 0.00001569  
+Epoch: [4][25300/109002] Elapsed 112m 8s (remain 370m 58s) Loss: 0.0106(0.0084) Grad: 0.2951  LR: 0.00001569  
+Epoch: [4][25400/109002] Elapsed 112m 34s (remain 370m 31s) Loss: 0.0155(0.0084) Grad: 0.4798  LR: 0.00001569  
+Epoch: [4][25500/109002] Elapsed 113m 1s (remain 370m 5s) Loss: 0.0071(0.0084) Grad: 0.3068  LR: 0.00001569  
+Epoch: [4][25600/109002] Elapsed 113m 28s (remain 369m 40s) Loss: 0.0017(0.0084) Grad: 0.3508  LR: 0.00001569  
+Epoch: [4][25700/109002] Elapsed 113m 55s (remain 369m 14s) Loss: 0.0041(0.0084) Grad: 0.2290  LR: 0.00001569  
+Epoch: [4][25800/109002] Elapsed 114m 22s (remain 368m 49s) Loss: 0.0052(0.0084) Grad: 0.3003  LR: 0.00001568  
+Epoch: [4][25900/109002] Elapsed 114m 49s (remain 368m 24s) Loss: 0.0095(0.0084) Grad: 0.3916  LR: 0.00001568  
+Epoch: [4][26000/109002] Elapsed 115m 16s (remain 368m 0s) Loss: 0.0035(0.0084) Grad: 0.4028  LR: 0.00001568  
+Epoch: [4][26100/109002] Elapsed 115m 44s (remain 367m 35s) Loss: 0.0038(0.0084) Grad: 0.1732  LR: 0.00001568  
+Epoch: [4][26200/109002] Elapsed 116m 11s (remain 367m 10s) Loss: 0.0067(0.0084) Grad: 0.4687  LR: 0.00001568  
+Epoch: [4][26300/109002] Elapsed 116m 38s (remain 366m 45s) Loss: 0.0046(0.0084) Grad: 0.3700  LR: 0.00001568  
+Epoch: [4][26400/109002] Elapsed 117m 5s (remain 366m 20s) Loss: 0.0187(0.0084) Grad: 0.4083  LR: 0.00001568  
+Epoch: [4][26500/109002] Elapsed 117m 32s (remain 365m 55s) Loss: 0.0094(0.0084) Grad: 0.4109  LR: 0.00001568  
+Epoch: [4][26600/109002] Elapsed 117m 59s (remain 365m 30s) Loss: 0.0080(0.0084) Grad: 0.4370  LR: 0.00001567  
+Epoch: [4][26700/109002] Elapsed 118m 26s (remain 365m 5s) Loss: 0.0135(0.0084) Grad: 0.3271  LR: 0.00001567  
+Epoch: [4][26800/109002] Elapsed 118m 53s (remain 364m 39s) Loss: 0.0039(0.0084) Grad: 0.1921  LR: 0.00001567  
+Epoch: [4][26900/109002] Elapsed 119m 20s (remain 364m 13s) Loss: 0.0029(0.0084) Grad: 0.4428  LR: 0.00001567  
+Epoch: [4][27000/109002] Elapsed 119m 47s (remain 363m 47s) Loss: 0.0126(0.0084) Grad: 0.4094  LR: 0.00001567  
+Epoch: [4][27100/109002] Elapsed 120m 14s (remain 363m 22s) Loss: 0.0080(0.0084) Grad: 0.2511  LR: 0.00001567  
+Epoch: [4][27200/109002] Elapsed 120m 41s (remain 362m 57s) Loss: 0.0073(0.0084) Grad: 0.4001  LR: 0.00001567  
+Epoch: [4][27300/109002] Elapsed 121m 8s (remain 362m 31s) Loss: 0.0065(0.0084) Grad: 0.2084  LR: 0.00001567  
+Epoch: [4][27400/109002] Elapsed 121m 35s (remain 362m 5s) Loss: 0.0038(0.0084) Grad: 0.2971  LR: 0.00001566  
+Epoch: [4][27500/109002] Elapsed 122m 2s (remain 361m 40s) Loss: 0.0125(0.0084) Grad: 0.4922  LR: 0.00001566  
+Epoch: [4][27600/109002] Elapsed 122m 29s (remain 361m 14s) Loss: 0.0053(0.0084) Grad: 0.2002  LR: 0.00001566  
+Epoch: [4][27700/109002] Elapsed 122m 56s (remain 360m 48s) Loss: 0.0040(0.0084) Grad: 0.3838  LR: 0.00001566  
+Epoch: [4][27800/109002] Elapsed 123m 23s (remain 360m 23s) Loss: 0.0096(0.0084) Grad: 0.4504  LR: 0.00001566  
+Epoch: [4][27900/109002] Elapsed 123m 50s (remain 359m 57s) Loss: 0.0137(0.0084) Grad: 0.2519  LR: 0.00001566  
+Epoch: [4][28000/109002] Elapsed 124m 17s (remain 359m 31s) Loss: 0.0065(0.0084) Grad: 0.3393  LR: 0.00001566  
+Epoch: [4][28100/109002] Elapsed 124m 44s (remain 359m 6s) Loss: 0.0030(0.0084) Grad: 0.4726  LR: 0.00001566  
+Epoch: [4][28200/109002] Elapsed 125m 10s (remain 358m 40s) Loss: 0.0126(0.0084) Grad: 0.2651  LR: 0.00001566  
+Epoch: [4][28300/109002] Elapsed 125m 37s (remain 358m 14s) Loss: 0.0054(0.0084) Grad: 0.2735  LR: 0.00001565  
+Epoch: [4][28400/109002] Elapsed 126m 4s (remain 357m 48s) Loss: 0.0232(0.0084) Grad: 0.7201  LR: 0.00001565  
+Epoch: [4][28500/109002] Elapsed 126m 31s (remain 357m 23s) Loss: 0.0057(0.0084) Grad: 0.2343  LR: 0.00001565  
+Epoch: [4][28600/109002] Elapsed 126m 58s (remain 356m 57s) Loss: 0.0096(0.0084) Grad: 0.3061  LR: 0.00001565  
+Epoch: [4][28700/109002] Elapsed 127m 25s (remain 356m 30s) Loss: 0.0055(0.0084) Grad: 0.8553  LR: 0.00001565  
+Epoch: [4][28800/109002] Elapsed 127m 52s (remain 356m 4s) Loss: 0.0115(0.0084) Grad: 0.2535  LR: 0.00001565  
+Epoch: [4][28900/109002] Elapsed 128m 19s (remain 355m 38s) Loss: 0.0087(0.0084) Grad: 0.5164  LR: 0.00001565  
+Epoch: [4][29000/109002] Elapsed 128m 46s (remain 355m 12s) Loss: 0.0129(0.0084) Grad: 0.4452  LR: 0.00001565  
+Epoch: [4][29100/109002] Elapsed 129m 12s (remain 354m 46s) Loss: 0.0076(0.0084) Grad: 0.2179  LR: 0.00001564  
+Epoch: [4][29200/109002] Elapsed 129m 39s (remain 354m 20s) Loss: 0.0053(0.0084) Grad: 0.5447  LR: 0.00001564  
+Epoch: [4][29300/109002] Elapsed 130m 6s (remain 353m 54s) Loss: 0.0019(0.0084) Grad: 0.3937  LR: 0.00001564  
+Epoch: [4][29400/109002] Elapsed 130m 33s (remain 353m 28s) Loss: 0.0329(0.0084) Grad: 0.6508  LR: 0.00001564  
+Epoch: [4][29500/109002] Elapsed 131m 0s (remain 353m 2s) Loss: 0.0037(0.0084) Grad: 0.4238  LR: 0.00001564  
+Epoch: [4][29600/109002] Elapsed 131m 27s (remain 352m 36s) Loss: 0.0088(0.0084) Grad: 0.4056  LR: 0.00001564  
+Epoch: [4][29700/109002] Elapsed 131m 54s (remain 352m 10s) Loss: 0.0067(0.0084) Grad: 0.4171  LR: 0.00001564  
+Epoch: [4][29800/109002] Elapsed 132m 21s (remain 351m 44s) Loss: 0.0067(0.0084) Grad: 0.3184  LR: 0.00001564  
+Epoch: [4][29900/109002] Elapsed 132m 47s (remain 351m 18s) Loss: 0.0102(0.0084) Grad: 0.5303  LR: 0.00001563  
+Epoch: [4][30000/109002] Elapsed 133m 14s (remain 350m 52s) Loss: 0.0060(0.0084) Grad: 0.2767  LR: 0.00001563  
+Epoch: [4][30100/109002] Elapsed 133m 41s (remain 350m 26s) Loss: 0.0092(0.0084) Grad: 0.5323  LR: 0.00001563  
+Epoch: [4][30200/109002] Elapsed 134m 8s (remain 350m 0s) Loss: 0.0129(0.0084) Grad: 0.4395  LR: 0.00001563  
+Epoch: [4][30300/109002] Elapsed 134m 35s (remain 349m 34s) Loss: 0.0132(0.0084) Grad: 0.3152  LR: 0.00001563  
+Epoch: [4][30400/109002] Elapsed 135m 2s (remain 349m 8s) Loss: 0.0043(0.0084) Grad: 0.4481  LR: 0.00001563  
+Epoch: [4][30500/109002] Elapsed 135m 29s (remain 348m 42s) Loss: 0.0070(0.0084) Grad: 0.4132  LR: 0.00001563  
+Epoch: [4][30600/109002] Elapsed 135m 56s (remain 348m 16s) Loss: 0.0062(0.0084) Grad: 0.2182  LR: 0.00001563  
+Epoch: [4][30700/109002] Elapsed 136m 23s (remain 347m 50s) Loss: 0.0080(0.0084) Grad: 0.4591  LR: 0.00001562  
+Epoch: [4][30800/109002] Elapsed 136m 49s (remain 347m 24s) Loss: 0.0036(0.0084) Grad: 0.3228  LR: 0.00001562  
+Epoch: [4][30900/109002] Elapsed 137m 16s (remain 346m 58s) Loss: 0.0068(0.0084) Grad: 0.2811  LR: 0.00001562  
+Epoch: [4][31000/109002] Elapsed 137m 43s (remain 346m 32s) Loss: 0.0043(0.0084) Grad: 0.4167  LR: 0.00001562  
+Epoch: [4][31100/109002] Elapsed 138m 10s (remain 346m 6s) Loss: 0.0076(0.0084) Grad: 0.5543  LR: 0.00001562  
+Epoch: [4][31200/109002] Elapsed 138m 37s (remain 345m 40s) Loss: 0.0069(0.0084) Grad: 0.2406  LR: 0.00001562  
+Epoch: [4][31300/109002] Elapsed 139m 4s (remain 345m 14s) Loss: 0.0024(0.0084) Grad: 0.2096  LR: 0.00001562  
+Epoch: [4][31400/109002] Elapsed 139m 31s (remain 344m 48s) Loss: 0.0061(0.0084) Grad: 0.5596  LR: 0.00001562  
+Epoch: [4][31500/109002] Elapsed 139m 58s (remain 344m 22s) Loss: 0.0113(0.0084) Grad: 0.2470  LR: 0.00001561  
+Epoch: [4][31600/109002] Elapsed 140m 25s (remain 343m 55s) Loss: 0.0051(0.0084) Grad: 0.6396  LR: 0.00001561  
+Epoch: [4][31700/109002] Elapsed 140m 52s (remain 343m 29s) Loss: 0.0033(0.0084) Grad: 0.5044  LR: 0.00001561  
+Epoch: [4][31800/109002] Elapsed 141m 18s (remain 343m 3s) Loss: 0.0134(0.0084) Grad: 0.4124  LR: 0.00001561  
+Epoch: [4][31900/109002] Elapsed 141m 45s (remain 342m 37s) Loss: 0.0087(0.0084) Grad: 0.5931  LR: 0.00001561  
+Epoch: [4][32000/109002] Elapsed 142m 12s (remain 342m 11s) Loss: 0.0030(0.0084) Grad: 0.3635  LR: 0.00001561  
+Epoch: [4][32100/109002] Elapsed 142m 39s (remain 341m 45s) Loss: 0.0149(0.0084) Grad: 0.3883  LR: 0.00001561  
+Epoch: [4][32200/109002] Elapsed 143m 6s (remain 341m 19s) Loss: 0.0136(0.0084) Grad: 0.3848  LR: 0.00001561  
+Epoch: [4][32300/109002] Elapsed 143m 33s (remain 340m 53s) Loss: 0.0024(0.0084) Grad: 0.3615  LR: 0.00001560  
+Epoch: [4][32400/109002] Elapsed 144m 0s (remain 340m 27s) Loss: 0.0003(0.0084) Grad: 0.0408  LR: 0.00001560  
+Epoch: [4][32500/109002] Elapsed 144m 27s (remain 340m 0s) Loss: 0.0120(0.0084) Grad: 0.5518  LR: 0.00001560  
+Epoch: [4][32600/109002] Elapsed 144m 54s (remain 339m 34s) Loss: 0.0031(0.0084) Grad: 0.4778  LR: 0.00001560  
+Epoch: [4][32700/109002] Elapsed 145m 20s (remain 339m 8s) Loss: 0.0073(0.0084) Grad: 0.3020  LR: 0.00001560  
+Epoch: [4][32800/109002] Elapsed 145m 47s (remain 338m 42s) Loss: 0.0070(0.0084) Grad: 0.5517  LR: 0.00001560  
+Epoch: [4][32900/109002] Elapsed 146m 14s (remain 338m 16s) Loss: 0.0096(0.0084) Grad: 0.5071  LR: 0.00001560  
+Epoch: [4][33000/109002] Elapsed 146m 41s (remain 337m 50s) Loss: 0.0042(0.0084) Grad: 0.2039  LR: 0.00001560  
+Epoch: [4][33100/109002] Elapsed 147m 8s (remain 337m 24s) Loss: 0.0035(0.0084) Grad: 0.2833  LR: 0.00001560  
+Epoch: [4][33200/109002] Elapsed 147m 35s (remain 336m 57s) Loss: 0.0174(0.0084) Grad: 0.5175  LR: 0.00001559  
+Epoch: [4][33300/109002] Elapsed 148m 2s (remain 336m 31s) Loss: 0.0114(0.0084) Grad: 0.3138  LR: 0.00001559  
+Epoch: [4][33400/109002] Elapsed 148m 29s (remain 336m 5s) Loss: 0.0137(0.0084) Grad: 0.4525  LR: 0.00001559  
+Epoch: [4][33500/109002] Elapsed 148m 56s (remain 335m 39s) Loss: 0.0101(0.0084) Grad: 0.5730  LR: 0.00001559  
+Epoch: [4][33600/109002] Elapsed 149m 22s (remain 335m 12s) Loss: 0.0419(0.0084) Grad: 0.4684  LR: 0.00001559  
+Epoch: [4][33700/109002] Elapsed 149m 49s (remain 334m 46s) Loss: 0.0051(0.0084) Grad: 0.3235  LR: 0.00001559  
+Epoch: [4][33800/109002] Elapsed 150m 16s (remain 334m 20s) Loss: 0.0084(0.0084) Grad: 0.4692  LR: 0.00001559  
+Epoch: [4][33900/109002] Elapsed 150m 43s (remain 333m 54s) Loss: 0.0063(0.0084) Grad: 0.1797  LR: 0.00001559  
+Epoch: [4][34000/109002] Elapsed 151m 10s (remain 333m 28s) Loss: 0.0098(0.0084) Grad: 0.5047  LR: 0.00001558  
+Epoch: [4][34100/109002] Elapsed 151m 37s (remain 333m 1s) Loss: 0.0196(0.0084) Grad: 0.5718  LR: 0.00001558  
+Epoch: [4][34200/109002] Elapsed 152m 4s (remain 332m 35s) Loss: 0.0356(0.0084) Grad: 0.5629  LR: 0.00001558  
+Epoch: [4][34300/109002] Elapsed 152m 31s (remain 332m 9s) Loss: 0.0081(0.0084) Grad: 0.3594  LR: 0.00001558  
+Epoch: [4][34400/109002] Elapsed 152m 57s (remain 331m 43s) Loss: 0.0076(0.0084) Grad: 0.4449  LR: 0.00001558  
+Epoch: [4][34500/109002] Elapsed 153m 24s (remain 331m 16s) Loss: 0.0193(0.0084) Grad: 0.5970  LR: 0.00001558  
+Epoch: [4][34600/109002] Elapsed 153m 51s (remain 330m 50s) Loss: 0.0164(0.0084) Grad: 0.4139  LR: 0.00001558  
+Epoch: [4][34700/109002] Elapsed 154m 18s (remain 330m 24s) Loss: 0.0063(0.0084) Grad: 0.4119  LR: 0.00001558  
+Epoch: [4][34800/109002] Elapsed 154m 45s (remain 329m 58s) Loss: 0.0033(0.0084) Grad: 0.1258  LR: 0.00001557  
+Epoch: [4][34900/109002] Elapsed 155m 12s (remain 329m 32s) Loss: 0.0076(0.0084) Grad: 0.3366  LR: 0.00001557  
+Epoch: [4][35000/109002] Elapsed 155m 39s (remain 329m 5s) Loss: 0.0099(0.0084) Grad: 0.4859  LR: 0.00001557  
+Epoch: [4][35100/109002] Elapsed 156m 6s (remain 328m 39s) Loss: 0.0058(0.0084) Grad: 0.2396  LR: 0.00001557  
+Epoch: [4][35200/109002] Elapsed 156m 33s (remain 328m 13s) Loss: 0.0017(0.0084) Grad: 0.6460  LR: 0.00001557  
+Epoch: [4][35300/109002] Elapsed 157m 0s (remain 327m 47s) Loss: 0.0073(0.0084) Grad: 0.5750  LR: 0.00001557  
+Epoch: [4][35400/109002] Elapsed 157m 26s (remain 327m 20s) Loss: 0.0103(0.0084) Grad: 0.2796  LR: 0.00001557  
+Epoch: [4][35500/109002] Elapsed 157m 53s (remain 326m 54s) Loss: 0.0023(0.0084) Grad: 0.2532  LR: 0.00001557  
+Epoch: [4][35600/109002] Elapsed 158m 20s (remain 326m 28s) Loss: 0.0080(0.0084) Grad: 0.4446  LR: 0.00001556  
+Epoch: [4][35700/109002] Elapsed 158m 47s (remain 326m 2s) Loss: 0.0119(0.0084) Grad: 0.3122  LR: 0.00001556  
+Epoch: [4][35800/109002] Elapsed 159m 14s (remain 325m 35s) Loss: 0.0225(0.0084) Grad: 0.5555  LR: 0.00001556  
+Epoch: [4][35900/109002] Elapsed 159m 41s (remain 325m 9s) Loss: 0.0098(0.0084) Grad: 0.4236  LR: 0.00001556  
+Epoch: [4][36000/109002] Elapsed 160m 8s (remain 324m 43s) Loss: 0.0078(0.0084) Grad: 0.2069  LR: 0.00001556  
+Epoch: [4][36100/109002] Elapsed 160m 35s (remain 324m 17s) Loss: 0.0014(0.0084) Grad: 0.2154  LR: 0.00001556  
+Epoch: [4][36200/109002] Elapsed 161m 2s (remain 323m 50s) Loss: 0.0066(0.0084) Grad: 0.3031  LR: 0.00001556  
+Epoch: [4][36300/109002] Elapsed 161m 29s (remain 323m 24s) Loss: 0.0122(0.0084) Grad: 0.3548  LR: 0.00001556  
+Epoch: [4][36400/109002] Elapsed 161m 55s (remain 322m 58s) Loss: 0.0238(0.0084) Grad: 0.5318  LR: 0.00001555  
+Epoch: [4][36500/109002] Elapsed 162m 22s (remain 322m 32s) Loss: 0.0062(0.0084) Grad: 0.5426  LR: 0.00001555  
+Epoch: [4][36600/109002] Elapsed 162m 49s (remain 322m 5s) Loss: 0.0254(0.0084) Grad: 0.7108  LR: 0.00001555  
+Epoch: [4][36700/109002] Elapsed 163m 16s (remain 321m 39s) Loss: 0.0037(0.0084) Grad: 0.2713  LR: 0.00001555  
+Epoch: [4][36800/109002] Elapsed 163m 43s (remain 321m 13s) Loss: 0.0093(0.0084) Grad: 0.5223  LR: 0.00001555  
+Epoch: [4][36900/109002] Elapsed 164m 10s (remain 320m 46s) Loss: 0.0021(0.0084) Grad: 0.1314  LR: 0.00001555  
+Epoch: [4][37000/109002] Elapsed 164m 36s (remain 320m 19s) Loss: 0.0095(0.0084) Grad: 0.3432  LR: 0.00001555  
+Epoch: [4][37100/109002] Elapsed 165m 3s (remain 319m 52s) Loss: 0.0095(0.0084) Grad: 0.4747  LR: 0.00001555  
+Epoch: [4][37200/109002] Elapsed 165m 29s (remain 319m 24s) Loss: 0.0019(0.0084) Grad: 0.1506  LR: 0.00001554  
+Epoch: [4][37300/109002] Elapsed 165m 55s (remain 318m 57s) Loss: 0.0022(0.0084) Grad: 0.2417  LR: 0.00001554  

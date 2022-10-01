@@ -126,7 +126,39 @@ class SentencePieceUnigramTokenizer(BaseTokenizer):
         tokenizer_json["model"]["unk_id"] = self.special_tokens["unk"]["id"]
 
         self._tokenizer = Tokenizer.from_str(json.dumps(tokenizer_json))
+        
 
+def create_normal_tokenizer(dataset, model_name):
+    if type(dataset) == datasets.dataset_dict.DatasetDict:
+        training_corpus = (
+        dataset['train'][i : i + 1000]['smiles']
+        for i in range(0, len(dataset), 1000)
+        )
+    else:
+        training_corpus = (
+        dataset[i : i + 1000]['smiles']
+        for i in range(0, len(dataset), 1000)
+        )
+
+    if 'deberta' in model_name:
+        # Train tokenizer
+        old_tokenizer = AutoTokenizer.from_pretrained(model_name)
+        tokenizer = old_tokenizer.train_new_from_iterator(training_corpus, 1000)
+    elif 't5' in model_name:
+        tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
+        tokenizer.train_from_iterator(training_corpus, 1000)
+    
+    return tokenizer
+
+
+def create_character_level_tokenizer(dataset, model_name):
+    df = dataset['train'].to_pandas()
+    df['smiles'] = [' '.join(list(i)) for i in df['smiles']]
+    dataset = datasets.Dataset.from_pandas(df)    
+    
+    tokenizer = create_normal_tokenizer(dataset, model_name)
+    
+    return tokenizer
 
 
 def seed_everything(seed=42):
@@ -142,258 +174,112 @@ seed_everything(seed=42)
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--load_dataset", action="store_true", default=False, required=False)
+    parser.add_argument("--use_character_level_tokenizer", action="store_true", default=False, required=False)
     
     return parser.parse_args()
 
 CFG = parse_args()
 
 
-if CFG.load_dataset:
-    
-    # PubChem10m data
+# ORD data
+# Prepare train, validation and test data
+all = pd.read_csv('./data/all_ord_reaction_uniq_canonicalized.csv')
 
-    # Initialize a dataset
-    dataset = load_dataset('sagawa/pubchem-10m-canonicalized')
-    dataset = datasets.concatenate_datasets([dataset['train'], dataset['validation']])
-    training_corpus = (
-        dataset[i : i + 1000]['smiles']
-        for i in range(0, len(dataset), 1000)
-    )
+train, test = train_test_split(all, test_size=int(len(all)*0.1))
+train, val = train_test_split(train, test_size=int(len(all)*0.1))
 
-    # Train tokenizer
-    old_tokenizer = AutoTokenizer.from_pretrained('microsoft/deberta-base')
-    tokenizer = old_tokenizer.train_new_from_iterator(training_corpus, 1000)
-
-    # Save files to disk
-    tokenizer.save_pretrained('./pretraining/PubChem10m-deberta/PubChem10m-deberta-base')
+train.to_csv('./data/all_ord_reaction_uniq_canonicalized-train.csv', index=False)
+val.to_csv('./data/all_ord_reaction_uniq_canonicalized-valid.csv', index=False)
+test.to_csv('./data/all_ord_reaction_uniq_canonicalized-test.csv', index=False)
 
 
-    # ZINC data
+# PubChem10m data
+# Initialize a dataset
+dataset = load_dataset('csv',data_files='./data/pubchem-10m-canonicalized.csv')
 
-    # Initialize a dataset
-    dataset = load_dataset('sagawa/ZINC-canonicalized')
-    dataset = datasets.concatenate_datasets([dataset['train'], dataset['validation']])
-    training_corpus = (
-        dataset[i : i + 1000]['smiles']
-        for i in range(0, len(dataset), 1000)
-    )
-    
-    # Train tokenizer
-    old_tokenizer = AutoTokenizer.from_pretrained('microsoft/deberta-base')
-    tokenizer = old_tokenizer.train_new_from_iterator(training_corpus, 1000)
-
-    # Save files to disk
-    tokenizer.save_pretrained('./pretraining/ZINC-deberta/ZINC-deberta-base')
-
-
-    # PubChem10m data
-
-    vocab_size = 32_000
-    input_sentence_size = None
-
-    # Initialize a dataset
-    dataset = load_dataset('sagawa/pubchem-10m-canonicalized')
-    dataset = datasets.concatenate_datasets([dataset['train'], dataset['validation']])
-
-    tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
-
-    # Build an iterator over this dataset
-    def batch_iterator(input_sentence_size=None):
-        if input_sentence_size is None:
-            input_sentence_size = len(dataset)
-        batch_length = 1000
-        for i in range(0, input_sentence_size, batch_length):
-            yield dataset[i: i + batch_length]['smiles']
-
-    # Train tokenizer
-    tokenizer.train_from_iterator(
-        iterator=batch_iterator(input_sentence_size=input_sentence_size),
-        vocab_size=vocab_size,
-        show_progress=True,
-    )
-
-    # Save files to disk
-    tokenizer.save('./pretraining/PubChem10m-t5/PubChem10m-t5-base/tokenizer.json')
-
-    config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-    config.save_pretrained('./pretraining/PubChem10m-t5/PubChem10m-t5-base/')
-
-
-    # ZINC data
-
-    vocab_size = 32_000
-    input_sentence_size = None
-
-    # Initialize a dataset
-    dataset = load_dataset('sagawa/ZINC-canonicalized')
-    dataset = datasets.concatenate_datasets([dataset['train'], dataset['validation']])
-
-    tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
-
-    # Build an iterator over this dataset
-    def batch_iterator(input_sentence_size=None):
-        if input_sentence_size is None:
-            input_sentence_size = len(dataset)
-        batch_length = 1000
-        for i in range(0, input_sentence_size, batch_length):
-            yield dataset[i: i + batch_length]['smiles']
-
-    # Train tokenizer
-    tokenizer.train_from_iterator(
-        iterator=batch_iterator(input_sentence_size=input_sentence_size),
-        vocab_size=vocab_size,
-        show_progress=True,
-    )
-
-    # Save files to disk
-    tokenizer.save('./pretraining/ZINC-t5/ZINC-t5-base/tokenizer.json')
-
-    config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-    config.save_pretrained('./pretraining/ZINC-t5/ZINC-t5-base/')
-    
+if CFG.use_character_level_tokenizer:
+    tokenizer = create_character_level_tokenizer(dataset, 'microsoft/deberta-base')
 else:
+    tokenizer = create_normal_tokenizer(dataset, 'microsoft/deberta-base')
+# Save files to disk
+tokenizer.save_pretrained('./pretraining/PubChem10m-deberta/PubChem10m-deberta-base')
 
-    # ORD data
-    # Prepare train, validation and test data
-    all = pd.read_csv('./data/all_ord_reaction_uniq_canonicalized.csv')
+# Split into train and validation data
+all = pd.read_csv('./data/pubchem-10m-canonicalized.csv')
+train, valid = train_test_split(all, test_size=0.1)
+# Save train and validation data
+train.to_csv('./data/pubchem-10m-canonicalized-train.csv', index=False)
+valid.to_csv('./data/pubchem-10m-canonicalized-valid.csv', index=False)
 
-    train, test = train_test_split(all, test_size=int(len(all)*0.1))
-    train, val = train_test_split(train, test_size=int(len(all)*0.1))
+# with open('./data/pubchem-10m-train.json', 'w') as fp:############################################################jsonに変える必要あるの？
+#     for smiles in train.smiles:
+#         fp.write(json.dumps({'text':smiles})+'\n')
 
-    train.to_csv('./data/all_ord_reaction_uniq_canonicalized-train.csv', index=False)
-    val.to_csv('./data/all_ord_reaction_uniq_canonicalized-valid.csv', index=False)
-    test.to_csv('./data/all_ord_reaction_uniq_canonicalized-test.csv', index=False)
-
-
-    # PubChem10m data
-
-    # Initialize a dataset
-    dataset = load_dataset('csv',data_files='./data/pubchem-10m-canonicalized.csv')
-    training_corpus = (
-        dataset['train'][i : i + 1000]['smiles']
-        for i in range(0, len(dataset['train']), 1000)
-    )
-
-    # Train tokenizer
-    old_tokenizer = AutoTokenizer.from_pretrained('microsoft/deberta-base')
-    tokenizer = old_tokenizer.train_new_from_iterator(training_corpus, 1000)
-
-    # Save files to disk
-    tokenizer.save_pretrained('./pretraining/PubChem10m-deberta/PubChem10m-deberta-base')
-
-    # Split into train and validation data
-    all = pd.read_csv('./data/pubchem-10m-canonicalized.csv')
-    train, valid = train_test_split(all, test_size=0.1)
-
-    # Save train and validation data
-    train.to_csv('./data/pubchem-10m-canonicalized-train.csv', index=False)
-    valid.to_csv('./data/pubchem-10m-canonicalized-valid.csv', index=False)
-
-    with open('./data/pubchem-10m-train.json', 'w') as fp:
-        for smiles in train.smiles:
-            fp.write(json.dumps({'text':smiles})+'\n')
-
-    with open('./data/pubchem-10m-valid.json', 'w') as fp:
-        for smiles in valid.smiles:
-            fp.write(json.dumps({'text':smiles})+'\n')
+# with open('./data/pubchem-10m-valid.json', 'w') as fp:
+#     for smiles in valid.smiles:
+#         fp.write(json.dumps({'text':smiles})+'\n')
 
 
-    # ZINC data
+# ZINC data
 
-    ZINC = pd.read_csv('./data/ZINC-canonicalized.csv')
-    ZINC.columns = ['text']
-    ZINC.to_csv('./data/ZINC-canonicalized.csv')
-    # Initialize a dataset
-    dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
-    training_corpus = (
-        dataset["train"][i : i + 1000]['text']
-        for i in range(0, len(dataset["train"]), 1000)
-    )
+# ZINC = pd.read_csv('./data/ZINC-canonicalized.csv')
+# ZINC.columns = ['text']############################################################textにに変える必要あるの？
+# ZINC.to_csv('./data/ZINC-canonicalized.csv')
+# # Initialize a dataset
+dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
 
-    # Train tokenizer
-    old_tokenizer = AutoTokenizer.from_pretrained('microsoft/deberta-base')
-    tokenizer = old_tokenizer.train_new_from_iterator(training_corpus, 1000)
+if CFG.use_character_level_tokenizer:
+    tokenizer = create_character_level_tokenizer(dataset, 'microsoft/deberta-base')
+else:
+    tokenizer = create_normal_tokenizer(dataset, 'microsoft/deberta-base')
+    
+# Save files to disk
+tokenizer.save_pretrained('./pretraining/ZINC-deberta/ZINC-deberta-base')
 
-    # Save files to disk
-    tokenizer.save_pretrained('./pretraining/ZINC-deberta/ZINC-deberta-base')
+# Split into train and validation data
+all = pd.read_csv('./data/ZINC-canonicalized.csv')
+train, valid = train_test_split(all, test_size=0.1)
 
-    # Split into train and validation data
-    all = pd.read_csv('./data/ZINC-canonicalized.csv')
-    train, valid = train_test_split(all, test_size=0.1)
+# Save train and validation data
+train.to_csv('./data/ZINC-canonicalized-train.csv', index=False)
+valid.to_csv('./data/ZINC-canonicalized-valid.csv', index=False)
 
-    # Save train and validation data
-    train.to_csv('./data/ZINC-canonicalized-train.csv', index=False)
-    valid.to_csv('./data/ZINC-canonicalized-valid.csv', index=False)
+# with open("./data/ZINC-train.json", "w") as fp:
+#     for smiles in train.text:
+#         fp.write(json.dumps({"text":smiles})+'\n')
 
-    with open("./data/ZINC-train.json", "w") as fp:
-        for smiles in train.text:
-            fp.write(json.dumps({"text":smiles})+'\n')
+# with open("./data/ZINC-valid.json", "w") as fp:
+#     for smiles in valid.text:
+#         fp.write(json.dumps({"text":smiles})+'\n')
 
-    with open("./data/ZINC-valid.json", "w") as fp:
-        for smiles in valid.text:
-            fp.write(json.dumps({"text":smiles})+'\n')
+# PubChem10m data
+# Initialize a dataset
+dataset = load_dataset('csv',data_files='./data/pubchem-10m-canonicalized.csv')
 
-    # PubChem10m data
+if CFG.use_character_level_tokenizer:
+    tokenizer = create_character_level_tokenizer(dataset, 't5')
+else:
+    tokenizer = create_normal_tokenizer(dataset, 't5')
 
-    vocab_size = 32_000
-    input_sentence_size = None
+# Save files to disk
+tokenizer.save('./pretraining/PubChem10m-t5/PubChem10m-t5-base/tokenizer.json')
 
-    # Initialize a dataset
-    dataset = load_dataset('csv',data_files='./data/pubchem-10m-canonicalized.csv')
-
-    tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
-
-    # Build an iterator over this dataset
-    def batch_iterator(input_sentence_size=None):
-        if input_sentence_size is None:
-            input_sentence_size = len(dataset)
-        batch_length = 1000
-        for i in range(0, input_sentence_size, batch_length):
-            yield dataset["train"][i: i + batch_length]['smiles']
-
-    # Train tokenizer
-    tokenizer.train_from_iterator(
-        iterator=batch_iterator(input_sentence_size=input_sentence_size),
-        vocab_size=vocab_size,
-        show_progress=True,
-    )
-
-    # Save files to disk
-    tokenizer.save('./pretraining/PubChem10m-t5/PubChem10m-t5-base/tokenizer.json')
-
-    config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-    config.save_pretrained('./pretraining/PubChem10m-t5/PubChem10m-t5-base/')
+config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
+config.save_pretrained('./pretraining/PubChem10m-t5/PubChem10m-t5-base/')
 
 
-    # ZINC data
+# ZINC data
+# Initialize a dataset
+dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
 
-    vocab_size = 32_000
-    input_sentence_size = None
+if CFG.use_character_level_tokenizer:
+    tokenizer = create_character_level_tokenizer(dataset, 't5')
+else:
+    tokenizer = create_normal_tokenizer(dataset, 't5')
 
-    # Initialize a dataset
-    dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
+# Save files to disk
+tokenizer.save('./pretraining/ZINC-t5/ZINC-t5-base/tokenizer.json')
 
-    tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
-
-    # Build an iterator over this dataset
-    def batch_iterator(input_sentence_size=None):
-        if input_sentence_size is None:
-            input_sentence_size = len(dataset)
-        batch_length = 1000
-        for i in range(0, input_sentence_size, batch_length):
-            yield dataset["train"][i: i + batch_length]['text']
-
-    # Train tokenizer
-    tokenizer.train_from_iterator(
-        iterator=batch_iterator(input_sentence_size=input_sentence_size),
-        vocab_size=vocab_size,
-        show_progress=True,
-    )
-
-    # Save files to disk
-    tokenizer.save('./pretraining/ZINC-t5/ZINC-t5-base/tokenizer.json')
-
-    config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-    config.save_pretrained('./pretraining/ZINC-t5/ZINC-t5-base/')
+config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
+config.save_pretrained('./pretraining/ZINC-t5/ZINC-t5-base/')
 

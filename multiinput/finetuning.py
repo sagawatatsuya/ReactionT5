@@ -128,12 +128,21 @@ for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', '
     df[col] = df[col].fillna(' ')
 df['input'] = 'REACTANT:' + df['REACTANT']  + 'CATALYST:' + df['CATALYST'] + 'REAGENT:' + df['REAGENT'] + 'SOLVENT:' + df['SOLVENT'] + 'NoData:' + df['NoData']
 # df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT'] + 'CATALYST:' + df['CATALYST']
-train_ds = df[:int(len(df)*0.8)]
-valid_ds = df[int(len(df)*0.8):]
 
-train_ds[['input', 'PRODUCT']].to_csv('../../ord-train-debug.csv', index=False)
-valid_ds[['input', 'PRODUCT']].to_csv('../../ord-test-debug.csv', index=False)
-data_files = {'train': '../../ord-train-debug.csv', 'validation': '../../ord-test-debug.csv'}
+lens = df['input'].apply(lambda x: len(x))
+df = df[lens <= 512]
+train, test = train_test_split(df, test_size=int(len(df)*0.1))
+train, valid = train_test_split(train, test_size=int(len(df)*0.1))
+train[['input', 'PRODUCT']].to_csv('../../multi-input-train.csv', index=False)
+valid[['input', 'PRODUCT']].to_csv('../../multi-input-valid.csv', index=False)
+test[['input', 'PRODUCT']].to_csv('../../multi-input-test.csv', index=False)
+
+# train_ds = df[:int(len(df)*0.8)]
+# valid_ds = df[int(len(df)*0.8):]
+
+# train_ds[['input', 'PRODUCT']].to_csv('../../ord-train-debug.csv', index=False)
+# valid_ds[['input', 'PRODUCT']].to_csv('../../ord-test-debug.csv', index=False)
+data_files = {'train': '../../multi-input-train.csv', 'validation': '../../multi-input-valid.csv'}
 dataset = load_dataset('csv', data_files=data_files)
 
 

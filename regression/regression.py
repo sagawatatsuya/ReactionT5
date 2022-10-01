@@ -10,11 +10,17 @@ from tqdm.auto import tqdm
 import torch
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, EncoderDecoderModel, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
+from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
 import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
+from torch.utils.data import Dataset, DataLoader
+import torch.nn as nn
+from torch.optim import AdamW
+import time
+import math
+from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 disable_progress_bar()
 
@@ -51,7 +57,7 @@ class CFG():
     debug = True
     epochs = 5
     lr = 2e-5
-    batch_size = 5 #max_lenを大きくしたらoom下から15から10に
+    batch_size = 5 #max_lenを大きくしたらoom下から15から5に
     max_len = 512
     weight_decay = 0.01
     evaluation_strategy = 'epoch'
@@ -80,7 +86,7 @@ def seed_everything(seed=42):
     torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
     
-from sklearn.preprocessing import MinMaxScaler
+
 df = pd.read_csv(CFG.data)
 # if CFG.debug:
 #     df = df[:1000]
@@ -90,21 +96,22 @@ for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', '
     df[col] = df[col].fillna(' ')
 # df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT'] + 'CATALYST:' + df['CATALYST'] + 'REAGENT:' + df['REAGENT'] + 'SOLVENT:' + df['SOLVENT'] + 'NoData:' + df['NoData']
 df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT'] + 'CATALYST:' + df['CATALYST']
-train_ds = df[:int(len(df)*0.8)]
+
+lens = df['input'].apply(lambda x: len(x))
+df = df[lens <= 512]
+train_ds, test_ds = train_test_split(df, test_size=int(len(all)*0.1))
+train_ds, valid_ds = train_test_split(train_ds, test_size=int(len(all)*0.1))
+train_ds.to_csv('regression-input-train.csv', index=False)
+valid_ds.to_csv('regression-input-valid.csv', index=False)
+test_ds.to_csv('regression-input-test.csv', index=False)
+
 train_ds = train_ds[train_ds['YIELD']<df['YIELD'].quantile(0.999)].reset_index(drop=True)
-valid_ds = df[int(len(df)*0.8):].reset_index(drop=True)
+valid_ds = valid_ds.reset_index(drop=True)
 
 scaler = MinMaxScaler()
 train_ds['YIELD'] = scaler.fit_transform(train_ds['YIELD'].values.reshape(-1, 1))
 valid_ds['YIELD'] = scaler.transform(valid_ds['YIELD'].values.reshape(-1, 1))
 
-from sklearn.metrics import mean_squared_error
-from torch.utils.data import Dataset, DataLoader
-import torch.nn as nn
-from transformers import AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
-from torch.optim import AdamW
-import time
-import math
 
 OUTPUT_DIR = './'
 if not os.path.exists(OUTPUT_DIR):
