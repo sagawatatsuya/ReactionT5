@@ -211,46 +211,25 @@ train, valid = train_test_split(all, test_size=0.1)
 train.to_csv('./data/pubchem-10m-canonicalized-train.csv', index=False)
 valid.to_csv('./data/pubchem-10m-canonicalized-valid.csv', index=False)
 
-# with open('./data/pubchem-10m-train.json', 'w') as fp:############################################################jsonに変える必要あるの？
-#     for smiles in train.smiles:
-#         fp.write(json.dumps({'text':smiles})+'\n')
-
-# with open('./data/pubchem-10m-valid.json', 'w') as fp:
-#     for smiles in valid.smiles:
-#         fp.write(json.dumps({'text':smiles})+'\n')
-
 
 # ZINC data
-
-# ZINC = pd.read_csv('./data/ZINC-canonicalized.csv')
-# ZINC.columns = ['text']############################################################textにに変える必要あるの？
-# ZINC.to_csv('./data/ZINC-canonicalized.csv')
-# # Initialize a dataset
+# Initialize a dataset
 dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
 
 if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 'microsoft/deberta-base')
 else:
     tokenizer = create_normal_tokenizer(dataset, 'microsoft/deberta-base')
-    
 # Save files to disk
 tokenizer.save_pretrained('./pretraining/ZINC-deberta/ZINC-deberta-base')
 
 # Split into train and validation data
 all = pd.read_csv('./data/ZINC-canonicalized.csv')
 train, valid = train_test_split(all, test_size=0.1)
-
 # Save train and validation data
 train.to_csv('./data/ZINC-canonicalized-train.csv', index=False)
 valid.to_csv('./data/ZINC-canonicalized-valid.csv', index=False)
 
-# with open("./data/ZINC-train.json", "w") as fp:
-#     for smiles in train.text:
-#         fp.write(json.dumps({"text":smiles})+'\n')
-
-# with open("./data/ZINC-valid.json", "w") as fp:
-#     for smiles in valid.text:
-#         fp.write(json.dumps({"text":smiles})+'\n')
 
 # PubChem10m data
 # Initialize a dataset
@@ -260,7 +239,6 @@ if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 't5')
 else:
     tokenizer = create_normal_tokenizer(dataset, 't5')
-
 # Save files to disk
 tokenizer.save('./pretraining/PubChem10m-t5/PubChem10m-t5-base/tokenizer.json')
 
@@ -276,7 +254,6 @@ if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 't5')
 else:
     tokenizer = create_normal_tokenizer(dataset, 't5')
-
 # Save files to disk
 tokenizer.save('./pretraining/ZINC-t5/ZINC-t5-base/tokenizer.json')
 

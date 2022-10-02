@@ -53,11 +53,11 @@ python ./new_run_t5_mlm_flax.py \
     --warmup_steps="2000" \
     --overwrite_output_dir \
     --logging_steps="500" \
-    --save_steps="10000" \
-    --num_train_epochs="30" \
+    --save_steps="100000" \
+    --num_train_epochs="10" \
     --do_train \
     --do_eval \
-    --eval_steps="25000"
+    --eval_steps="100000"
 ```
 
 ZINC-t5
@@ -78,11 +78,11 @@ python ./new_run_t5_mlm_flax.py \
     --warmup_steps="2000" \
     --overwrite_output_dir \
     --logging_steps="500" \
-    --save_steps="10000" \
-    --num_train_epochs="30" \
+    --save_steps="100000" \
+    --num_train_epochs="10" \
     --do_train \
     --do_eval \
-    --eval_steps="25000"
+    --eval_steps="100000"
 ```
 
 PubChem10m-deberta
@@ -91,7 +91,7 @@ cd pretraining/PubChem10m-deberta
 python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./PubChem10m-deberta-base" \
-    --num_train_epochs 30 \
+    --num_train_epochs 10 \
     --dataset_name "sagawa/pubchem-10m-canonicalized" \
     --per_device_train_batch_size 5 \
     --max_seq_length 512 \
@@ -100,12 +100,12 @@ python ./run_mlm.py \
     --output_dir "./PubChem10m-deberta-base-output" \
     --overwrite_output_dir \
     --evaluation_strategy "steps" \
-    --eval_steps 25000 \
+    --eval_steps 100000 \
     --save_strategy "steps" \
-    --save_steps="25000" \
+    --save_steps="100000" \
     --save_total_limit=2 \
     --logging_steps 500 \
-    --learning_rate 0.005 \
+    --learning_rate 0.00005 \
     --report_to "none" \
     --use_new_implementation \
     --load_best_model_at_end True \
@@ -118,7 +118,7 @@ cd pretraining/ZINC-deberta
 python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./ZINC-deberta-base" \
-    --num_train_epochs 30 \
+    --num_train_epochs 10 \
     --dataset_name "sagawa/ZINC-canonicalized" \
     --per_device_train_batch_size 5 \
     --max_seq_length 512 \
@@ -127,12 +127,12 @@ python ./run_mlm.py \
     --output_dir "./ZINC-deberta-base-output" \
     --overwrite_output_dir \
     --evaluation_strategy "steps" \
-    --eval_steps 25000 \
+    --eval_steps 100000 \
     --save_strategy "steps" \
-    --save_steps="25000" \
+    --save_steps="100000" \
     --save_total_limit=2 \
     --logging_steps 500 \
-    --learning_rate 0.005 \
+    --learning_rate 0.00005 \
     --report_to "none" \
     --use_new_implementation \
     --load_best_model_at_end True \
@@ -160,11 +160,11 @@ python ./new_run_t5_mlm_flax.py \
     --warmup_steps="2000" \
     --overwrite_output_dir \
     --logging_steps="500" \
-    --save_steps="10000" \
-    --num_train_epochs="30" \
+    --save_steps="100000" \
+    --num_train_epochs="10" \
     --do_train \
     --do_eval \
-    --eval_steps="25000"
+    --eval_steps="100000"
 ```
 
 ZINC-t5
@@ -186,11 +186,11 @@ python ./new_run_t5_mlm_flax.py \
     --warmup_steps="2000" \
     --overwrite_output_dir \
     --logging_steps="500" \
-    --save_steps="10000" \
-    --num_train_epochs="30" \
+    --save_steps="100000" \
+    --num_train_epochs="10" \
     --do_train \
     --do_eval \
-    --eval_steps="25000"
+    --eval_steps="100000"
 ```
 
 PubChem10m-deberta
@@ -199,9 +199,9 @@ cd pretraining/PubChem10m-deberta
 python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./PubChem10m-deberta-base" \
-    --num_train_epochs 30 \
-    --train_file "../../data/pubchem-10m-train.json" \
-    --validation_file "../../data/pubchem-10m-valid.json" \
+    --num_train_epochs 10 \
+    --train_file "../../data/pubchem-10m-canonicalized-train.csv" \
+    --validation_file "../../data/pubchem-10m-canonicalized-valid.csv" \
     --per_device_train_batch_size 5 \
     --max_seq_length 512 \
     --do_train \
@@ -209,11 +209,11 @@ python ./run_mlm.py \
     --output_dir "./PubChem10m-deberta-base-output" \
     --overwrite_output_dir \
     --evaluation_strategy "steps" \
-    --eval_steps 25000 \
+    --eval_steps 100000 \
     --save_strategy "steps" \
-    --save_steps="25000" \
+    --save_steps="100000" \
     --logging_steps 500 \
-    --learning_rate 0.005 \
+    --learning_rate 0.00005 \
     --report_to "none" \
     --use_new_implementation \
     --load_best_model_at_end True \
@@ -226,9 +226,9 @@ cd pretraining/ZINC-deberta
 python ./run_mlm.py \
     --model_name_or_path "microsoft/deberta-base" \
     --tokenizer_name "./ZINC-deberta-base" \
-    --num_train_epochs 30 \
-    --train_file "../../data/ZINC-train.json" \
-    --validation_file "../../data/ZINC-valid.json" \
+    --num_train_epochs 10 \
+    --train_file "../../data/ZINC-canonicalized-train.csv" \
+    --validation_file "../../data/ZINC-canonicalized-valid.csv" \
     --per_device_train_batch_size 5 \
     --max_seq_length 512 \
     --do_train \
@@ -236,11 +236,11 @@ python ./run_mlm.py \
     --output_dir "./ZINC-deberta-base-output" \
     --overwrite_output_dir \
     --evaluation_strategy "steps" \
-    --eval_steps 25000 \
+    --eval_steps 100000 \
     --save_strategy "steps" \
-    --save_steps="25000" \
+    --save_steps="100000" \
     --logging_steps 500 \
-    --learning_rate 0.005 \
+    --learning_rate 0.00005 \
     --report_to "none" \
     --use_new_implementation \
     --load_best_model_at_end True \

@@ -2727,3 +2727,52 @@ Special tokens file saved in t5/checkpoint-907168/special_tokens_map.json
 ***** Running Evaluation *****
   Num examples = 453584
   Batch size = 4
+Saving model checkpoint to t5/checkpoint-1360752
+Configuration saved in t5/checkpoint-1360752/config.json
+Model weights saved in t5/checkpoint-1360752/pytorch_model.bin
+tokenizer config file saved in t5/checkpoint-1360752/tokenizer_config.json
+Special tokens file saved in t5/checkpoint-1360752/special_tokens_map.json
+{'loss': 0.0593, 'learning_rate': 1.4058432396204454e-05, 'epoch': 2.97}
+{'loss': 0.0609, 'learning_rate': 1.4056227732900633e-05, 'epoch': 2.97}
+{'loss': 0.0583, 'learning_rate': 1.4054023069596812e-05, 'epoch': 2.97}
+{'loss': 0.0607, 'learning_rate': 1.4051818406292991e-05, 'epoch': 2.97}
+{'loss': 0.0592, 'learning_rate': 1.4049613742989172e-05, 'epoch': 2.98}
+{'loss': 0.0626, 'learning_rate': 1.4047409079685353e-05, 'epoch': 2.98}
+{'loss': 0.0611, 'learning_rate': 1.404520441638153e-05, 'epoch': 2.98}
+{'loss': 0.0587, 'learning_rate': 1.4042999753077711e-05, 'epoch': 2.98}
+{'loss': 0.0603, 'learning_rate': 1.404079508977389e-05, 'epoch': 2.98}
+{'loss': 0.0593, 'learning_rate': 1.4038590426470071e-05, 'epoch': 2.98}
+{'loss': 0.0601, 'learning_rate': 1.403638576316625e-05, 'epoch': 2.98}
+{'loss': 0.0639, 'learning_rate': 1.403418109986243e-05, 'epoch': 2.98}
+{'loss': 0.0587, 'learning_rate': 1.4031976436558609e-05, 'epoch': 2.98}
+{'loss': 0.0598, 'learning_rate': 1.402977177325479e-05, 'epoch': 2.99}
+{'loss': 0.059, 'learning_rate': 1.4027567109950971e-05, 'epoch': 2.99}
+{'loss': 0.0573, 'learning_rate': 1.4025362446647148e-05, 'epoch': 2.99}
+{'loss': 0.0602, 'learning_rate': 1.402315778334333e-05, 'epoch': 2.99}
+{'loss': 0.0618, 'learning_rate': 1.4020953120039508e-05, 'epoch': 2.99}
+{'loss': 0.0604, 'learning_rate': 1.401874845673569e-05, 'epoch': 2.99}
+{'loss': 0.0582, 'learning_rate': 1.4016543793431869e-05, 'epoch': 2.99}
+{'loss': 0.0559, 'learning_rate': 1.4014339130128048e-05, 'epoch': 2.99}
+{'loss': 0.0579, 'learning_rate': 1.4012134466824227e-05, 'epoch': 2.99}
+{'loss': 0.0594, 'learning_rate': 1.4009929803520408e-05, 'epoch': 3.0}
+{'loss': 0.0596, 'learning_rate': 1.4007725140216589e-05, 'epoch': 3.0}
+{'loss': 0.0594, 'learning_rate': 1.4005520476912766e-05, 'epoch': 3.0}
+{'loss': 0.0614, 'learning_rate': 1.4003315813608947e-05, 'epoch': 3.0}
+{'loss': 0.0617, 'learning_rate': 1.4001111150305126e-05, 'epoch': 3.0}
+{'eval_loss': 3.6172523498535156, 'eval_bleu': 6.117643444995248, 'eval_runtime': 35458.9198, 'eval_samples_per_second': 12.792, 'eval_steps_per_second': 3.198, 'epoch': 3.0}
+Traceback (most recent call last):
+  File "/data1/sagawa_notebook/transformer-chemical-reaction-prediciton/multiinput/finetuning.py", line 236, in <module>
+    model,
+  File "/home/sagawa/anaconda3/lib/python3.9/site-packages/transformers/trainer.py", line 1415, in train
+    return inner_training_loop(
+  File "/home/sagawa/anaconda3/lib/python3.9/site-packages/transformers/trainer.py", line 1749, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/sagawa/anaconda3/lib/python3.9/site-packages/transformers/trainer.py", line 1922, in _maybe_log_save_evaluate
+    self._save_checkpoint(model, trial, metrics=metrics)
+  File "/home/sagawa/anaconda3/lib/python3.9/site-packages/transformers/trainer.py", line 2085, in _save_checkpoint
+    self._rotate_checkpoints(use_mtime=True, output_dir=run_dir)
+  File "/home/sagawa/anaconda3/lib/python3.9/site-packages/transformers/trainer.py", line 2572, in _rotate_checkpoints
+    checkpoints_sorted = self._sorted_checkpoints(use_mtime=use_mtime, output_dir=output_dir)
+  File "/home/sagawa/anaconda3/lib/python3.9/site-packages/transformers/trainer.py", line 2562, in _sorted_checkpoints
+    best_model_index = checkpoints_sorted.index(str(Path(self.state.best_model_checkpoint)))
+ValueError: 't5/checkpoint-453584' is not in list
