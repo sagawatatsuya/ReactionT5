@@ -1,5 +1,0 @@
-Epoch 1 - avg_train_loss: 0.0155  avg_val_loss: 0.0186  time: 30885s
-Epoch 2 - avg_train_loss: 0.0122  avg_val_loss: 0.0181  time: 32870s
-Epoch 3 - avg_train_loss: 0.0100  avg_val_loss: 0.0175  time: 33198s
-Epoch 4 - avg_train_loss: 0.0084  avg_val_loss: 0.0175  time: 31767s
-Epoch 5 - avg_train_loss: 0.0072  avg_val_loss: 0.0169  time: 30733s

@@ -22,6 +22,7 @@ import time
 import math
 from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
+from sklearn.model_selection import train_test_split
 disable_progress_bar()
 
 # def parse_args():
@@ -88,9 +89,6 @@ seed_everything(seed=CFG.seed)
     
 
 df = pd.read_csv(CFG.data)
-# if CFG.debug:
-#     df = df[:1000]
-# df = df.dropna().reset_index(drop=True)
 df = df[~df['YIELD'].isna()]
 for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT', 'YIELD', 'TEMP']:
     df[col] = df[col].fillna(' ')
@@ -99,15 +97,17 @@ df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT'] + 'CATAL
 
 lens = df['input'].apply(lambda x: len(x))
 df = df[lens <= 512]
-train_ds, test_ds = train_test_split(df, test_size=int(len(all)*0.1))
-train_ds, valid_ds = train_test_split(train_ds, test_size=int(len(all)*0.1))
-train_ds.to_csv('regression-input-train.csv', index=False)
-valid_ds.to_csv('regression-input-valid.csv', index=False)
-test_ds.to_csv('regression-input-test.csv', index=False)
+train_ds, test_ds = train_test_split(df, test_size=int(len(df)*0.1))
+train_ds, valid_ds = train_test_split(train_ds, test_size=int(len(df)*0.1))
+train_ds.to_csv('../../regression-input-train.csv', index=False)
+valid_ds.to_csv('../../regression-input-valid.csv', index=False)
+test_ds.to_csv('../../regression-input-test.csv', index=False)
 
 train_ds = train_ds[train_ds['YIELD']<df['YIELD'].quantile(0.999)].reset_index(drop=True)
 valid_ds = valid_ds.reset_index(drop=True)
-
+if CFG.debug:
+    train_ds = train_ds[:int(len(train_ds)/4)].reset_index(drop=True)
+    valid_ds = valid_ds[:int(len(valid_ds)/4)].reset_index(drop=True)
 scaler = MinMaxScaler()
 train_ds['YIELD'] = scaler.fit_transform(train_ds['YIELD'].values.reshape(-1, 1))
 valid_ds['YIELD'] = scaler.transform(valid_ds['YIELD'].values.reshape(-1, 1))
@@ -174,14 +174,20 @@ class RegressionModel(nn.Module):
         else:
             self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(cfg.tokenizer))
-        self.fc_dropout = nn.Dropout(cfg.fc_dropout)
-        self.fc = nn.Linear(self.config.hidden_size, 1)
+        self.fc_dropout1 = nn.Dropout(cfg.fc_dropout)
+        self.fc1 = nn.Linear(self.config.hidden_size, 256)
+        self.fc_dropout2 = nn.Dropout(cfg.fc_dropout)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc_dropout3 = nn.Dropout(cfg.fc_dropout)
+        self.fc3 = nn.Linear(128, 1)
         
     def forward(self, inputs):
         outputs = self.model(**inputs)
         last_hidden_states = outputs[0]
 #         print(last_hidden_states.shape)
-        output = self.fc(self.fc_dropout(last_hidden_states)[:, 0, :].view(-1, self.config.hidden_size))
+        output = self.fc1(self.fc_dropout1(last_hidden_states)[:, 0, :].view(-1, self.config.hidden_size))
+        output = self.fc2(self.fc_dropout2(output))
+        output = self.fc3(self.fc_dropout3(output))
 #         print(output.shape)
         return output
     
@@ -229,8 +235,6 @@ def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device
         batch_size = labels.size(0)
         with torch.cuda.amp.autocast(enabled=CFG.apex):
             y_preds = model(inputs)
-#         print(y_preds.shape)
-#         print(labels)
         loss = criterion(y_preds.view(-1, 1), labels.view(-1, 1))
         if CFG.gradient_accumulation_steps > 1:
             loss = loss/CFG.gradient_accumulation_steps

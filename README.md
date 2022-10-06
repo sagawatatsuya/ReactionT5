@@ -1,4 +1,4 @@
-# transformer-chemical-reaction-prediciton
+# transformer chemical reaction prediciton
 We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models [here](https://huggingface.co/sagawa). Using these pretrained models, we conducted a chemical reaction prediction, where if models were given a product, they generate reactants which is necessary for the reaction.
 # How to start with
 First, you have to install libraries. You can use requirements.yaml. If torch and jax version doesn't fit your environment, change and run following command. 

@@ -15,6 +15,7 @@ import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
+from sklearn.model_selection import train_test_split
 from datasets.utils.logging import disable_progress_bar
 disable_progress_bar()
 
@@ -133,6 +134,9 @@ lens = df['input'].apply(lambda x: len(x))
 df = df[lens <= 512]
 train, test = train_test_split(df, test_size=int(len(df)*0.1))
 train, valid = train_test_split(train, test_size=int(len(df)*0.1))
+if CFG.debug:
+    train = train[:int(len(train)/4)].reset_index(drop=True)
+    valid = valid[:int(len(valid)/4)].reset_index(drop=True)
 train[['input', 'PRODUCT']].to_csv('../../multi-input-train.csv', index=False)
 valid[['input', 'PRODUCT']].to_csv('../../multi-input-valid.csv', index=False)
 test[['input', 'PRODUCT']].to_csv('../../multi-input-test.csv', index=False)
