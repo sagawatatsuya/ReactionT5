@@ -280,6 +280,7 @@ def hp_tuning(cfg):
 
     # start hyperparameter tuning
     param = trainer.hyperparameter_search(
+        direction='maximize',
         hp_space=my_hp_space,
         n_trials=n_trials
     )
