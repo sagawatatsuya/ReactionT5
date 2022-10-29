@@ -274,7 +274,7 @@ def hp_tuning(cfg):
     
     def my_hp_space(trial):
         return {
-            "learning_rate": trial.suggest_float("learning_rate", 1e-4, 1e-2, log=True),
+            "learning_rate": trial.suggest_float("learning_rate", 1e-5, 1e-3, log=True),
             "weight_decay": trial.suggest_float("weight_decay", 0.001, 0.1, log=True),
         }
 

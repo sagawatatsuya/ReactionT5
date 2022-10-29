@@ -139,7 +139,7 @@ def compute_metrics(eval_preds):
 
     decoded_preds = tokenizer.batch_decode(preds, skip_special_tokens=True)
 
-    labels = np.where(labels != -100, labels, tokenizer.pad_token_id)# np.where(条件式, x, y) True=>xi, False=>yiを要素と持つリストを返す
+    labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
     decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
 
     decoded_preds = [pred.strip() for pred in decoded_preds]

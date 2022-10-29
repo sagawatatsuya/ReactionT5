@@ -7,7 +7,6 @@ warnings.filterwarnings('ignore')
 import numpy as np
 import pandas as pd
 from tqdm.auto import tqdm
-import torch
 import tokenizers
 import transformers
 from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
@@ -15,68 +14,79 @@ import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
+import torch
 from torch.utils.data import Dataset, DataLoader
+import torch.nn.functional as F
 import torch.nn as nn
 from torch.optim import AdamW
+import pickle
 import time
 import math
 from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 disable_progress_bar()
 
-# def parse_args():
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("--train", action='store_true', default=False, required=False)
-#     parser.add_argument("--data_path", type=str, required=False)
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data_path", type=str, required=False)
 #     parser.add_argument("--dataset_name", type=str, required=False)
-#     parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
-#     parser.add_argument("--model", type=str, required=True)
-#     parser.add_argument("--debug", action='store_true', default=False, required=False)
-#     parser.add_argument("--epochs", type=int, default=3, required=False)
-#     parser.add_argument("--lr", type=float, default=2e-5, required=False)
-#     parser.add_argument("--batch_size", type=int, default=16, required=False)
-#     parser.add_argument("--max_len", type=int, default=128, required=False)
-#     parser.add_argument("--weight_decay", type=float, default=0.01, required=False)
-#     parser.add_argument("--evaluation_strategy", type=str, default="epoch", required=False)
-#     parser.add_argument("--save_strategy", type=str, default="epoch", required=False)
-#     parser.add_argument("--logging_strategy", type=str, default="epoch", required=False)
-#     parser.add_argument("--save_total_limit", type=int, default=3, required=False)
-#     parser.add_argument("--fp16", action='store_true', default=False, required=False)
-#     parser.add_argument("--disable_tqdm", action="store_true", default=False, required=False)
-#     parser.add_argument("--multitask", action="store_true", default=False, required=False)
-#     parser.add_argument("--shuffle_augmentation", type=int, default=0, required=False)
-#     parser.add_argument("--noncanonical_augmentation", type=int, default=0, required=False)
-#     parser.add_argument("--seed", type=int, default=42, required=False)
+    parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
+    parser.add_argument("--model_name_or_path", type=str, required=False)
+    parser.add_argument("--debug", action='store_true', default=False, required=False)
+    parser.add_argument("--epochs", type=int, default=5, required=False)
+    parser.add_argument("--lr", type=float, default=2e-6, required=False)
+    parser.add_argument("--batch_size", type=int, default=5, required=False)
+    parser.add_argument("--max_len", type=int, default=512, required=False)
+    parser.add_argument("--num_workers", type=int, default=1, required=False)
+    parser.add_argument("--fc_dropout", type=float, default=0.1, required=False)
+    parser.add_argument("--eps", type=float, default=1e-6, required=False)
+    parser.add_argument("--max_grad_norm", type=int, default=1000, required=False)
+    parser.add_argument("--gradient_accumulation_steps", type=int, default=1, required=False)
+    parser.add_argument("--num_warmup_steps", type=int, default=0, required=False)
+    parser.add_argument("--batch_scheduler", action='store_true', default=False, required=False)
+    parser.add_argument("--print_freq", type=int, default=100, required=False)
+    parser.add_argument("--use_apex", action='store_true', default=False, required=False)
+    parser.add_argument("--output_dir", type=str, default='./', required=False)
+    parser.add_argument("--weight_decay", type=float, default=0.01, required=False)
+    parser.add_argument("--shuffle_augmentation", type=int, default=0, required=False)
+    parser.add_argument("--noncanonical_augmentation", type=int, default=0, required=False)
+    parser.add_argument("--seed", type=int, default=42, required=False)
 
-#     return parser.parse_args()
+    return parser.parse_args()
 
-class CFG():
-    data='../../all_ord_reaction_uniq_with_attr_v3.tsv'
-#     pretrained_model_name_or_path = 'sagawa/ZINC-t5'
-    model = 'sagawa/ZINC-t5'
-    debug = True
-    epochs = 5
-    lr = 2e-5
-    batch_size = 5 #max_lenを大きくしたらoom下から15から5に
-    max_len = 512
-    weight_decay = 0.01
-    evaluation_strategy = 'epoch'
-    save_strategy = 'epoch'
-    save_total_limit = 1
-    seed = 42
-    num_workers = 4
-    fc_dropout = 0.2
-    eps = 1e-6
-    max_grad_norm=1000
-    betas=(0.9, 0.999)
-    gradient_accumulation_steps=3
-    num_warmup_steps=0
-    batch_scheduler=True
-    print_freq=100
-    apex=False
+CFG = parse_args()
+
+
+
+# class CFG():
+#     data_path='../../all_ord_reaction_uniq_with_attr_v3.tsv'
+# #     pretrained_model_name_or_path = 'sagawa/ZINC-t5'
+#     model = 'sagawa/ZINC-t5'
+#     debug = True
+#     epochs = 5
+#     lr = 2e-5
+#     batch_size = 5 #max_lenを大きくしたらoomしたから15から5に
+#     max_len = 512
+#     weight_decay = 0.01
+#     seed = 42
+#     num_workers = 4
+#     fc_dropout = 0.1
+#     eps = 1e-6
+#     max_grad_norm=1000
+#     gradient_accumulation_steps=3
+#     num_warmup_steps=0
+#     batch_scheduler=True
+#     print_freq=100
+#     use_apex=False
+#     output_dir = './'
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+OUTPUT_DIR = CFG.output_dir
+if not os.path.exists(OUTPUT_DIR):
+    os.makedirs(OUTPUT_DIR)
 
 def seed_everything(seed=42):
     random.seed(seed)
@@ -88,37 +98,74 @@ def seed_everything(seed=42):
 seed_everything(seed=CFG.seed)  
     
 
-df = pd.read_csv(CFG.data)
+df = pd.read_csv(CFG.data_path)
 df = df[~df['YIELD'].isna()]
 for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT', 'YIELD', 'TEMP']:
     df[col] = df[col].fillna(' ')
 # df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT'] + 'CATALYST:' + df['CATALYST'] + 'REAGENT:' + df['REAGENT'] + 'SOLVENT:' + df['SOLVENT'] + 'NoData:' + df['NoData']
-df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT'] + 'CATALYST:' + df['CATALYST']
+df['input'] = 'REACTANT:' + df['REACTANT'] + 'PRODUCT:' + df['PRODUCT']
 
 lens = df['input'].apply(lambda x: len(x))
+# remove data that have too long inputs
 df = df[lens <= 512]
+# remove outlier
+print('len(df[df["YIELD"]>100]: ', len(df[df['YIELD']>100]))
+df = df[df['YIELD'] <= 100].reset_index(drop=True)
 train_ds, test_ds = train_test_split(df, test_size=int(len(df)*0.1))
 train_ds, valid_ds = train_test_split(train_ds, test_size=int(len(df)*0.1))
 train_ds.to_csv('../../regression-input-train.csv', index=False)
 valid_ds.to_csv('../../regression-input-valid.csv', index=False)
 test_ds.to_csv('../../regression-input-test.csv', index=False)
 
-train_ds = train_ds[train_ds['YIELD']<df['YIELD'].quantile(0.999)].reset_index(drop=True)
-valid_ds = valid_ds.reset_index(drop=True)
+
 if CFG.debug:
     train_ds = train_ds[:int(len(train_ds)/4)].reset_index(drop=True)
     valid_ds = valid_ds[:int(len(valid_ds)/4)].reset_index(drop=True)
+    
 scaler = MinMaxScaler()
 train_ds['YIELD'] = scaler.fit_transform(train_ds['YIELD'].values.reshape(-1, 1))
 valid_ds['YIELD'] = scaler.transform(valid_ds['YIELD'].values.reshape(-1, 1))
 
+with open(OUTPUT_DIR+'scaler.pkl', 'wb') as f:
+    pickle.dump(scaler, f)
+    
+if CFG.noncanonical_augmentation:
+    from rdkit import Chem, RDLogger
+    RDLogger.DisableLog('rdApp.*')
+    def randomize(smiles):
+        lis = []
+        if (len(smiles) == 1) and smiles[0] == ' ':
+            return ' '
+        for smile in smiles:
+            mol = Chem.MolFromSmiles(smile)
+            smi = Chem.MolToSmiles(mol, doRandom=True)
+            lis.append(smi)
+        return '.'.join(lis)
+    
+    train_ds['split_reactant'] = train_ds['REACTANT'].apply(lambda x: x.split('.'))
+    dfs = [train_ds]
+    for i in range(CFG.noncanonical_augmentation):
+        dfc = train_ds.copy()
+        dfc['REACTANT'] = dfc['split_reactant'].apply(randomize)
+        dfs.append(dfc)
+    train_ds = pd.concat(dfs, axis=0).drop('split_reactant', axis=1).drop_duplicates().reset_index(drop=True)
 
-OUTPUT_DIR = './'
-if not os.path.exists(OUTPUT_DIR):
-    os.makedirs(OUTPUT_DIR)
+if CFG.shuffle_augmentation:
+    train_ds['split_reactant'] = train_ds['REACTANT'].apply(lambda x: x.split('.'))
+    dfs = [train_ds]
+    for i in range(CFG.shuffle_augmentation):
+        dfc = train_ds.copy()
+        dfc['REACTANT'] = dfc['split_reactant'].apply(lambda x: '.'.join(random.sample(x, len(x))))
+        dfs.append(dfc)
+    train_ds = pd.concat(dfs, axis=0).drop('split_reactant', axis=1).drop_duplicates().reset_index(drop=True)
 
+    
+if CFG.shuffle_augmentation or CFG.noncanonical_augmentation:
+    train_ds['input'] = 'REACTANT:' + train_ds['REACTANT'] + 'PRODUCT:' + train_ds['PRODUCT'] + 'CATALYST:' + train_ds['CATALYST']
 
-
+train_ds = train_ds[['input', 'YIELD']]
+valid_ds = valid_ds[['input', 'YIELD']]
+    
 def get_logger(filename=OUTPUT_DIR+'train'):
     from logging import getLogger, INFO, StreamHandler, FileHandler, Formatter
     logger = getLogger(__name__)
@@ -133,15 +180,23 @@ def get_logger(filename=OUTPUT_DIR+'train'):
 
 LOGGER = get_logger()
 
-tokenizer = AutoTokenizer.from_pretrained(CFG.model)
-tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['CATALYST:', 'REACTANT:', 'REAGENT:', 'SOLVENT:', 'INTERNAL_STANDARD:', 'NoData:','PRODUCT:']})
+#load tokenizer
+try: # load pretrained tokenizer from local directory
+    tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors='pt')
+except: # load pretrained tokenizer from huggingface model hub
+    tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
+tokenizer.add_tokens('.')
+# tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['CATALYST:', 'REACTANT:', 'REAGENT:', 'SOLVENT:', 'NoData:','PRODUCT:']})
+tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'PRODUCT:', 'NoData:']})
+tokenizer.save_pretrained(OUTPUT_DIR+'tokenizer/')
 CFG.tokenizer = tokenizer
 def prepare_input(cfg, text):
-    inputs = cfg.tokenizer(text, add_special_tokens=True, max_length=CFG.max_len, padding='max_length', return_offsets_mapping=False, truncation=True)
+    inputs = cfg.tokenizer(text, add_special_tokens=True, max_length=CFG.max_len, padding='max_length', return_offsets_mapping=False, truncation=True, return_attention_mask=True)
     for k, v in inputs.items():
         inputs[k] = torch.tensor(v, dtype=torch.long)
     
     return inputs
+
 
 class TrainDataset(Dataset):
     def __init__(self, cfg, df):
@@ -158,38 +213,39 @@ class TrainDataset(Dataset):
         
         return inputs, label
     
+       
 class RegressionModel(nn.Module):
     def __init__(self, cfg, config_path=None, pretrained=False):
         super().__init__()
         self.cfg = cfg
         if config_path is None:
-            self.config = AutoConfig.from_pretrained(cfg.model, output_hidden_states=True)
+            self.config = AutoConfig.from_pretrained(cfg.pretrained_model_name_or_path, output_hidden_states=True)
         else:
             self.config = torch.load(config_path)
         if pretrained:
-            if 't5' in cfg.model:
-                self.model = T5EncoderModel.from_pretrained(CFG.model)
+            if 't5' in cfg.pretrained_model_name_or_path:
+                self.model = T5EncoderModel.from_pretrained(CFG.pretrained_model_name_or_path)
             else:
-                self.model = AutoModel.from_pretrained(CFG.model)
+                self.model = AutoModel.from_pretrained(CFG.pretrained_model_name_or_path)
         else:
-            self.model = AutoModel.from_config(self.config)
+            if 't5' in cfg.model_name_or_path:
+                self.model = T5EncoderModel.from_pretrained('sagawa/ZINC-t5')
+            else:
+                self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(cfg.tokenizer))
         self.fc_dropout1 = nn.Dropout(cfg.fc_dropout)
-        self.fc1 = nn.Linear(self.config.hidden_size, 256)
+        self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size)
         self.fc_dropout2 = nn.Dropout(cfg.fc_dropout)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc_dropout3 = nn.Dropout(cfg.fc_dropout)
-        self.fc3 = nn.Linear(128, 1)
+        self.fc2 = nn.Linear(self.config.hidden_size, 1)
         
     def forward(self, inputs):
         outputs = self.model(**inputs)
         last_hidden_states = outputs[0]
-#         print(last_hidden_states.shape)
         output = self.fc1(self.fc_dropout1(last_hidden_states)[:, 0, :].view(-1, self.config.hidden_size))
         output = self.fc2(self.fc_dropout2(output))
-        output = self.fc3(self.fc_dropout3(output))
-#         print(output.shape)
         return output
+    
+    
     
 class AverageMeter(object):
     def __init__(self):
@@ -224,7 +280,7 @@ def timeSince(since, percent):
 
 def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device):
     model.train()
-    scaler = torch.cuda.amp.GradScaler(enabled=CFG.apex)
+    scaler = torch.cuda.amp.GradScaler(enabled=CFG.use_apex)
     losses = AverageMeter()
     start = end = time.time()
     global_step = 0
@@ -233,7 +289,7 @@ def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device
             inputs[k] = v.to(device)
         labels = labels.to(device)
         batch_size = labels.size(0)
-        with torch.cuda.amp.autocast(enabled=CFG.apex):
+        with torch.cuda.amp.autocast(enabled=CFG.use_apex):
             y_preds = model(inputs)
         loss = criterion(y_preds.view(-1, 1), labels.view(-1, 1))
         if CFG.gradient_accumulation_steps > 1:
@@ -267,26 +323,32 @@ def valid_fn(valid_loader, model, criterion, device):
     losses = AverageMeter()
     model.eval()
     start = end = time.time()
+    label_list = []
+    pred_list = []
     for step, (inputs, labels) in enumerate(valid_loader):
         for k, v in inputs.items():
             inputs[k] = v.to(device)
-        labels = labels.to(device)
-        batch_size = labels.size(0)
+#         labels = labels.to(device)
+#         batch_size = labels.size(0)
         with torch.no_grad():
             y_preds = model(inputs)
-        loss = criterion(y_preds.view(-1, 1), labels.view(-1, 1))
-        if CFG.gradient_accumulation_steps > 1:
-            loss = loss/CFG.gradient_accumulation_steps
-        losses.update(loss.item(), batch_size)
+        label_list += labels.tolist()
+        pred_list += y_preds.tolist()
+#         loss = criterion(y_preds.view(-1, 1), labels.view(-1, 1))
+#         if CFG.gradient_accumulation_steps > 1:
+#             loss = loss/CFG.gradient_accumulation_steps
+#         losses.update(loss.item(), batch_size)
         end = time.time()
         if step % CFG.print_freq == 0 or step == (len(valid_loader)-1):
             print('EVAL: [{0}/{1}] '
                   'Elapsed {remain:s} '
-                  'Loss: {loss.val:.4f}({loss.avg:.4f}) '
+                  'RMSE Loss: {loss:.4f} '
+                  'r2 score: {r2_score:.4f} '
                   .format(step, len(valid_loader),
-                          loss=losses,
-                          remain=timeSince(start, float(step+1)/len(valid_loader))))
-    return losses.avg
+                          loss=mean_squared_error(label_list, pred_list, squared=False),
+                          remain=timeSince(start, float(step+1)/len(valid_loader)),
+                          r2_score=r2_score(label_list, pred_list)))
+    return mean_squared_error(label_list, pred_list), r2_score(label_list, pred_list)
     
 def inference_fn(test_loader, model, device):
     preds = []
@@ -327,33 +389,28 @@ def train_loop(train_ds, valid_ds):
         return optimizer_parameters
     
     optimizer_parameters = get_optimizer_params(model, encoder_lr=CFG.lr, decoder_lr=CFG.lr, weight_decay=CFG.weight_decay)
-    optimizer = AdamW(optimizer_parameters, lr=CFG.lr, eps=CFG.eps, betas=CFG.betas)
+    optimizer = AdamW(optimizer_parameters, lr=CFG.lr, eps=CFG.eps, betas=(0.9, 0.999))
     
     num_train_steps = int(len(train_ds)/CFG.batch_size*CFG.epochs)
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=CFG.num_warmup_steps, num_training_steps=num_train_steps)
     
     criterion = nn.MSELoss(reduction='mean')
-    best_loss = 0
+    best_loss = float('inf')
     
     for epoch in range(CFG.epochs):
         start_time = time.time()
 
         avg_loss = train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device)
-        
-        # prediction削除
-        avg_val_loss = valid_fn(valid_loader, model, criterion, device)
-        
-#         score = get_score(valid_labels, prediction)
+        val_loss, val_r2_score = valid_fn(valid_loader, model, criterion, device)
         
         elapsed = time.time() - start_time
 
-        LOGGER.info(f'Epoch {epoch+1} - avg_train_loss: {avg_loss:.4f}  avg_val_loss: {avg_val_loss:.4f}  time: {elapsed:.0f}s')
-#         LOGGER.info(f'Epoch {epoch+1} - Score: {score:.4f}')
+        LOGGER.info(f'Epoch {epoch+1} - avg_train_loss: {avg_loss:.4f}  val_rmse_loss: {val_loss:.4f}  val_r2_score: {val_r2_score:.4f}  time: {elapsed:.0f}s')
     
-        if avg_val_loss < best_loss:
-            best_loss = avg_val_loss
+        if val_loss < best_loss:
+            best_loss = val_loss
             LOGGER.info(f'Epoch {epoch+1} - Save Lowest Loss: {best_loss:.4f} Model')
-            torch.save(model.state_dict(), OUTPUT_DIR+f"{CFG.model}_best.pth")
+            torch.save(model.state_dict(), OUTPUT_DIR+f"{CFG.pretrained_model_name_or_path.split('/')[-1]}_best.pth")
     
     torch.cuda.empty_cache()
     gc.collect()
