@@ -337,3 +337,77 @@ python finetuning.py \
     --shuffle_augmentation=1 \
     --noncanonical_augmentation=1
 ```
+
+# Use finetuned models
+We finetuned pretrained-models and uploaded to Hugging Face Hub. So you can immediately use them for predicting products or yields against your data. 
+
+### Product prediction
+By executing the following command, you can predict the products of reactions from their inputs. The code expects input_data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like "REACTANT:{reactants of the reaction}CATALYST:{catalysts of the reaction}REAGENT:{reagents of the reaction}SOLVENT:{solvent of the reaction}NoData:{uncategorized compounds of the reaction}". If there are no catalyst or reagent, fill the blank with a space. And if there are multiple reactants, concatenate them with ".".(ex. "REACTANT:NCCO.O=C1COCC(=O)O1CATALYST: REAGENT: SOLVENT:c1ccncc1NoData: ")
+```
+cd prediction/
+python multiinput_prediction.py \
+    --input_data="../../multi-input-valid.csv" \
+    --model_name_or_path="../multiinput2/t5/checkpoint-2721180" \
+    --model="t5" \
+    --num_beams=5 \
+    --num_return_sequences=5
+```
+
+### Yield prediction
+By executing the following command, you can predict the yield of reactions from their inputs. The code expects input_data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like "REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}". If there are multiple reactants, concatenate them with ".".(ex. "REACTANT:NCCO.O=C1COCC(=O)O1CATALYST: REAGENT: SOLVENT:c1ccncc1NoData: ")
+```
+cd prediction/
+python yield_prediction.py \
+    --data="../../regression-input-valid.csv" \
+    --model="t5" \
+    --batch_size=10 \
+    --output_dir="./" \
+    --model_name_or_path="/data2/sagawa/tcrp-regression-model-archive/10-29-1st-low-lr-20epoch" \
+    --scaler_path="/data2/sagawa/tcrp-regression-model-archive/10-29-1st-low-lr-20epoch"
+```
+
+
+# Yield prediction
+You can predict yields of chemical reactions from their inputs (reactants, products, and catalysts). By executing following command, you can finetune yield prediction 
+```
+cd regression/
+python regression.py \
+    --data_path='../../all_ord_reaction_uniq_with_attr_v3.tsv' \
+    --pretrained_model_name_or_path='sagawa/ZINC-t5' \
+    --debug \
+    --epochs=5 \
+    --batch_size=5 \
+    --max_len=512 \
+    --num_workers=4 \
+    --gradient_accumulation_steps=3 \
+    --batch_scheduler \
+    --print_freq=100 \
+    --output_dir='./' \
+    --shuffle_augmentation=0 \
+    --noncanonical_augmentation=0
+```
+
+# Product prediction
+You can predict products of reactions only from reactants. However, we found inputting reactants, catalysts, reagents, solvents, and NoData(their classification is unknown) can achive better results. By execting following command, you can do multi-input product prediction.
+```
+cd multiinput/
+python finetuning.py \
+    --model='t5' \
+    --epochs=10 \
+    --lr=2e-5 \
+    --batch_size=4 \
+    --max_len=512 \
+    --weight_decay=0.01 \
+    --evaluation_strategy='epoch' \
+    --save_strategy='epoch' \
+    --logging_strategy='epoch' \
+    --save_total_limit=1 \
+    --train \
+    --data_path='../data/' \
+    --disable_tqdm \
+    --pretrained_model_name_or_path='sagawa/ZINC-t5' \
+    --multitask \
+    --shuffle_augmentation=1 \
+    --noncanonical_augmentation=1
+```
+
