@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
+from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, T5ForConditionalGeneration
 import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
@@ -26,22 +26,25 @@ from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from rdkit import RDLogger
+RDLogger.DisableLog('rdApp.*')
 disable_progress_bar()
+os.environ['TOKENIZERS_PARALLELISM']='false'
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_path", type=str, required=False)
-#     parser.add_argument("--dataset_name", type=str, required=False)
+    parser.add_argument("--model", type=str, default='t5', required=False)
     parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
     parser.add_argument("--model_name_or_path", type=str, required=False)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
     parser.add_argument("--epochs", type=int, default=5, required=False)
     parser.add_argument("--patience", type=int, default=10, required=False)
-    parser.add_argument("--lr", type=float, default=2e-6, required=False)
+    parser.add_argument("--lr", type=float, default=5e-4, required=False)
     parser.add_argument("--batch_size", type=int, default=5, required=False)
     parser.add_argument("--max_len", type=int, default=512, required=False)
     parser.add_argument("--num_workers", type=int, default=1, required=False)
-    parser.add_argument("--fc_dropout", type=float, default=0.1, required=False)
+    parser.add_argument("--fc_dropout", type=float, default=0.0, required=False)
     parser.add_argument("--eps", type=float, default=1e-6, required=False)
     parser.add_argument("--max_grad_norm", type=int, default=1000, required=False)
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1, required=False)
@@ -56,6 +59,7 @@ def parse_args():
     return parser.parse_args()
 
 CFG = parse_args()
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -75,7 +79,8 @@ seed_everything(seed=CFG.seed)
 
 df = pd.read_csv(CFG.data_path).drop_duplicates().reset_index(drop=True)
 df = df[~df['YIELD'].isna()].reset_index(drop=True)
-df['YIELD'] = df['YIELD'].clip(0, 100)/100
+df = df[~(df['YIELD']>100)].reset_index(drop=True)
+df['YIELD'] = df['YIELD']/100
 df = df[~(df['REACTANT'].isna() | df['PRODUCT'].isna())]
 for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT']:
     df[col] = df[col].fillna(' ')
@@ -95,13 +100,13 @@ def canonicalize(mol):
 df['REACTANT'] = df['REACTANT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
 df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
 df['PRODUCT'] = df['PRODUCT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
-    
+
 
 df['input'] = 'REACTANT:' + df['REACTANT']  + 'REAGENT:' + df['REAGENT'] + 'PRODUCT:' + df['PRODUCT']
 df = df[['input', 'YIELD']].drop_duplicates().reset_index(drop=True)
 
+
 lens = df['input'].apply(lambda x: len(x))
-# remove data that have too long inputs
 df = df[lens <= 512].reset_index(drop=True)
 
 train_ds, test_ds = train_test_split(df, test_size=int(len(df)*0.1))
@@ -134,11 +139,12 @@ try: # load pretrained tokenizer from local directory
     tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors='pt')
 except: # load pretrained tokenizer from huggingface model hub
     tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
-tokenizer.add_tokens('.')
+tokenizer.add_tokens(['.', 'P', '>', '<','Pd'])
 
 tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'PRODUCT:', 'REAGENT:']})
 tokenizer.save_pretrained(OUTPUT_DIR+'tokenizer/')
 CFG.tokenizer = tokenizer
+
 def prepare_input(cfg, text):
     inputs = cfg.tokenizer(text, add_special_tokens=True, max_length=CFG.max_len, padding='max_length', return_offsets_mapping=False, truncation=True, return_attention_mask=True)
     for k, v in inputs.items():
@@ -224,7 +230,6 @@ class RegressionModel(nn.Module):
         output = self.fc4(output)
         output = self.fc5(output)
         return output
-    
     
     
 class AverageMeter(object):

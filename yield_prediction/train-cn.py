@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, T5ForConditionalGeneration
+from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, AutoModelForSeq2SeqLM, T5ForConditionalGeneration
 import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
@@ -29,16 +29,17 @@ from sklearn.metrics import mean_squared_error, r2_score
 from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
 disable_progress_bar()
-os.environ['TOKENIZERS_PARALLELISM']='false'
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, required=False)
+    parser.add_argument("--train_data_path", type=str, required=False)
+    parser.add_argument("--valid_data_path", type=str, required=False)
     parser.add_argument("--model", type=str, default='t5', required=False)
     parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
     parser.add_argument("--model_name_or_path", type=str, required=False)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
     parser.add_argument("--epochs", type=int, default=5, required=False)
+    parser.add_argument("--patience", type=int, default=10, required=False)
     parser.add_argument("--lr", type=float, default=5e-4, required=False)
     parser.add_argument("--batch_size", type=int, default=5, required=False)
     parser.add_argument("--max_len", type=int, default=512, required=False)
@@ -59,8 +60,6 @@ def parse_args():
 
 CFG = parse_args()
 
-
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 OUTPUT_DIR = CFG.output_dir
@@ -77,43 +76,30 @@ def seed_everything(seed=42):
 seed_everything(seed=CFG.seed)  
     
 
-df = pd.read_csv(CFG.data_path).drop_duplicates().reset_index(drop=True)
-df = df[~df['YIELD'].isna()].reset_index(drop=True)
-df = df[~(df['YIELD']>100)].reset_index(drop=True)
-df['YIELD'] = df['YIELD']/100
-df = df[~(df['REACTANT'].isna() | df['PRODUCT'].isna())]
-for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT']:
-    df[col] = df[col].fillna(' ')
-    
-
-def clean(row):
-    row = row.replace('. ', '').replace(' .', '').replace('  ', ' ')
-    return row
-df['REAGENT'] = df['CATALYST'] + '.' + df['REAGENT']
-df['REAGENT'] = df['REAGENT'].apply(lambda x: clean(x))
-
 from rdkit import Chem
 def canonicalize(mol):
     mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
     return mol
 
-df['REACTANT'] = df['REACTANT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
-df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
-df['PRODUCT'] = df['PRODUCT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+def preprocess(df):
+    df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+    df['REACTANT'] = df['REACTANT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+    df['PRODUCT'] = df['PRODUCT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+    df['YIELD'] = df['YIELD'].clip(0, 100)/100
+    df['input'] = 'REACTANT:' + df['REACTANT']  + 'REAGENT:' + df['REAGENT'] + 'PRODUCT:' + df['PRODUCT']
+    df = df[['input', 'YIELD']].drop_duplicates().reset_index(drop=True)
+    lens = df['input'].apply(lambda x: len(x))
+    # remove data that have too long inputs
+    df = df[lens <= 512].reset_index(drop=True)
     
+    return df
+    
+df = pd.read_csv(CFG.train_data_path).drop_duplicates().reset_index(drop=True)
+train_ds = preprocess(df)
 
-df['input'] = 'REACTANT:' + df['REACTANT']  + 'REAGENT:' + df['REAGENT'] + 'PRODUCT:' + df['PRODUCT']
-df = df[['input', 'YIELD']].drop_duplicates().reset_index(drop=True)
+df = pd.read_csv(CFG.valid_data_path).drop_duplicates().reset_index(drop=True)
+valid_ds = preprocess(df)
 
-
-lens = df['input'].apply(lambda x: len(x))
-df = df[lens <= 512].reset_index(drop=True)
-
-train_ds, test_ds = train_test_split(df, test_size=int(len(df)*0.1))
-train_ds, valid_ds = train_test_split(train_ds, test_size=int(len(df)*0.1))
-train_ds.to_csv('regression-input-train.csv', index=False)
-valid_ds.to_csv('regression-input-valid.csv', index=False)
-test_ds.to_csv('regression-input-test.csv', index=False)
 
 if CFG.debug:
     train_ds = train_ds[:int(len(train_ds)/4)].reset_index(drop=True)
@@ -144,7 +130,6 @@ tokenizer.add_tokens(['.', 'P', '>', '<','Pd'])
 tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'PRODUCT:', 'REAGENT:']})
 tokenizer.save_pretrained(OUTPUT_DIR+'tokenizer/')
 CFG.tokenizer = tokenizer
-
 def prepare_input(cfg, text):
     inputs = cfg.tokenizer(text, add_special_tokens=True, max_length=CFG.max_len, padding='max_length', return_offsets_mapping=False, truncation=True, return_attention_mask=True)
     for k, v in inputs.items():
@@ -168,7 +153,6 @@ class TrainDataset(Dataset):
         
         return inputs, label
     
-       
 class RegressionModel(nn.Module):
     def __init__(self, cfg, config_path=None, pretrained=False):
         super().__init__()
@@ -201,6 +185,7 @@ class RegressionModel(nn.Module):
         self._init_weights(self.fc2)
         self._init_weights(self.fc3)
         self._init_weights(self.fc4)
+        self._init_weights(self.fc5)
         
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
@@ -353,7 +338,7 @@ def train_loop(train_ds, valid_ds):
     valid_loader = DataLoader(valid_dataset, batch_size=CFG.batch_size, shuffle=False, num_workers=CFG.num_workers, pin_memory=True, drop_last=False)
     
     model = RegressionModel(CFG, config_path=None, pretrained=True)
-    torch.save(model.config, OUTPUT_DIR+'config.pth')
+    torch.save(model.config, OUTPUT_DIR+'config.pth')        
     model.to(device)
     
     def get_optimizer_params(model, encoder_lr, decoder_lr, weight_decay=0.0):
@@ -394,7 +379,7 @@ def train_loop(train_ds, valid_ds):
             
         else:
             es_count += 1
-            if es_count >= 50:
+            if es_count >= CFG.patience:
                 print('early_stopping')
                 break
     

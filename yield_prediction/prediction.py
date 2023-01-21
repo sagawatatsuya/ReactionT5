@@ -11,7 +11,7 @@ import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
+from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, AutoModelForSeq2SeqLM, T5ForConditionalGeneration
 import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
@@ -25,16 +25,16 @@ import time
 from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 from sklearn.metrics import mean_squared_error, r2_score
+import subprocess
 disable_progress_bar()
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=str, required=False)
-#     parser.add_argument("--dataset_name", type=str, required=False)
     parser.add_argument("--pretrained_model_name_or_path", type=str, default="sagawa/ZINC-t5", required=False)
     parser.add_argument("--model", type=str, default="t5", required=False)
     parser.add_argument("--model_name_or_path", type=str, required=False)
-#     parser.add_argument("--scaler_path", type=str, default="/data2/sagawa/tcrp-regression-model-archive/10-23-1st-new-metric-reactant-product", required=False)
+    parser.add_argument("--download_pretrained_model", action='store_true', default=False, required=False)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
     parser.add_argument("--max_len", type=int, default=512, required=False)
     parser.add_argument("--batch_size", type=int, default=5, required=False)
@@ -62,11 +62,14 @@ def seed_everything(seed=42):
     torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
 
-
-# with open(CFG.scaler_path + '/scaler.pkl', 'rb') as f:
-#     scaler = pickle.load(f)
-
-    
+if CFG.download_pretrained_model:
+    os.mkdir('tokenizer')
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/ZINC-t5_best.pth', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/config.pth', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json -P ./tokenizer', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer.json -P ./tokenizer', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json -P ./tokenizer', shell=True)
+    CFG.model_name_or_path = '.'
 
 try: # load pretrained tokenizer from local directory
     CFG.tokenizer = AutoTokenizer.from_pretrained(CFG.model_name_or_path+'/tokenizer', return_tensors='pt')
@@ -103,26 +106,56 @@ class RegressionModel(nn.Module):
         else:
             self.config = torch.load(config_path)
         if pretrained:
-            if 't5' in cfg.model: ###################
-                self.model = T5EncoderModel.from_pretrained(CFG.pretrained_model_name_or_path)
+            if 't5' in cfg.model:
+                self.model = T5ForConditionalGeneration.from_pretrained(CFG.pretrained_model_name_or_path)
             else:
                 self.model = AutoModel.from_pretrained(CFG.pretrained_model_name_or_path)
         else:
-            if 't5' in cfg.model:###################
-                self.model = T5EncoderModel.from_pretrained('sagawa/ZINC-t5')
+            if 't5' in cfg.model:
+                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/ZINC-t5')
             else:
                 self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(cfg.tokenizer))
         self.fc_dropout1 = nn.Dropout(cfg.fc_dropout)
-        self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size)
+        self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
         self.fc_dropout2 = nn.Dropout(cfg.fc_dropout)
-        self.fc2 = nn.Linear(self.config.hidden_size, 1)
+        
+        self.fc2 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
+        self.fc3 = nn.Linear(self.config.hidden_size//2*2, self.config.hidden_size)
+        self.fc4 = nn.Linear(self.config.hidden_size, self.config.hidden_size)
+        self.fc5 = nn.Linear(self.config.hidden_size, 1)
+
+        self._init_weights(self.fc1)
+        self._init_weights(self.fc2)
+        self._init_weights(self.fc3)
+        self._init_weights(self.fc4)
+        
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            module.weight.data.normal_(mean=0.0, std=0.01)
+            if module.bias is not None:
+                module.bias.data.zero_()
+        elif isinstance(module, nn.Embedding):
+            module.weight.data.normal_(mean=0.0, std=0.01)
+            if module.padding_idx is not None:
+                module.weight.data[module.padding_idx].zero_()
+        elif isinstance(module, nn.LayerNorm):
+            module.bias.data.zero_()
+            module.weight.data.fill_(1.0)
         
     def forward(self, inputs):
-        outputs = self.model(**inputs)
+        encoder_outputs = self.model.encoder(**inputs)
+        encoder_hidden_states = encoder_outputs[0]
+        outputs = self.model.decoder(input_ids=torch.full((inputs['input_ids'].size(0),1),
+                                            self.config.decoder_start_token_id,
+                                            dtype=torch.long,
+                                            device=device), encoder_hidden_states=encoder_hidden_states)
         last_hidden_states = outputs[0]
-        output = self.fc1(self.fc_dropout1(last_hidden_states)[:, 0, :].view(-1, self.config.hidden_size))
-        output = self.fc2(self.fc_dropout2(output))
+        output1 = self.fc1(self.fc_dropout1(last_hidden_states).view(-1, self.config.hidden_size))
+        output2 = self.fc2(encoder_hidden_states[:, 0, :].view(-1, self.config.hidden_size))
+        output = self.fc3(self.fc_dropout2(torch.hstack((output1, output2))))
+        output = self.fc4(output)
+        output = self.fc5(output)
         return output
     
 
@@ -163,7 +196,6 @@ if 'csv' in CFG.data:
 
     test_ds['prediction'] = prediction*100
     test_ds['prediction'] = test_ds['prediction'].clip(0, 100)
-#     test_ds['prediction'] = scaler.inverse_transform(test_ds['prediction'].values.reshape(-1, 1))
     test_ds.to_csv(CFG.output_dir + 'yield_prediction_output.csv', index=False)
     
 else:

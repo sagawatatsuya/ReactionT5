@@ -1,5 +1,5 @@
 # transformer chemical reaction prediciton
-We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models [here](https://huggingface.co/sagawa). Using these pretrained models, we conducted a chemical reaction prediction, where if models were given a product, they generate reactants which is necessary for the reaction.
+We trained T5 and DeBERTa on SMILES from ZINC and PubChem-10m using the task of masked-language modeling (MLM). These models can be used for the prediction of moelcules' properties, reactions, or interactions with proteins by changing the way of finetuning. You can download these pretrained models [here](https://huggingface.co/sagawa). Using these pretrained models, we created yield prediction model and product prediction model. You can use them at [Hugging Face space](https://huggingface.co/sagawa).
 # How to start with
 First, you have to install libraries. You can use requirements.yaml. If torch and jax version doesn't fit your environment, change and run following command. 
 ```
@@ -295,7 +295,7 @@ We finetuned pretrained-models and uploaded to Hugging Face Hub. So you can imme
 By executing the following command, you can predict the products of reactions from their inputs. The code expects input_data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like "REACTANT:{reactants of the reaction}CATALYST:{catalysts of the reaction}REAGENT:{reagents of the reaction}SOLVENT:{solvent of the reaction}NoData:{uncategorized compounds of the reaction}". If there are no catalyst or reagent, fill the blank with a space. And if there are multiple reactants, concatenate them with ".".(ex. "REACTANT:NCCO.O=C1COCC(=O)O1CATALYST: REAGENT: SOLVENT:c1ccncc1NoData: ")
 ```
 cd prediction/
-python multiinput_prediction.py \
+python forward_reaction_prediction.py \
     --input_data="../../multi-input-valid.csv" \
     --model_name_or_path="../multiinput2/t5/checkpoint-2721180" \
     --model="t5" \
@@ -373,14 +373,14 @@ You can predict yields of chemical reactions from their inputs (reactants, produ
 ```
 cd regression/
 python regression.py \
-    --data_path='../../all_ord_reaction_uniq_with_attr_v3.tsv' \
+    --data_path='all_ord_reaction_uniq_with_attr_v3.tsv' \
     --pretrained_model_name_or_path='sagawa/ZINC-t5' \
-    --debug \
-    --epochs=5 \
-    --batch_size=5 \
-    --max_len=512 \
+    --epochs=100 \
+    --batch_size=50 \
+    --max_len=400 \
     --num_workers=4 \
-    --gradient_accumulation_steps=3 \
+    --weight_decay=0.05 \
+    --gradient_accumulation_steps=1 \
     --batch_scheduler \
     --print_freq=100 \
     --output_dir='./'

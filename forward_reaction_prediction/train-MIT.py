@@ -21,7 +21,8 @@ disable_progress_bar()
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, required=False)
+    parser.add_argument("--train_data_path", type=str, required=False)
+    parser.add_argument("--valid_data_path", type=str, required=False)
     parser.add_argument("--dataset_name", type=str, required=False)
     parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
     parser.add_argument("--model", type=str, required=True)
@@ -55,96 +56,23 @@ def seed_everything(seed=42):
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
-    
-
-# if CFG.dataset_name:
-#     if CFG.debug:
-#         dataset = load_dataset(CFG.dataset_name)
-#         dataset['train'] = datasets.Dataset.from_dict(dataset["train"][:100])
-#         dataset['validation'] = datasets.Dataset.from_dict(dataset["validation"][:100])
-#     else:
-#         dataset = load_dataset(CFG.dataset_name)
-# else:
-#     if CFG.debug:
-#         train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')[:100]
-#         test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')[:100]
-#         train.to_csv(CFG.data_path + 'ord-train-debug.csv', index=False)
-#         test.to_csv(CFG.data_path + 'ord-test-debug.csv', index=False)
-#         data_files = {'train': CFG.data_path + 'ord-train-debug.csv', 'validation': CFG.data_path + 'ord-test-debug.csv'}
-#         dataset = load_dataset('csv', data_files=data_files)
-#     else:
-#         train = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv')
-#         test = pd.read_csv(CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv')
-#         data_files = {'train': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-train.csv', 'validation': CFG.data_path + 'all_ord_reaction_uniq_canonicalized-valid.csv'}
-#         dataset = load_dataset('csv', data_files=data_files)
-        
 
 
-
-# df = pd.read_csv(CFG.data_path)
-# df = df[df['NoData'].isna()]
-# df_nodata = pd.read_csv('../compound-classification/reconstructed.csv')
-# df = pd.concat([df, df_nodata]).reset_index(drop=True)
-# df = df[~df['PRODUCT'].isna()]
-# for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT', 'YIELD', 'TEMP']:
-#     df[col] = df[col].fillna(' ')
-# df['TEMP'] = df['TEMP'].apply(lambda x: str(x))
-
-df = pd.read_csv(CFG.data_path)
-df = df[~df['PRODUCT'].isna()]
-for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT', 'YIELD', 'TEMP']:
-    df[col] = df[col].fillna(' ')
-df['TEMP'] = df['TEMP'].apply(lambda x: str(x))
+train = pd.read_csv(CFG.train_data_path)
+valid = pd.read_csv(CFG.valid_data_path)
 
 
-# reactantとcatalyst========================================================================
-print(len(df), flush=True)
-df = df[df['REACTANT'] != ' ']
-print(len(df), flush=True)
-df = df[['REACTANT', 'PRODUCT', 'CATALYST', 'REAGENT', 'SOLVENT']].drop_duplicates().reset_index(drop=True)
-print(len(df), flush=True)
-df = df.iloc[df[['REACTANT', 'CATALYST', 'REAGENT', 'SOLVENT']].drop_duplicates().index].reset_index(drop=True)
-print(len(df), flush=True)
-
-def clean(row):
-    row = row.replace('. ', '').replace(' .', '').replace('  ', ' ')
-    return row
-df['REAGENT'] = df['CATALYST'] + '.' + df['REAGENT'] + '.' + df['SOLVENT']
-df['REAGENT'] = df['REAGENT'].apply(lambda x: clean(x))
-from rdkit import Chem
-def canonicalize(mol):
-    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
-    return mol
-df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
-
-
-df['input'] = 'REACTANT:' + df['REACTANT'] + 'REAGENT:' + df['REAGENT']
-# ========================================================================
-
-lens = df['input'].apply(lambda x: len(x))
-df = df[lens <= 512]
-
-train, test = train_test_split(df, test_size=int(len(df)*0.1))
-train, valid = train_test_split(train, test_size=int(len(df)*0.1))
+for col in ['REACTANT', 'REAGENT']:
+    train[col] = train[col].fillna(' ')
+    valid[col] = valid[col].fillna(' ')
+train['input'] = 'REACTANT:' + train['REACTANT'] + 'REAGENT:' + train['REAGENT']
+valid['input'] = 'REACTANT:' + valid['REACTANT'] + 'REAGENT:' + valid['REAGENT']
 
 
 if CFG.debug:
-    train = train[:int(len(train)/400)].reset_index(drop=True)
-    print('len(train):', len(train), flush=True)
+    train = train[:int(len(train)/40)].reset_index(drop=True)
     valid = valid[:int(len(valid)/40)].reset_index(drop=True)
     
-    
-train[['input', 'PRODUCT']].to_csv('../../multi-input-train.csv', index=False)
-valid[['input', 'PRODUCT']].to_csv('../../multi-input-valid.csv', index=False)
-test[['input', 'PRODUCT']].to_csv('../../multi-input-test.csv', index=False)
-
-nodata = pd.read_csv('/data2/sagawa/transformer-chemical-reaction-prediciton/compound-classification/reconstructed.csv')
-nodata = nodata[~nodata['REACTANT'].isna()]
-for col in ['REAGENT']:
-    nodata[col] = nodata[col].fillna(' ')
-nodata['input'] = 'REACTANT:' + nodata['REACTANT'] + 'REAGENT:' + nodata['REAGENT']
-train = pd.concat([train[['input', 'PRODUCT']], nodata[['input', 'PRODUCT']]]).reset_index(drop=True)
-
 
 dataset = DatasetDict({'train': Dataset.from_pandas(train[['input', 'PRODUCT']]), 'validation': Dataset.from_pandas(valid[['input', 'PRODUCT']])})
 

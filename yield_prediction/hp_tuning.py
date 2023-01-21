@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
+from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, T5ForConditionalGeneration
 import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
@@ -26,7 +26,10 @@ from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from rdkit import RDLogger
+RDLogger.DisableLog('rdApp.*')
 disable_progress_bar()
+os.environ['TOKENIZERS_PARALLELISM']='false'
 
 
 CFG = dict(

@@ -28,7 +28,7 @@ def parse_args():
 
     return parser.parse_args()
 CFG = parse_args()
-device = 'cpu'
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 def seed_everything(seed=42):
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
@@ -51,8 +51,7 @@ if 'csv' not in CFG.input_data:
     input_compound = CFG.input_data
     min_length = min(input_compound.find('REAGENT') - input_compound.find(':') - 10, 0)
     inp = tokenizer(input_compound, return_tensors='pt').to(device)
-    output = model.generate(**inp, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
-#     output = model.generate(**inp, min_length=min_length, max_length=min_length+50, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
+    output = model.generate(**inp, min_length=min_length, max_length=min_length+50, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
     if CFG.num_beams > 1:
         scores = output['sequences_scores'].tolist()
         output = [tokenizer.decode(i, skip_special_tokens=True).replace('. ', '.').rstrip('.') for i in output['sequences']]
@@ -81,21 +80,15 @@ if 'csv' not in CFG.input_data:
         output_df.to_csv('multiinput_prediction_output.csv', index=False)
 
 elif 'csv' in CFG.input_data:
-#     input_data = pd.read_csv(CFG.input_data)
-    valid = pd.read_csv(CFG.input_data)
-    for col in ['REACTANT', 'REAGENT']:
-        valid[col] = valid[col].fillna(' ')
-    valid['input'] = 'REACTANT:' + valid['REACTANT'] + 'REAGENT:' + valid['REAGENT']
-    input_data = valid
+    input_data = pd.read_csv(CFG.input_data)
     if CFG.debug:
         input_data = input_data[:10]
     outputs = []
     for idx, row in input_data.iterrows():
         input_compound = row['input']
-        min_length = min(input_compound.find('REAGENT') - input_compound.find(':') - 10, 0)################# min_length, max_lengthの調節は要注意
+        min_length = min(input_compound.find('REAGENT') - input_compound.find(':') - 10, 0)
         inp = tokenizer(input_compound, return_tensors='pt').to(device)
-        output = model.generate(**inp, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
-#         output = model.generate(**inp, min_length=min_length, max_length=min_length+50, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
+        output = model.generate(**inp, min_length=min_length, max_length=min_length+50, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
         if CFG.num_beams > 1:
             scores = output['sequences_scores'].tolist()
             output = [tokenizer.decode(i, skip_special_tokens=True).replace('. ', '.').rstrip('.') for i in output['sequences']]
@@ -122,7 +115,7 @@ elif 'csv' in CFG.input_data:
             outputs.append(output)
             
     if CFG.num_beams > 1:
-        output_df = pd.DataFrame(outputs, columns=['input'] + [f'{i}th' for i in range(CFG.num_return_sequences)] + ['valid compound'] + [f'{i}th score' for i in range(CFG.num_return_sequences)] + ['valid compound score'])
+        output_df = pd.DataFrame(outputs, columns=['input'] + [f'{i}th' for i in range(CFG.num_beams)] + ['valid compound'] + [f'{i}th score' for i in range(CFG.num_beams)] + ['valid compound score'])
     else:
         output_df = pd.DataFrame(outputs, columns=['input', '0th', 'valid compound'])
     output_df.to_csv('multiinput_prediction_output.csv', index=False)
