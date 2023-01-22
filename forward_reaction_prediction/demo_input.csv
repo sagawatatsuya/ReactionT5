@@ -1,0 +1,11 @@
+input,PRODUCT
+REACTANT:COC(=O)C1=CCCN(C)C1.O.[Al+3].[H-].[Li+].[Na+].[OH-]REAGENT:C1CCOC1,c1ccc2sc(-c3nccc4ccccc34)cc2c1
+REACTANT:Cc1cc(C=O)cc(C)c1OCCO.Nc1ccccc1C(=O)Nc1ccc(Br)cc1REAGENT:CCO.Cl[Cu]Cl,Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1
+REACTANT:O=C([O-])[O-].O=[N+]([O-])c1ccccc1F.Oc1ccc(Cl)cc1Cl.[K+]REAGENT:CN(C)C=O,Cc1cc(Cc2cc(C)c(O)c(C=O)c2)cc(C=O)c1O
+REACTANT:CCOC=O.COC(=O)[C@@H]1CNC[C@H]1c1ccc(OC)c(OC2CCCC2)c1REAGENT:CCOCC,CCc1c(Cc2[nH]c(C(=O)OCc3ccccc3)c(C)c2CCC(=O)OC)[nH]c(Cc2[nH]c(C(=O)OCc3ccccc3)c(C)c2CCC(=O)OC)c1CC
+REACTANT:CC(C)NS(=O)(=O)Cl.ClCCCl.O=C(Cl)Cl.c1ccncc1REAGENT:O,O=C1NS(=O)(=O)CN1c1ccc(Cl)cc1
+REACTANT:C#CCCCO.CC#N.CC(C)Cn1c(=O)n(C)c(=O)c2c(I)n(Cc3cccc4ccccc34)cc21.[Cl-]REAGENT:CCN(CC)CC.[Cu]I,COC(=O)CN1CCN(CC(=O)OC(C)(C)C)CCN(CC(=O)OC(C)(C)C)CCN(CC(=O)OC(C)(C)C)CC1
+REACTANT:COC(=O)CC[C@H](N)C(=O)OC.O=C(NC(Cc1c[nH]c2ccc(O)cc12)C(=O)O)c1ccc2c(c1)nc(-c1ccc3nc(-c4cc(C(=O)N5CCCC5)ccc4-c4ccc(Cl)cc4)ccc3c1)n2C1CCCCC1.O=C(O)c1ccc2c(c1)nc(-c1ccc3nc(-c4ccccc4)ccc3c1)n2C1CCCCC1.[Na+].[OH-]REAGENT: ,CNC(=O)c1ncn2c(C)cc(C)[n+](C)c12.[Cl-]
+REACTANT:CC(=O)[O-].CCOC(=O)C(=NOCCOC(=O)c1ccccc1)C(=O)CCl.NC(N)=S.O.[Na+]REAGENT:CCO,O=C1OC(=O)c2ccccc21
+REACTANT:CC(=O)N(C)C.CC(C)(C)[O-].CCOC(COc1cnc(Cl)nc1)OCC.Cn1ccc(Nc2ncnc3ccc(O)cc23)n1.[K+]REAGENT:O,Cc1cc(Cc2cc(C)c(O)c(C=O)c2)cc(C=O)c1O
+REACTANT:COc1ccccc1Oc1c(NS(=O)(=O)c2ccc(C)cn2)nc(-c2ccncc2)nc1OCCN.CS(=O)(=O)ClREAGENT: ,CCCCCCCCCCCC(=O)N1CCC[C@H]1C(=O)O
