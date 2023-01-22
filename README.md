@@ -21,9 +21,9 @@ conda install -c conda-forge optuna
 This will install all the necessary libraries for the project.
 
 The original data used for pre-training and fine-tuning is uploaded to Google Drive and can be found at the following links:
-・[ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z)
-・[PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view)
-・[ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view)
+・[ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z) 
+・[PubChem-10m](https://drive.google.com/file/d/1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3/view) 
+・[ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view) 
 The pre-processed data is also available on [Hugging Face Hub](https://huggingface.co/sagawa) and can be used directly. 
 
 To download the data, you can run the following command:
@@ -39,7 +39,7 @@ In our experiments, character-level tokenizers have shown to perform better than
 python data-split-and-model-preparation.py --use_character_level_tokenizer
 ```
 
-# Model pretraining
+# Model pre-training
 If you want to re-do the model pre-training yourself, you can easily do so by using the dataset uploaded to Hugging Face Hub.
 For example, to pre-train a T5 model on the PubChem-10m dataset, you can use the following command:
 PubChem10m-t5
@@ -296,7 +296,7 @@ python train.py \
     --pretrained_model_name_or_path='sagawa/ZINC-deberta'
 ```
 
-### retrosynthesis
+### Retrosynthesis
 Use dataset uplaoded to Hugging Face Hub.
 ```
 cd retrosynthesis/
