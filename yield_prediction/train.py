@@ -33,28 +33,151 @@ os.environ['TOKENIZERS_PARALLELISM']='false'
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, required=False)
-    parser.add_argument("--model", type=str, default='t5', required=False)
-    parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
-    parser.add_argument("--model_name_or_path", type=str, required=False)
-    parser.add_argument("--debug", action='store_true', default=False, required=False)
-    parser.add_argument("--epochs", type=int, default=5, required=False)
-    parser.add_argument("--patience", type=int, default=10, required=False)
-    parser.add_argument("--lr", type=float, default=5e-4, required=False)
-    parser.add_argument("--batch_size", type=int, default=5, required=False)
-    parser.add_argument("--max_len", type=int, default=512, required=False)
-    parser.add_argument("--num_workers", type=int, default=1, required=False)
-    parser.add_argument("--fc_dropout", type=float, default=0.0, required=False)
-    parser.add_argument("--eps", type=float, default=1e-6, required=False)
-    parser.add_argument("--max_grad_norm", type=int, default=1000, required=False)
-    parser.add_argument("--gradient_accumulation_steps", type=int, default=1, required=False)
-    parser.add_argument("--num_warmup_steps", type=int, default=0, required=False)
-    parser.add_argument("--batch_scheduler", action='store_true', default=False, required=False)
-    parser.add_argument("--print_freq", type=int, default=100, required=False)
-    parser.add_argument("--use_apex", action='store_true', default=False, required=False)
-    parser.add_argument("--output_dir", type=str, default='./', required=False)
-    parser.add_argument("--weight_decay", type=float, default=0.01, required=False)
-    parser.add_argument("--seed", type=int, default=42, required=False)
+    parser.add_argument(
+        "--data_path", 
+        type=str, 
+        required=True, 
+        help="The path to data used for training. CSV file that contains ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT'] columns is expected."
+    )
+    parser.add_argument(
+        "--model", 
+        type=str, 
+        default="t5", 
+        required=False,
+        help="Model name used for training. Currentry, only t5 is expected."
+    )
+    parser.add_argument(
+        "--pretrained_model_name_or_path", 
+        type=str, 
+        required=True,
+        help="The name of a pretrained model or path to a model which you want to use for training. You can use your local models or models uploaded to hugging face."
+    )
+    parser.add_argument(
+        "--debug", 
+        action="store_true", 
+        default=False, 
+        required=False,
+        help="Use debug mode."
+    )
+    parser.add_argument(
+        "--epochs", 
+        type=int, 
+        default=5, 
+        required=False,
+        help="Number of epochs for training."
+    )
+    parser.add_argument(
+        "--patience", 
+        type=int, 
+        default=10, 
+        required=False,
+        help="Early stopping patience."
+    )
+    parser.add_argument(
+        "--lr", 
+        type=float, 
+        default=5e-4, 
+        required=False,
+        help="Learning rate."
+    )
+    parser.add_argument(
+        "--batch_size", 
+        type=int, 
+        default=5, 
+        required=False,
+        help="Batch size."
+    )
+    parser.add_argument(
+        "--max_len",
+        type=int, 
+        default=512, 
+        required=False,
+        help="Max input token length."
+    )
+    parser.add_argument(
+        "--num_workers", 
+        type=int, 
+        default=1, 
+        required=False,
+        help="Number of workers used for training."
+    )
+    parser.add_argument(
+        "--fc_dropout", 
+        type=float, 
+        default=0.0, 
+        required=False,
+        help="Drop out rate after fully connected layers."
+    )
+    parser.add_argument(
+        "--eps", 
+        type=float, 
+        default=1e-6, 
+        required=False,
+        help="Eps of Adam optimizer."
+    )
+    parser.add_argument(
+        "--weight_decay", 
+        type=float, 
+        default=0.01, 
+        required=False,
+        help="weight_decay used for optimizer"
+    )
+    parser.add_argument(
+        "--max_grad_norm", 
+        type=int, 
+        default=1000, 
+        required=False,
+        help="max_grad_norm used for clip_grad_norm_"
+    )
+    parser.add_argument(
+        "--gradient_accumulation_steps", 
+        type=int, 
+        default=1, 
+        required=False,
+        help="Number of epochs to accumulate gradient."
+    )
+    parser.add_argument(
+        "--num_warmup_steps", 
+        type=int, 
+        default=0, 
+        required=False,
+        help="num_warmup_steps"
+    )
+    parser.add_argument(
+        "--batch_scheduler", 
+        action='store_true', 
+        default=False, 
+        required=False,
+        help="Use batch_scheduler"
+    )
+    parser.add_argument(
+        "--print_freq", 
+        type=int, 
+        default=100, 
+        required=False,
+        help="Logging frequency."
+    )
+    parser.add_argument(
+        "--use_apex", 
+        action='store_true',
+        default=False, 
+        required=False,
+        help="Use apex."
+    )
+    parser.add_argument(
+        "--output_dir", 
+        type=str, 
+        default='./', 
+        required=False,
+        help="The directory where trained model is saved."
+    )
+    parser.add_argument(
+        "--seed", 
+        type=int,
+        default=42, 
+        required=False,
+        help="Set seed for reproducibility."
+    )
 
     return parser.parse_args()
 

@@ -19,15 +19,58 @@ import rdkit
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_data", type=str, required=False)
-    parser.add_argument("--model_name_or_path", type=str, required=True)
-    parser.add_argument("--model", type=str, required=True)
-    parser.add_argument("--num_beams", type=int, default=5, required=False)
-    parser.add_argument("--num_return_sequences", type=int, default=5, required=False)
-    parser.add_argument("--debug", action='store_true', default=False, required=False)
-    parser.add_argument("--seed", type=int, default=42, required=False)
+    parser.add_argument(
+        "--input_data", 
+        type=str, 
+        required=True, 
+        help="The path to data used for training. CSV file that contains 'input' column is expected."
+    )
+    parser.add_argument(
+        "--model", 
+        type=str, 
+        default="t5", 
+        required=False,
+        help="Model name used for prediction."
+    )
+    parser.add_argument(
+        "--model_name_or_path", 
+        type=str, 
+        required=True,
+        help="The name of a finetuned model or path to a model which you want to use for prediction. You can use your local models or models uploaded to hugging face."
+    )
+    parser.add_argument(
+        "--num_beams", 
+        type=int, 
+        default=5, 
+        required=False,
+        help="Number of beams used for beam_search for targets."
+    )
+    parser.add_argument(
+        "--num_return_sequences", 
+        type=int, 
+        default=5, 
+        required=False,
+        help="Number of predictions that is returned as an output. This must be smaller than or equal to num_beams."
+    )
+    parser.add_argument(
+        "--debug", 
+        action="store_true", 
+        default=False, 
+        required=False,
+        help="Use debug mode."
+    )
+    parser.add_argument(
+        "--seed", 
+        type=int,
+        default=42, 
+        required=False,
+        help="Set seed for reproducibility."
+    )
 
     return parser.parse_args()
+
 CFG = parse_args()
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 def seed_everything(seed=42):
     random.seed(seed)
@@ -115,7 +158,7 @@ elif 'csv' in CFG.input_data:
             outputs.append(output)
             
     if CFG.num_beams > 1:
-        output_df = pd.DataFrame(outputs, columns=['input'] + [f'{i}th' for i in range(CFG.num_beams)] + ['valid compound'] + [f'{i}th score' for i in range(CFG.num_beams)] + ['valid compound score'])
+        output_df = pd.DataFrame(outputs, columns=['input'] + [f'{i}th' for i in range(CFG.num_return_sequences)] + ['valid compound'] + [f'{i}th score' for i in range(CFG.num_return_sequences)] + ['valid compound score'])
     else:
         output_df = pd.DataFrame(outputs, columns=['input', '0th', 'valid compound'])
     output_df.to_csv('multiinput_prediction_output.csv', index=False)

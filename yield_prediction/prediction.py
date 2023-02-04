@@ -30,18 +30,87 @@ disable_progress_bar()
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data", type=str, required=False)
-    parser.add_argument("--pretrained_model_name_or_path", type=str, default="sagawa/ZINC-t5", required=False)
-    parser.add_argument("--model", type=str, default="t5", required=False)
-    parser.add_argument("--model_name_or_path", type=str, required=False)
-    parser.add_argument("--download_pretrained_model", action='store_true', default=False, required=False)
-    parser.add_argument("--debug", action='store_true', default=False, required=False)
-    parser.add_argument("--max_len", type=int, default=512, required=False)
-    parser.add_argument("--batch_size", type=int, default=5, required=False)
-    parser.add_argument("--fc_dropout", type=float, default=0.1, required=False)
-    parser.add_argument("--num_workers", type=int, default=1, required=False)
-    parser.add_argument("--output_dir", type=str, default='./', required=False)
-    parser.add_argument("--seed", type=int, default=42, required=False)
+    parser.add_argument(
+        "--data", 
+        type=str, 
+        required=True,
+        help=" Data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like 'REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}'. If there are multiple reactants, concatenate them with '.'.(ex. 'REACTANT:NCCO.O=C1COCC(=O)O1CATALYST: REAGENT: SOLVENT:c1ccncc1NoData: '"
+    )
+    parser.add_argument(
+        "--pretrained_model_name_or_path", 
+        type=str, 
+        required=True,
+        help="Load finetuned model weight later. So this is not necessary."
+    )
+    parser.add_argument(
+        "--model", 
+        type=str, 
+        default="t5", 
+        required=False,
+        help="Model name used for prediction. Currentry, only t5 is expected."
+    )
+    parser.add_argument(
+        "--model_name_or_path",
+        type=str,
+        required=False,
+        help="The name of a finetuned model or path to a model which you want to use for prediction. You can use your local models or models uploaded to hugging face."
+    )
+    parser.add_argument(
+        "--download_pretrained_model", 
+        action='store_true', 
+        default=False, 
+        required=False,
+        help="Download finetuned model from hugging face hub and use it for prediction."
+    )
+    parser.add_argument(
+        "--debug", 
+        action="store_true", 
+        default=False, 
+        required=False,
+        help="Use debug mode."
+    )
+    parser.add_argument(
+        "--max_len",
+        type=int, 
+        default=512, 
+        required=False,
+        help="Max input token length."
+    )
+    parser.add_argument(
+        "--batch_size", 
+        type=int, 
+        default=5, 
+        required=False,
+        help="Batch size."
+    )
+    parser.add_argument(
+        "--fc_dropout", 
+        type=float, 
+        default=0.0, 
+        required=False,
+        help="Drop out rate after fully connected layers."
+    )
+    parser.add_argument(
+        "--num_workers", 
+        type=int, 
+        default=1, 
+        required=False,
+        help="Number of workers used for training."
+    )
+    parser.add_argument(
+        "--output_dir", 
+        type=str, 
+        default='./', 
+        required=False,
+        help="The directory where prediction is saved."
+    )
+    parser.add_argument(
+        "--seed", 
+        type=int,
+        default=42, 
+        required=False,
+        help="Set seed for reproducibility."
+    )
 
     return parser.parse_args()
 
@@ -129,6 +198,7 @@ class RegressionModel(nn.Module):
         self._init_weights(self.fc2)
         self._init_weights(self.fc3)
         self._init_weights(self.fc4)
+        self._init_weights(self.fc5)
         
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):

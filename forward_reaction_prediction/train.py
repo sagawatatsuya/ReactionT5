@@ -21,25 +21,144 @@ disable_progress_bar()
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, required=False)
-    parser.add_argument("--dataset_name", type=str, required=False)
-    parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
-    parser.add_argument("--model", type=str, required=True)
-    parser.add_argument("--debug", action='store_true', default=False, required=False)
-    parser.add_argument("--epochs", type=int, default=3, required=False)
-    parser.add_argument("--lr", type=float, default=2e-5, required=False)
-    parser.add_argument("--batch_size", type=int, default=16, required=False)
-    parser.add_argument("--input_max_len", type=int, default=128, required=False)
-    parser.add_argument("--target_max_len", type=int, default=128, required=False)
-    parser.add_argument("--weight_decay", type=float, default=0.01, required=False)
-    parser.add_argument("--evaluation_strategy", type=str, default="epoch", required=False)
-    parser.add_argument("--save_strategy", type=str, default="epoch", required=False)
-    parser.add_argument("--logging_strategy", type=str, default="epoch", required=False)
-    parser.add_argument("--save_total_limit", type=int, default=2, required=False)
-    parser.add_argument("--fp16", action='store_true', default=False, required=False)
-    parser.add_argument("--disable_tqdm", action="store_true", default=False, required=False)
-    parser.add_argument("--multitask", action="store_true", default=False, required=False)
-    parser.add_argument("--seed", type=int, default=42, required=False)
+    parser.add_argument(
+        "--data_path", 
+        type=str, 
+        required=True, 
+        help="The path to data used for training. CSV file that contains ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT'] columns is expected."
+    )
+    parser.add_argument(
+        "--model", 
+        type=str, 
+        default="t5", 
+        required=False,
+        help="Model name used for training. Currentry, only t5 is expected."
+    )
+    parser.add_argument(
+        "--pretrained_model_name_or_path", 
+        type=str, 
+        required=True,
+        help="The name of a pretrained model or path to a model which you want to use for training. You can use your local models or models uploaded to hugging face."
+    )
+    parser.add_argument(
+        "--debug", 
+        action="store_true", 
+        default=False, 
+        required=False,
+        help="Use debug mode."
+    )
+    parser.add_argument(
+        "--epochs", 
+        type=int, 
+        default=5, 
+        required=False,
+        help="Number of epochs for training."
+    )
+    parser.add_argument(
+        "--lr", 
+        type=float, 
+        default=2e-5, 
+        required=False,
+        help="Learning rate."
+    )
+    parser.add_argument(
+        "--batch_size", 
+        type=int, 
+        default=16, 
+        required=False,
+        help="Batch size."
+    )
+    parser.add_argument(
+        "--input_max_len",
+        type=int, 
+        default=128, 
+        required=False,
+        help="Max input token length."
+    )
+    parser.add_argument(
+        "--target_max_len",
+        type=int, 
+        default=128, 
+        required=False,
+        help="Max target token length."
+    )
+    parser.add_argument(
+        "--weight_decay", 
+        type=float, 
+        default=0.01, 
+        required=False,
+        help="weight_decay used for trainer"
+    )
+    parser.add_argument(
+        "--evaluation_strategy", 
+        type=str, 
+        default="epoch", 
+        required=False,
+        help="Evaluation strategy used during training. Select from 'no', 'steps', or 'epoch'. If you select 'steps', also give --eval_steps."
+    )
+    parser.add_argument(
+        "--eval_steps", 
+        type=int, 
+        required=False,
+        help="Number of update steps between two evaluations"
+    )
+    parser.add_argument(
+        "--save_strategy", 
+        type=str, 
+        default="epoch", 
+        required=False,
+        help="Save strategy used during training. Select from 'no', 'steps', or 'epoch'. If you select 'steps', also give --save_steps."
+    )
+    parser.add_argument(
+        "--save_steps", 
+        type=int, 
+        required=False,
+        default="500",
+        help="Number of steps between two saving"
+    )
+    parser.add_argument(
+        "--logging_strategy", 
+        type=str, 
+        default="epoch", 
+        required=False,
+        help="Logging strategy used during training. Select from 'no', 'steps', or 'epoch'. If you select 'steps', also give --logging_steps."
+    )
+    parser.add_argument(
+        "--logging_steps", 
+        type=int, 
+        required=False,
+        default="500",
+        help="Number of steps between two logging"
+    )
+    parser.add_argument(
+        "--save_total_limit", 
+        type=int, 
+        default=2, 
+        required=False,
+        help="Limit of the number of saved checkpoints. If limit is reached, the oldest checkpoint will be deleted."
+    )
+    parser.add_argument(
+        "--fp16", 
+        action='store_true', 
+        default=False, 
+        required=False,
+        help="Use fp16 during training"
+    )
+    parser.add_argument(
+        "--disable_tqdm", 
+        action="store_true", 
+        default=False, 
+        required=False,
+        help="Disable tqdm during training"
+    )
+#     parser.add_argument("--multitask", action="store_true", default=False, required=False)
+    parser.add_argument(
+        "--seed", 
+        type=int,
+        default=42, 
+        required=False,
+        help="Set seed for reproducibility."
+    )
 
     return parser.parse_args()
     
@@ -179,7 +298,11 @@ data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
 args = Seq2SeqTrainingArguments(
     CFG.model,
     evaluation_strategy=CFG.evaluation_strategy,
+    eval_steps=CFG.eval_steps,
     save_strategy=CFG.save_strategy,
+    save_steps=CFG.save_steps,
+    logging_strategy=CFG.logging_strategy,
+    logging_steps=CFG.logging_steps,
     learning_rate=CFG.lr,
     per_device_train_batch_size=CFG.batch_size,
     per_device_eval_batch_size=CFG.batch_size,
