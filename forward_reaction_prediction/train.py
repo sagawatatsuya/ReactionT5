@@ -316,6 +316,7 @@ args = Seq2SeqTrainingArguments(
     load_best_model_at_end=True
 )
 
+from transformers import EarlyStoppingCallback
 trainer = Seq2SeqTrainer(
     model,
     args,
@@ -324,6 +325,7 @@ trainer = Seq2SeqTrainer(
     data_collator=data_collator,
     tokenizer=tokenizer,
     compute_metrics=compute_metrics,
+    callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
 )
 
 trainer.train()
