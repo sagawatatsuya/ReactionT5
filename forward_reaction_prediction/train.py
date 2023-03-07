@@ -215,16 +215,16 @@ if CFG.debug:
     valid = valid[:int(len(valid)/40)].reset_index(drop=True)
     
     
-train[['input', 'PRODUCT']].to_csv('multi-input-train.csv', index=False)
-valid[['input', 'PRODUCT']].to_csv('multi-input-valid.csv', index=False)
-test[['input', 'PRODUCT']].to_csv('multi-input-test.csv', index=False)
+train.to_csv('multi-input-train.csv', index=False)
+valid.to_csv('multi-input-valid.csv', index=False)
+test.to_csv('multi-input-test.csv', index=False)
 
-nodata = pd.read_csv('/data2/sagawa/transformer-chemical-reaction-prediciton/compound-classification/reconstructed.csv')
-nodata = nodata[~nodata['REACTANT'].isna()]
-for col in ['REAGENT']:
-    nodata[col] = nodata[col].fillna(' ')
-nodata['input'] = 'REACTANT:' + nodata['REACTANT'] + 'REAGENT:' + nodata['REAGENT']
-train = pd.concat([train[['input', 'PRODUCT']], nodata[['input', 'PRODUCT']]]).reset_index(drop=True)
+# nodata = pd.read_csv('/data2/sagawa/transformer-chemical-reaction-prediciton/compound-classification/reconstructed.csv')
+# nodata = nodata[~nodata['REACTANT'].isna()]
+# for col in ['REAGENT']:
+#     nodata[col] = nodata[col].fillna(' ')
+# nodata['input'] = 'REACTANT:' + nodata['REACTANT'] + 'REAGENT:' + nodata['REAGENT']
+# train = pd.concat([train[['input', 'PRODUCT']], nodata[['input', 'PRODUCT']]]).reset_index(drop=True)
 
 
 dataset = DatasetDict({'train': Dataset.from_pandas(train[['input', 'PRODUCT']]), 'validation': Dataset.from_pandas(valid[['input', 'PRODUCT']])})
@@ -261,7 +261,7 @@ try: # load pretrained tokenizer from local directory
     tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors='pt')
 except: # load pretrained tokenizer from huggingface model hub
     tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
-tokenizer.add_tokens('.')
+tokenizer.add_tokens(['.', '6', '7', '8', '<', '>', 'Ag', 'Al', 'Ar', 'As', 'Au', 'Ba', 'Bi', 'Ca', 'Cl', 'Cu', 'Fe', 'Ge', 'Hg', 'K', 'Li', 'Mg', 'Mn', 'Mo', 'Na', 'Nd', 'Ni', 'P', 'Pb', 'Pd', 'Pt', 'Re', 'Rh', 'Ru', 'Ru', 'Sb', 'Si', 'Sm', 'Ta', 'Ti', 'Tl', 'W', 'Yb', 'Zn', 'Zr', 'e', 'p'])
 tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'REAGENT:']})
 
 
@@ -329,4 +329,3 @@ trainer = Seq2SeqTrainer(
 trainer.train()
 
 trainer.save_model('./best_model')
-

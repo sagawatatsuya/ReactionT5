@@ -232,7 +232,7 @@ try: # load pretrained tokenizer from local directory
     tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors='pt')
 except: # load pretrained tokenizer from huggingface model hub
     tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
-tokenizer.add_tokens('.')
+tokenizer.add_tokens(['.', '6', '7', '8', '<', '>', 'Ag', 'Al', 'Ar', 'As', 'Au', 'Ba', 'Bi', 'Ca', 'Cl', 'Cu', 'Fe', 'Ge', 'Hg', 'K', 'Li', 'Mg', 'Mn', 'Mo', 'Na', 'Nd', 'Ni', 'P', 'Pb', 'Pd', 'Pt', 'Re', 'Rh', 'Ru', 'Ru', 'Sb', 'Si', 'Sm', 'Ta', 'Ti', 'Tl', 'W', 'Yb', 'Zn', 'Zr', 'e', 'p'])
 tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'REAGENT:']})
 
 
@@ -269,11 +269,7 @@ data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
 args = Seq2SeqTrainingArguments(
     CFG.model,
     evaluation_strategy=CFG.evaluation_strategy,
-    eval_steps=CFG.eval_steps,
     save_strategy=CFG.save_strategy,
-    save_steps=CFG.save_steps,
-    logging_strategy=CFG.logging_strategy,
-    logging_steps=CFG.logging_steps,
     learning_rate=CFG.lr,
     per_device_train_batch_size=CFG.batch_size,
     per_device_eval_batch_size=CFG.batch_size,
@@ -300,4 +296,3 @@ trainer = Seq2SeqTrainer(
 trainer.train()
 
 trainer.save_model('./best_model')
-
