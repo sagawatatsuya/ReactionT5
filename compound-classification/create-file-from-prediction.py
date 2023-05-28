@@ -28,7 +28,7 @@ for idx, row in df.iterrows():
     
 df_all = pd.read_csv('../../all_ord_reaction_uniq_with_attr_v3.tsv')
 df_all = df_all[~df_all['PRODUCT'].isna()]
-df_all = df_all[df_all['REACTANT'].isna()]
+df_all = df_all[df_all['REACTANT'].isna()].reset_index(drop=True)
 
 dfs = []
 name2num = {'REAGENT': 0,
@@ -37,7 +37,7 @@ names = ['REAGENT', 'REACTANT']
 for idx, row in df_all.iterrows():
     lis = []
     if type(row['NoData']) != str:
-        lis.append(row[names].values)
+        lis = row[names].values.tolist()
     else:
         for name in names:
             if type(row[name]) == str:
@@ -56,17 +56,9 @@ def canonicalize(smi):
     smi = Chem.MolToSmiles(Chem.MolFromSmiles(smi),True)
     return smi
 
-df_after[['PRODUCT', 'YIELD', 'TEMP']] = df_all[['PRODUCT', 'YIELD', 'TEMP']]
+df_after[['PRODUCT', 'YIELD', 'TEMP', 'NoData']] = df_all[['PRODUCT', 'YIELD', 'TEMP', 'NoData']]
 
 df_after.to_csv('reconstructed-nodata.csv', index=False)
-df = pd.read_csv('reconstructed-nodata.csv')
 
 
-# df['CATALYST'] = df['CATALYST'].apply(lambda x: canonicalize(x) if type(x) == str else None)
-df['REACTANT'] = df['REACTANT'].apply(lambda x: canonicalize(x) if type(x) == str else None)
-# df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if type(x) == str else None)
-# df['SOLVENT'] = df['SOLVENT'].apply(lambda x: canonicalize(x) if type(x) == str else None)
-# df['INTERNAL_STANDARD'] = df['INTERNAL_STANDARD'].apply(lambda x: canonicalize(x) if type(x) == str else None)
-
-df.to_csv('reconstructed-nodata.csv', index=False)
 print('finish')

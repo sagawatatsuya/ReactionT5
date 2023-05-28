@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument(
         "--pretrained_model_name_or_path", 
         type=str, 
-        required=True,
+        required=False,
         help="Load finetuned model weight later. So this is not necessary."
     )
     parser.add_argument(
@@ -245,12 +245,34 @@ def inference_fn(test_loader, model, device):
     return predictions
 
 model = RegressionModel(CFG, config_path=CFG.model_name_or_path + '/config.pth', pretrained=False)
-state = torch.load(CFG.model_name_or_path + '/ZINC-t5_best.pth', map_location=torch.device('cpu'))
+# state = torch.load(CFG.model_name_or_path + '/ZINC-t5_best.pth', map_location=torch.device('cpu'))
+state = torch.load(CFG.model_name_or_path + '/finetuned_model.pth', map_location=torch.device('cpu'))
 model.load_state_dict(state)
 
 
 if 'csv' in CFG.data:
+    from rdkit import Chem
+    def canonicalize(mol):
+        mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
+        return mol
+    
+    def preprocess(df):
+        df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+        df['REACTANT'] = df['REACTANT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+        df['PRODUCT'] = df['PRODUCT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
+        df['YIELD'] = df['YIELD'].clip(0, 100)/100
+        df['input'] = 'REACTANT:' + df['REACTANT']  + 'REAGENT:' + df['REAGENT'] + 'PRODUCT:' + df['PRODUCT']
+        df = df[['input', 'YIELD']].drop_duplicates().reset_index(drop=True)
+        lens = df['input'].apply(lambda x: len(x))
+        # remove data that have too long inputs
+        df = df[lens <= 512].reset_index(drop=True)
+
+        return df
+    
     test_ds = pd.read_csv(CFG.data)
+    
+    if 'input' not in test_ds.columns:
+        test_ds = preprocess(test_ds)
     
     if CFG.debug:
         test_ds = test_ds[:500]

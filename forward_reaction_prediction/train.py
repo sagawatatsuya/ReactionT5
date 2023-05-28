@@ -151,6 +151,13 @@ def parse_args():
         required=False,
         help="Disable tqdm during training"
     )
+    parser.add_argument(
+        "--use_reconstructed_data", 
+        action="store_true", 
+        default=False, 
+        required=False,
+        help="Use reconstructed data for training"
+    )
 #     parser.add_argument("--multitask", action="store_true", default=False, required=False)
     parser.add_argument(
         "--seed", 
@@ -178,9 +185,11 @@ seed_everything(seed=CFG.seed)
 
 df = pd.read_csv(CFG.data_path)
 df = df[~df['PRODUCT'].isna()]
-for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT', 'YIELD', 'TEMP']:
+if CFG.use_reconstructed_data:
+    df2 = pd.read_csv('reconstructed-nodata.csv')
+    df = pd.concat([df, df2]).sample(frac=1).reset_index(drop=True)
+for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT','PRODUCT']:
     df[col] = df[col].fillna(' ')
-df['TEMP'] = df['TEMP'].apply(lambda x: str(x))
 
 
 df = df[df['REACTANT'] != ' ']
@@ -218,13 +227,6 @@ if CFG.debug:
 train.to_csv('multi-input-train.csv', index=False)
 valid.to_csv('multi-input-valid.csv', index=False)
 test.to_csv('multi-input-test.csv', index=False)
-
-# nodata = pd.read_csv('/data2/sagawa/transformer-chemical-reaction-prediciton/compound-classification/reconstructed.csv')
-# nodata = nodata[~nodata['REACTANT'].isna()]
-# for col in ['REAGENT']:
-#     nodata[col] = nodata[col].fillna(' ')
-# nodata['input'] = 'REACTANT:' + nodata['REACTANT'] + 'REAGENT:' + nodata['REAGENT']
-# train = pd.concat([train[['input', 'PRODUCT']], nodata[['input', 'PRODUCT']]]).reset_index(drop=True)
 
 
 dataset = DatasetDict({'train': Dataset.from_pandas(train[['input', 'PRODUCT']]), 'validation': Dataset.from_pandas(valid[['input', 'PRODUCT']])})

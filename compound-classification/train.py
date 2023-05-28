@@ -82,8 +82,10 @@ df['target'] += 1
 train_ds = df[df['fold'] != 0].drop(['fold'], axis=1)
 valid_ds = df[df['fold'] == 0].drop(['fold'], axis=1)
 
-train_ds.to_csv('classification-input-train.csv', index=False)
-valid_ds.to_csv('classification-input-valid.csv', index=False)
+train_ds.to_csv('../../classification-input-train.csv', index=False)
+valid_ds.to_csv('../../classification-input-valid.csv', index=False)
+# train_ds = pd.read_csv('classification-input-train.csv')
+# valid_ds = pd.read_csv('classification-input-valid.csv')
 
 train_ds = pd.concat([train_ds, train_ds[train_ds['target'] == 1].sample(n=len(train_ds[train_ds['target'] == 1])*100, replace=True)])
 
@@ -110,7 +112,7 @@ try: # load pretrained tokenizer from local directory
     tokenizer = AutoTokenizer.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors='pt')
 except: # load pretrained tokenizer from huggingface model hub
     tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
-# tokenizer.add_tokens('.')
+tokenizer.add_tokens(['>', '<', 'P','Pd', 'Na', 'K', 'Al', 'Cu', 'Si', 'Zn', 'Mn', 'Li', 'Mg', 'Fe', 'Ba', 'Pt', 'Ag', 'Yb', '6', 'e'])
 # tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['CATALYST:', 'REACTANT:', 'REAGENT:', 'SOLVENT:', 'NoData:','PRODUCT:']})
 # tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'PRODUCT:', 'NoData:']})
 tokenizer.save_pretrained(OUTPUT_DIR+'tokenizer/')
@@ -199,6 +201,7 @@ class RegressionModel(nn.Module):
         output = self.fc3(self.fc_dropout2(torch.hstack((output1, output2))))
         output = self.fc4(output)
         output = self.fc5(output)
+#         return F.softmax(output)
         return output
     
     

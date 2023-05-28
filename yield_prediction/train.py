@@ -37,7 +37,7 @@ def parse_args():
         "--data_path", 
         type=str, 
         required=True, 
-        help="The path to data used for training. CSV file that contains ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT'] columns is expected."
+        help="The path to data used for training. CSV file that contains ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT'] columns is expected. If there are missing values, please fill them with ' '."
     )
     parser.add_argument(
         "--model", 

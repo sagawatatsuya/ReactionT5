@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup
+from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, AutoModelForSeq2SeqLM, T5ForConditionalGeneration
 import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
@@ -29,12 +29,13 @@ from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
 disable_progress_bar()
 
 class CFG():
-    data_path='../../data_for_classification.csv'
-    pretrained_model_name_or_path='sagawa/ZINC-t5'
+    data_path = 'nodata.csv'
+    pretrained_model_name_or_path='./tokenizer'
     debug = True
+    model = 't5'
     epochs = 5
     lr = 2e-5
-    batch_size = 15
+    batch_size = 64
     max_len = 128
     weight_decay = 0.01
     seed = 42
@@ -63,9 +64,7 @@ def seed_everything(seed=42):
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
-    
 
-df = pd.read_csv(CFG.data_path)
 
 
 def get_logger(filename=OUTPUT_DIR+'train'):
@@ -120,28 +119,58 @@ class RegressionModel(nn.Module):
         else:
             self.config = torch.load(config_path)
         if pretrained:
-            if 't5' in cfg.pretrained_model_name_or_path:
-                self.model = T5EncoderModel.from_pretrained(CFG.pretrained_model_name_or_path)
+            if 't5' in cfg.model:
+                self.model = T5ForConditionalGeneration.from_pretrained(CFG.pretrained_model_name_or_path)
             else:
                 self.model = AutoModel.from_pretrained(CFG.pretrained_model_name_or_path)
         else:
-            if 't5' in cfg.model_name_or_path:
-                self.model = T5EncoderModel.from_pretrained('sagawa/ZINC-t5')
+            if 't5' in cfg.model:
+                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/ZINC-t5')
             else:
                 self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(cfg.tokenizer))
         self.fc_dropout1 = nn.Dropout(cfg.fc_dropout)
-        self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size)
+        self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
         self.fc_dropout2 = nn.Dropout(cfg.fc_dropout)
-        self.fc2 = nn.Linear(self.config.hidden_size, 2)
+        
+        self.fc2 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
+        self.fc3 = nn.Linear(self.config.hidden_size//2*2, self.config.hidden_size)
+        self.fc4 = nn.Linear(self.config.hidden_size, self.config.hidden_size)
+        self.fc5 = nn.Linear(self.config.hidden_size, 2)
+
+        self._init_weights(self.fc1)
+        self._init_weights(self.fc2)
+        self._init_weights(self.fc3)
+        self._init_weights(self.fc4)
+        self._init_weights(self.fc5)
+        
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            module.weight.data.normal_(mean=0.0, std=0.01)
+            if module.bias is not None:
+                module.bias.data.zero_()
+        elif isinstance(module, nn.Embedding):
+            module.weight.data.normal_(mean=0.0, std=0.01)
+            if module.padding_idx is not None:
+                module.weight.data[module.padding_idx].zero_()
+        elif isinstance(module, nn.LayerNorm):
+            module.bias.data.zero_()
+            module.weight.data.fill_(1.0)
         
     def forward(self, inputs):
-        outputs = self.model(**inputs)
+        encoder_outputs = self.model.encoder(**inputs)
+        encoder_hidden_states = encoder_outputs[0]
+        outputs = self.model.decoder(input_ids=torch.full((inputs['input_ids'].size(0),1),
+                                            self.config.decoder_start_token_id,
+                                            dtype=torch.long,
+                                            device=device), encoder_hidden_states=encoder_hidden_states)
         last_hidden_states = outputs[0]
-        output = self.fc1(self.fc_dropout1(last_hidden_states)[:, 0, :].view(-1, self.config.hidden_size))
-        output = self.fc2(self.fc_dropout2(output))
-        output = F.softmax(output, dim=1)
-        return output
+        output1 = self.fc1(self.fc_dropout1(last_hidden_states).view(-1, self.config.hidden_size))
+        output2 = self.fc2(encoder_hidden_states[:, 0, :].view(-1, self.config.hidden_size))
+        output = self.fc3(self.fc_dropout2(torch.hstack((output1, output2))))
+        output = self.fc4(output)
+        output = self.fc5(output)
+        return F.softmax(output)
 
     
 def inference_fn(test_loader, model, device):
@@ -159,8 +188,7 @@ def inference_fn(test_loader, model, device):
     return predictions
 
 
-valid_ds = pd.read_csv('../../all_data_for_classification.csv')
-valid_ds = valid_ds[valid_ds['target'] == 5].reset_index(drop=True)
+valid_ds = pd.read_csv(CFG.data_path)
 CFG.model_name_or_path = 't5'
 valid_dataset = TestDataset(CFG, valid_ds)
 valid_loader = DataLoader(valid_dataset, batch_size=CFG.batch_size, shuffle=False, num_workers=CFG.num_workers, pin_memory=True)
@@ -175,7 +203,11 @@ for inputs in valid_loader:
         inputs[k] = v.to(device)
     with torch.no_grad():
         y_preds = model(inputs)
-        preds += torch.argmax(y_preds, dim=1).tolist()
+#         preds += torch.argmax(y_preds, dim=1).tolist()
+        preds.append(y_preds.tolist())
 
-valid_ds['pred'] = preds
-valid_ds.to_csv('nodata-prediction.csv', index=False)
+# valid_ds['pred'] = preds
+valid_ds.to_csv('prediction.csv', index=False)
+import pickle
+with open('pred.pkl', 'bw') as f:
+    pickle.dump(preds, f)

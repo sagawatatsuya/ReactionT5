@@ -1,7 +1,7 @@
 # transformer chemical reaction prediciton
 We trained T5 and DeBERTa models on SMILES from ZINC and PubChem-10m for the task of masked-language modeling (MLM). These models can be used for predicting molecules' properties, reactions, or interactions with proteins by fine-tuning them in different ways. You can download these pre-trained models [here](https://huggingface.co/sagawa). Using these pre-trained models, we created yield prediction and product prediction models. You can access them on [Hugging Face space](https://huggingface.co/sagawa).
 
-In this repository, we will explain how to perform pre-training and fine-tuning. Then, we will explain how to use the pre-trained models and fine-tuned models.
+In this repository, we will explain how to reproduce our paper's results(compound pretraining, reaction pretraining, and fine-tuning). Then, we will explain how to use the pretrained models and fine-tuned models.
 
 # How to start with
 To get started, you will first need to install the necessary libraries. You can use the requirements.yaml file for this purpose. If the versions of torch and jax do not match your environment, you can change and run the following command:
@@ -68,7 +68,7 @@ python ./new_run_t5_mlm_flax.py \
 ```
 Please note that if your GPU memory size is small, you may encounter an out-of-memory error during T5 pre-training. If this occurs, you can try reducing the batch size or you can try putting XLA_PYTHON_CLIENT_MEM_FRACTION=.8 before python ./new_run_t5_mlm_flax.py this reduces GPU memory preallocation.
 
-ZINC-t5
+ZINC-t5(CompoundT5)
 ```
 cd pretraining/ZINC-t5
 python ./new_run_t5_mlm_flax.py \
@@ -175,7 +175,7 @@ python ./new_run_t5_mlm_flax.py \
     --eval_steps="100000"
 ```
 
-ZINC-t5
+ZINC-t5(CompoundT5)
 ```
 cd pretraining/ZINC-t5
 python ./new_run_t5_mlm_flax.py \
@@ -263,7 +263,7 @@ You can predict yields of chemical reactions from their inputs (reactants, produ
 cd yield_prediction/
 python train.py     
     --data_path='all_ord_reaction_uniq_with_attr_v3.tsv'
-    --pretrained_model_name_or_path='sagawa/ZINC-t5'
+    --pretrained_model_name_or_path='sagawa/CompoundT5'
     --model='t5'
     --epochs=100
     --batch_size=50
