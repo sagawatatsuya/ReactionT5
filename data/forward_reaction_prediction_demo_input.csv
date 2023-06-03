@@ -1,0 +1,11 @@
+,REACTANT,PRODUCT,CATALYST,REAGENT,SOLVENT,input
+0,CC(C)NC(C)C.CC(C)[N-]C(C)C.CCI.CCOC(=O)C1CC=CC1.[Li+].[Li]CCCC,Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1, ,C1CCOC1,C1CCOC1,REACTANT:CC(C)NC(C)C.CC(C)[N-]C(C)C.CCI.CCOC(=O)C1CC=CC1.[Li+].[Li]CCCCREAGENT:C1CCOC1
+1,C[Si](C)(C)OS(=O)(=O)C(F)(F)F.[Cl-].c1ccc([I+]c2ccccc2)cc1,Clc1cnc2c(C=Cc3c(Cl)ccc4cc(Cl)cnc34)c(Cl)ccc2c1, ,ClCCl,ClCCl,REACTANT:C[Si](C)(C)OS(=O)(=O)C(F)(F)F.[Cl-].c1ccc([I+]c2ccccc2)cc1REAGENT:ClCCl
+2,O=C(Cl)c1cnc2ccccc2n1.OC12CC3CC(CC(C3)C1)C2.c1ccncc1,CC(C)(C)[C@H](N)C(=O)O.CN(C)CC(=O)O.NCC(=O)O.N[C@@H](CS)C(=O)O, ,O,O,REACTANT:O=C(Cl)c1cnc2ccccc2n1.OC12CC3CC(CC(C3)C1)C2.c1ccncc1REAGENT:O
+3,C=COCCC(C)(C)C.CC(=O)N[C@@H](Cc1cc(F)cc(F)c1)[C@H](OCc1ccccc1)[C@@H](CO)NC(=O)OC(C)(C)C.O=C1CCC(=O)N1I,O=S(=O)([O-])[O-].O=S(=O)([O-])[O-].O=S(=O)([O-])[O-].[Cr+3].[Cr+3], ,CC#N.CCOC(C)=O,CC#N.CCOC(C)=O,REACTANT:C=COCCC(C)(C)C.CC(=O)N[C@@H](Cc1cc(F)cc(F)c1)[C@H](OCc1ccccc1)[C@@H](CO)NC(=O)OC(C)(C)C.O=C1CCC(=O)N1IREAGENT:CC#N.CCOC(C)=O
+4,CN(C)/C=C/C(=O)c1nn(-c2cccc(S(C)(=O)=O)c2)ccc1=O.NNc1ccc(F)cc1,Cc1cc(Cc2cc(C)c(O)c(C=O)c2)cc(C=O)c1O, , , ,REACTANT:CN(C)/C=C/C(=O)c1nn(-c2cccc(S(C)(=O)=O)c2)ccc1=O.NNc1ccc(F)cc1REAGENT: 
+5,COC(=O)Cc1ccc(O)cc1.O=C(OCc1ccccc1)N1CCC(O)CC1,CCCCCCCCCCCC(=O)N1CCC[C@H]1C(=O)O, , , ,REACTANT:COC(=O)Cc1ccc(O)cc1.O=C(OCc1ccccc1)N1CCC(O)CC1REAGENT: 
+6,CCOC(C)=O.CO.[BH4-].[Na+],N#Cc1cccc(Oc2ccc(CO)cc2)c1, ,N#Cc1cccc(Oc2ccc(C=O)cc2)c1, ,REACTANT:CCOC(C)=O.CO.[BH4-].[Na+]REAGENT:N#Cc1cccc(Oc2ccc(C=O)cc2)c1
+7,CO.CSc1nccc(-c2[nH]c(C3CCN(C(=O)OCc4ccccc4)CC3)nc2-c2cccc(C(F)(F)F)c2)n1.O=S([O-])OO.[K+],CC1CO1, , , ,REACTANT:CO.CSc1nccc(-c2[nH]c(C3CCN(C(=O)OCc4ccccc4)CC3)nc2-c2cccc(C(F)(F)F)c2)n1.O=S([O-])OO.[K+]REAGENT: 
+8,O=C1C=C2c3cccc(-c4ccno4)c3CCN2C(=O)CN1.O=P(Cl)(Cl)Cl.c1ccncc1.c1nc(C2CC2)c[nH]1,c1ccc2sc(-c3nccc4ccccc34)cc2c1, ,ClCCCl,ClCCCl,REACTANT:O=C1C=C2c3cccc(-c4ccno4)c3CCN2C(=O)CN1.O=P(Cl)(Cl)Cl.c1ccncc1.c1nc(C2CC2)c[nH]1REAGENT:ClCCCl
+9,Cl[Sn]Cl.Nc1ccc(CC(=O)O)cc1.O=N[O-].[Na+],COC(=O)CN1CCN(CC(=O)OC(C)(C)C)CCN(CC(=O)OC(C)(C)C)CCN(CC(=O)OC(C)(C)C)CC1, ,Cl.O,Cl.O,REACTANT:Cl[Sn]Cl.Nc1ccc(CC(=O)O)cc1.O=N[O-].[Na+]REAGENT:Cl.O

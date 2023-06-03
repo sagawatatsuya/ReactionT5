@@ -26,6 +26,7 @@ from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+import subprocess
 from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
 disable_progress_bar()
@@ -55,14 +56,20 @@ def parse_args():
         "--pretrained_model_name_or_path", 
         type=str, 
         required=False,
-        help="The name of a pretrained model or path to a model which you want to use for training. You can use your local models or models uploaded to hugging face. If you want to use our pretrained model, remove pretrained_model_name_or_path option and use download_pretrained_model option."
+        help="Load pretrained model weight later. So this is not necessary."
+    )
+    parser.add_argument(
+        "--model_name_or_path", 
+        type=str, 
+        required=False,
+        help="The model's name or path used for fine-tuning. ReactionT5 is automaticaly used if download_pretrained_model is specified."
     )
     parser.add_argument(
         "--download_pretrained_model", 
         action='store_true', 
         default=False, 
         required=False,
-        help="Download pretrained model from hugging face hub and use it for training."
+        help="Download pretrained model from hugging face hub and use it for fine-tuning."
     )
     parser.add_argument(
         "--debug", 
@@ -88,7 +95,7 @@ def parse_args():
     parser.add_argument(
         "--lr", 
         type=float, 
-        default=5e-4, 
+        default=1e-4, 
         required=False,
         help="Learning rate."
     )
@@ -130,7 +137,7 @@ def parse_args():
     parser.add_argument(
         "--weight_decay", 
         type=float, 
-        default=0.01, 
+        default=0.05, 
         required=False,
         help="weight_decay used for optimizer"
     )
@@ -154,13 +161,6 @@ def parse_args():
         default=0, 
         required=False,
         help="num_warmup_steps"
-    )
-    parser.add_argument(
-        "--batch_scheduler", 
-        action='store_true', 
-        default=False, 
-        required=False,
-        help="Use batch_scheduler"
     )
     parser.add_argument(
         "--print_freq", 
@@ -194,6 +194,7 @@ def parse_args():
     return parser.parse_args()
 
 CFG = parse_args()
+CFG.batch_scheduler = True
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -211,12 +212,15 @@ def seed_everything(seed=42):
 seed_everything(seed=CFG.seed)  
 
 if CFG.download_pretrained_model:
-#     os.mkdir('tokenizer')
-#     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/ZINC-t5_best.pth', shell=True)
-#     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/config.pth', shell=True)
-#     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json -P ./tokenizer', shell=True)
-#     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer.json -P ./tokenizer', shell=True)
-#     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json -P ./tokenizer', shell=True)
+    try:
+        os.mkdir('tokenizer')
+    except:
+        print('already tokenizer exists')
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/ZINC-t5_best.pth', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/config.pth', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json -P ./tokenizer', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer.json -P ./tokenizer', shell=True)
+    subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json -P ./tokenizer', shell=True)
     CFG.model_name_or_path = '.'
     
 
@@ -312,7 +316,7 @@ class RegressionModel(nn.Module):
                 self.model = AutoModel.from_pretrained(CFG.pretrained_model_name_or_path)
         else:
             if 't5' in cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/ZINC-t5')
+                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/CompoundT5')
             else:
                 self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(cfg.tokenizer))

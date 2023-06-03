@@ -1,5 +1,4 @@
 import os
-import gc
 import random
 import itertools
 import warnings
@@ -10,9 +9,7 @@ import numpy as np
 import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
-import transformers
 from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, AutoModelForSeq2SeqLM, T5ForConditionalGeneration
-import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
@@ -20,11 +17,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 import torch.nn.functional as F
 import torch.nn as nn
-import pickle
-import time
-from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
-from sklearn.metrics import mean_squared_error, r2_score
 import subprocess
 disable_progress_bar()
 
@@ -132,7 +125,10 @@ def seed_everything(seed=42):
 seed_everything(seed=CFG.seed)  
 
 if CFG.download_pretrained_model:
-    os.mkdir('tokenizer')
+    try:
+        os.mkdir('tokenizer')
+    except:
+        print('already tokenizer exists')
     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/ZINC-t5_best.pth', shell=True)
     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/config.pth', shell=True)
     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json -P ./tokenizer', shell=True)
@@ -181,7 +177,7 @@ class RegressionModel(nn.Module):
                 self.model = AutoModel.from_pretrained(CFG.pretrained_model_name_or_path)
         else:
             if 't5' in cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/ZINC-t5')
+                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/CompoundT5')
             else:
                 self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(cfg.tokenizer))
@@ -245,8 +241,7 @@ def inference_fn(test_loader, model, device):
     return predictions
 
 model = RegressionModel(CFG, config_path=CFG.model_name_or_path + '/config.pth', pretrained=False)
-# state = torch.load(CFG.model_name_or_path + '/ZINC-t5_best.pth', map_location=torch.device('cpu'))
-state = torch.load(CFG.model_name_or_path + '/finetuned_model.pth', map_location=torch.device('cpu'))
+state = torch.load(CFG.model_name_or_path + '/ZINC-t5_best.pth', map_location=torch.device('cpu'))
 model.load_state_dict(state)
 
 
