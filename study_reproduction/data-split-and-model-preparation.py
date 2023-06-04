@@ -183,80 +183,80 @@ CFG = parse_args()
 
 # ORD data
 # Prepare train, validation and test data
-all = pd.read_csv('./data/all_ord_reaction_uniq_canonicalized.csv')
+all = pd.read_csv('../data/all_ord_reaction_uniq_canonicalized.csv')
 
 train, test = train_test_split(all, test_size=int(len(all)*0.1))
 train, val = train_test_split(train, test_size=int(len(all)*0.1))
 
-train.to_csv('./data/all_ord_reaction_uniq_canonicalized-train.csv', index=False)
-val.to_csv('./data/all_ord_reaction_uniq_canonicalized-valid.csv', index=False)
-test.to_csv('./data/all_ord_reaction_uniq_canonicalized-test.csv', index=False)
+train.to_csv('../data/all_ord_reaction_uniq_canonicalized-train.csv', index=False)
+val.to_csv('../data/all_ord_reaction_uniq_canonicalized-valid.csv', index=False)
+test.to_csv('../data/all_ord_reaction_uniq_canonicalized-test.csv', index=False)
 
 
 # PubChem10m data
 # Initialize a dataset
-dataset = load_dataset('csv',data_files='./data/pubchem-10m-canonicalized.csv')
+dataset = load_dataset('csv',data_files='../data/pubchem-10m-canonicalized.csv')
 
 if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 'microsoft/deberta-base')
 else:
     tokenizer = create_normal_tokenizer(dataset, 'microsoft/deberta-base')
 # Save files to disk
-tokenizer.save_pretrained('./pretraining/PubChem10m-deberta/PubChem10m-deberta-base')
+tokenizer.save_pretrained('./compound_pretraining/PubChem10m-deberta/PubChem10m-deberta-base')
 
 # Split into train and validation data
-all = pd.read_csv('./data/pubchem-10m-canonicalized.csv')
+all = pd.read_csv('../data/pubchem-10m-canonicalized.csv')
 train, valid = train_test_split(all, test_size=0.1)
 # Save train and validation data
-train.to_csv('./data/pubchem-10m-canonicalized-train.csv', index=False)
-valid.to_csv('./data/pubchem-10m-canonicalized-valid.csv', index=False)
+train.to_csv('../data/pubchem-10m-canonicalized-train.csv', index=False)
+valid.to_csv('../data/pubchem-10m-canonicalized-valid.csv', index=False)
 
 
 # ZINC data
 # Initialize a dataset
-dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
+dataset = load_dataset('csv',data_files='../data/ZINC-canonicalized.csv')
 
 if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 'microsoft/deberta-base')
 else:
     tokenizer = create_normal_tokenizer(dataset, 'microsoft/deberta-base')
 # Save files to disk
-tokenizer.save_pretrained('./pretraining/ZINC-deberta/ZINC-deberta-base')
+tokenizer.save_pretrained('./compound_pretraining/ZINC-deberta/ZINC-deberta-base')
 
 # Split into train and validation data
-all = pd.read_csv('./data/ZINC-canonicalized.csv')
+all = pd.read_csv('../data/ZINC-canonicalized.csv')
 train, valid = train_test_split(all, test_size=0.1)
 # Save train and validation data
-train.to_csv('./data/ZINC-canonicalized-train.csv', index=False)
-valid.to_csv('./data/ZINC-canonicalized-valid.csv', index=False)
+train.to_csv('../data/ZINC-canonicalized-train.csv', index=False)
+valid.to_csv('../data/ZINC-canonicalized-valid.csv', index=False)
 
 
 # PubChem10m data
 # Initialize a dataset
-dataset = load_dataset('csv',data_files='./data/pubchem-10m-canonicalized.csv')
+dataset = load_dataset('csv',data_files='../data/pubchem-10m-canonicalized.csv')
 
 if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 't5')
 else:
     tokenizer = create_normal_tokenizer(dataset, 't5')
 # Save files to disk
-tokenizer.save('./pretraining/PubChem10m-t5/PubChem10m-t5-base/tokenizer.json')
+tokenizer.save('./compound_pretraining/PubChem10m-t5/PubChem10m-t5-base/tokenizer.json')
 
 config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-config.save_pretrained('./pretraining/PubChem10m-t5/PubChem10m-t5-base/')
+config.save_pretrained('./compound_pretraining/PubChem10m-t5/PubChem10m-t5-base/')
 
 
 # ZINC data
 # Initialize a dataset
-dataset = load_dataset('csv',data_files='./data/ZINC-canonicalized.csv')
+dataset = load_dataset('csv',data_files='../data/ZINC-canonicalized.csv')
 
 if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, 't5')
 else:
     tokenizer = create_normal_tokenizer(dataset, 't5')
 # Save files to disk
-tokenizer.save('./pretraining/ZINC-t5/ZINC-t5-base/tokenizer.json')
+tokenizer.save('./compound_pretraining/CompoundT5/CompoundT5-config/tokenizer.json')
 
 config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-config.save_pretrained('./pretraining/ZINC-t5/ZINC-t5-base/')
+config.save_pretrained('./compound_pretraining/CompoundT5/CompoundT5-config/')
 

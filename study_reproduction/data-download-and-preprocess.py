@@ -22,7 +22,7 @@ def canonicalize(mol):
 
 lst = set([])
 for i in range(4):
-    suppl = Chem.SmilesMolSupplier(f'./data/16_p{i}.smi')
+    suppl = Chem.SmilesMolSupplier(f'../data/16_p{i}.smi')
     # some molecules cannot be read by rdkit, so we remove them here
     for mol in suppl:
         try:
@@ -31,10 +31,10 @@ for i in range(4):
         except:
             pass
 df = pd.DataFrame({'smiles': list(lst)})
-df.to_csv('./data/ZINC-canonicalized.csv', index=False)
+df.to_csv('../data/ZINC-canonicalized.csv', index=False)
 
 
-tx = pd.read_csv('./data/pubchem-10m.txt', names=['smiles'])
+tx = pd.read_csv('../data/pubchem-10m.txt', names=['smiles'])
 lst = set([])
 for smiles in tx['smiles']:
     try:
@@ -42,11 +42,11 @@ for smiles in tx['smiles']:
     except:
         pass
 df = pd.DataFrame({'smiles': list(lst)})
-df.to_csv('./data/pubchem-10m-canonicalized.csv', index=False)
+df.to_csv('../data/pubchem-10m-canonicalized.csv', index=False)
 
 
-df = pd.read_csv('./data/all_ord_reaction_uniq.tsv', sep='\t', names=['id', 'product', 'reactant'])
+df = pd.read_csv('../data/all_ord_reaction_uniq.tsv', sep='\t', names=['id', 'product', 'reactant'])
 df['product'] = df['product'].apply(lambda x: canonicalize(x))
 df['reactant'] = df['reactant'].apply(lambda x: canonicalize(x))
 df.drop(['id'], inplace=True, axis=1)
-df.to_csv('./data/all_ord_reaction_uniq_canonicalized.csv', index=False)
+df.to_csv('../data/all_ord_reaction_uniq_canonicalized.csv', index=False)

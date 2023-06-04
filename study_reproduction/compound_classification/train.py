@@ -30,16 +30,15 @@ disable_progress_bar()
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, required=False)
-#     parser.add_argument("--dataset_name", type=str, required=False)
-    parser.add_argument("--pretrained_model_name_or_path", type=str, required=True)
+    parser.add_argument("--data_path", type=str, default="data_for_classification_binary.csv", required=False)
+    parser.add_argument("--pretrained_model_name_or_path", default="sagawa/CompoundT5", type=str, required=False)
     parser.add_argument("--model_name_or_path", type=str, required=False)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
-    parser.add_argument("--epochs", type=int, default=5, required=False)
-    parser.add_argument("--lr", type=float, default=2e-6, required=False)
-    parser.add_argument("--batch_size", type=int, default=5, required=False)
-    parser.add_argument("--max_len", type=int, default=512, required=False)
-    parser.add_argument("--num_workers", type=int, default=1, required=False)
+    parser.add_argument("--epochs", type=int, default=100, required=False)
+    parser.add_argument("--lr", type=float, default=2e-5, required=False)
+    parser.add_argument("--batch_size", type=int, default=25, required=False)
+    parser.add_argument("--max_len", type=int, default=128, required=False)
+    parser.add_argument("--num_workers", type=int, default=4, required=False)
     parser.add_argument("--fc_dropout", type=float, default=0.1, required=False)
     parser.add_argument("--model", type=str, default='t5', required=False)
     parser.add_argument("--eps", type=float, default=1e-6, required=False)
@@ -56,7 +55,7 @@ def parse_args():
     return parser.parse_args()
 
 CFG = parse_args()
-
+CFG.batch_scheduler = True
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -82,10 +81,8 @@ df['target'] += 1
 train_ds = df[df['fold'] != 0].drop(['fold'], axis=1)
 valid_ds = df[df['fold'] == 0].drop(['fold'], axis=1)
 
-train_ds.to_csv('../../classification-input-train.csv', index=False)
-valid_ds.to_csv('../../classification-input-valid.csv', index=False)
-# train_ds = pd.read_csv('classification-input-train.csv')
-# valid_ds = pd.read_csv('classification-input-valid.csv')
+train_ds.to_csv('classification-input-train.csv', index=False)
+valid_ds.to_csv('classification-input-valid.csv', index=False)
 
 train_ds = pd.concat([train_ds, train_ds[train_ds['target'] == 1].sample(n=len(train_ds[train_ds['target'] == 1])*100, replace=True)])
 
@@ -250,7 +247,6 @@ def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device
         batch_size = labels.size(0)
         with torch.cuda.amp.autocast(enabled=CFG.use_apex):
             y_preds = model(inputs)
-#         loss = criterion(y_preds.view(-1, 1), labels.view(-1, 1))
         loss = criterion(y_preds, labels)
         if CFG.gradient_accumulation_steps > 1:
             loss = loss/CFG.gradient_accumulation_steps
