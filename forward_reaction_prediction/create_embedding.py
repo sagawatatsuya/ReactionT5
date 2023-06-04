@@ -20,6 +20,9 @@ from torch.utils.data import Dataset, DataLoader
 from rdkit import Chem
 import rdkit
 disable_progress_bar()
+import sys
+sys.path.append('../')
+from utils import seed_everything
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -49,13 +52,6 @@ class CFG:
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
     
 def prepare_input(cfg, text):
@@ -99,7 +95,7 @@ CFG.tokenizer = AutoTokenizer.from_pretrained(CFG.model_name_or_path, return_ten
 model = T5EncoderModel.from_pretrained(CFG.model_name_or_path)
 
     
-df = pd.read_csv(CFG.dataset_path)[:100]
+df = pd.read_csv(CFG.dataset_path)[:5000]
 dataset = TestDataset(CFG, df)
 dataloader = DataLoader(dataset,
                         batch_size=CFG.batch_size,

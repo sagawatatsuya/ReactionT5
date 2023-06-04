@@ -18,6 +18,9 @@ import argparse
 from sklearn.model_selection import train_test_split
 from datasets.utils.logging import disable_progress_bar
 disable_progress_bar()
+import sys
+sys.path.append('../')
+from utils import seed_everything, canonicalize, space_clean
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -166,13 +169,6 @@ CFG = parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
     
 
@@ -188,15 +184,8 @@ df = df[['REACTANT', 'PRODUCT', 'CATALYST', 'REAGENT', 'SOLVENT']].drop_duplicat
 df = df.iloc[df[['REACTANT', 'CATALYST', 'REAGENT', 'SOLVENT']].drop_duplicates().index].reset_index(drop=True)
 
 
-def clean(row):
-    row = row.replace('. ', '').replace(' .', '').replace('  ', ' ')
-    return row
 df['REAGENT'] = df['CATALYST'] + '.' + df['REAGENT'] + '.' + df['SOLVENT']
-df['REAGENT'] = df['REAGENT'].apply(lambda x: clean(x))
-from rdkit import Chem
-def canonicalize(mol):
-    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
-    return mol
+df['REAGENT'] = df['REAGENT'].apply(lambda x: space_clean(x))
 df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
 
 

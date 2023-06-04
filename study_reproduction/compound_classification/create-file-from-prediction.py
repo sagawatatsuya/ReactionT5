@@ -13,11 +13,9 @@ import time
 import math
 from sklearn.preprocessing import MinMaxScaler
 from rdkit import Chem
-
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
+import sys
+sys.path.append('../../')
+from utils import seed_everything
 seed_everything(seed=42)  
 
 
@@ -52,13 +50,8 @@ for idx, row in df_all.iterrows():
 
 df_after = pd.DataFrame(np.array(dfs).reshape(-1, 2), columns=names)
 
-def canonicalize(smi):
-    smi = Chem.MolToSmiles(Chem.MolFromSmiles(smi),True)
-    return smi
-
 df_after[['PRODUCT', 'YIELD', 'TEMP', 'NoData']] = df_all[['PRODUCT', 'YIELD', 'TEMP', 'NoData']]
 
 df_after.to_csv('reconstructed-nodata.csv', index=False)
-
 
 print('finish')

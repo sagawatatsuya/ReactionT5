@@ -27,6 +27,9 @@ from datasets.utils.logging import disable_progress_bar
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, precision_score, recall_score, f1_score
 disable_progress_bar()
+import sys
+sys.path.append('../../')
+from utils import seed_everything, canonicalize, space_clean, get_logger, AverageMeter, asMinutes, timeSince
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -63,13 +66,6 @@ OUTPUT_DIR = CFG.output_dir
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
     
 
@@ -90,19 +86,7 @@ if CFG.debug:
     train_ds = train_ds.sample(frac=0.2).reset_index(drop=True)
     valid_ds = valid_ds.sample(frac=0.2).reset_index(drop=True)
 
-def get_logger(filename=OUTPUT_DIR+'train'):
-    from logging import getLogger, INFO, StreamHandler, FileHandler, Formatter
-    logger = getLogger(__name__)
-    logger.setLevel(INFO)
-    handler1 = StreamHandler()
-    handler1.setFormatter(Formatter("%(message)s"))
-    handler2 = FileHandler(filename=f"{filename}.log")
-    handler2.setFormatter(Formatter("%(message)s"))
-    logger.addHandler(handler1)
-    logger.addHandler(handler2)
-    return logger
-
-LOGGER = get_logger()
+LOGGER = get_logger(OUTPUT_DIR+'train')
 
 #load tokenizer
 try: # load pretrained tokenizer from local directory
@@ -200,37 +184,6 @@ class RegressionModel(nn.Module):
         output = self.fc5(output)
 #         return F.softmax(output)
         return output
-    
-    
-class AverageMeter(object):
-    def __init__(self):
-        self.reset()
-        
-    def reset(self):
-        self.val = 0
-        self.avg = 0
-        self.sum = 0
-        self.count = 0
-        
-    def update(self, val, n=1):
-        self.val = val
-        self.sum += val*n
-        self.count += n
-        self.avg = self.sum/self.count
-        
-
-def asMinutes(s):
-    m = math.floor(s/60)
-    s -= m*60
-    return '%dm %ds' % (m, s)
-
-
-def timeSince(since, percent):
-    now = time.time()
-    s = now - since
-    es = s/(percent)
-    rs = es - s
-    return '%s (remain %s)' % (asMinutes(s), asMinutes(rs))
 
 
 def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device):

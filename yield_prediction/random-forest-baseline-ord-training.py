@@ -16,23 +16,15 @@ import math
 from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
+from sklearn.ensemble import RandomForestRegressor
 from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
-
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
-seed_everything()  
-
-from rdkit import Chem
-def canonicalize(mol):
-    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
-    return mol
+from rdkit.Chem import AllChem
+import sys
+sys.path.append('../')
+from utils import seed_everything, canonicalize
+seed_everything(42)  
 
 def preprocess(df):
     df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
@@ -64,7 +56,6 @@ df = pd.read_csv('/data2/sagawa/t5chem/data/C_N_yield/MFF_FullCV_01/test.csv').d
 valid_ds = preprocess(df)
 
 
-from rdkit.Chem import AllChem
 fingerprints = []
 dim = 865
 for idx, row in train_ds.iterrows():
@@ -78,8 +69,6 @@ for idx, row in valid_ds.iterrows():
 valid_ds[[str(i) for i in range(dim)]] = fingerprints
 
 
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
 model = RandomForestRegressor(n_estimators=785, max_depth=914, random_state=42)
 model.fit(train_ds[[str(i) for i in range(dim)]], train_ds['YIELD'])
 valid_ds['prediction'] = model.predict(valid_ds[[str(i) for i in range(dim)]])

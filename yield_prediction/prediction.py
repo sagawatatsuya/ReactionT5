@@ -20,6 +20,9 @@ import torch.nn as nn
 from datasets.utils.logging import disable_progress_bar
 import subprocess
 disable_progress_bar()
+import sys
+sys.path.append('../')
+from utils import seed_everything, canonicalize, space_clean, get_logger, AverageMeter, asMinutes, timeSince
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -115,13 +118,6 @@ OUTPUT_DIR = CFG.output_dir
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
 
 if CFG.download_pretrained_model:

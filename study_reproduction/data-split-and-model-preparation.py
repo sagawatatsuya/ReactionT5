@@ -13,6 +13,9 @@ import datasets
 from datasets import load_dataset
 import sentencepiece
 import argparse
+import sys
+sys.path.append('../')
+from utils import seed_everything
 
 # https://github.com/huggingface/transformers/blob/main/examples/flax/language-modeling/t5_tokenizer_model.py
 #!/usr/bin/env python3
@@ -161,14 +164,6 @@ def create_character_level_tokenizer(dataset, model_name):
     return tokenizer
 
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
-    
 seed_everything(seed=42)
 
 

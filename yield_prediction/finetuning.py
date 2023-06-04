@@ -30,6 +30,9 @@ import subprocess
 from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
 disable_progress_bar()
+import sys
+sys.path.append('../')
+from utils import seed_everything, canonicalize, space_clean, get_logger, AverageMeter, asMinutes, timeSince
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -202,13 +205,6 @@ OUTPUT_DIR = CFG.output_dir
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
 
 if CFG.download_pretrained_model:
@@ -223,12 +219,6 @@ if CFG.download_pretrained_model:
     subprocess.run('wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json -P ./tokenizer', shell=True)
     CFG.model_name_or_path = '.'
     
-
-from rdkit import Chem
-def canonicalize(mol):
-    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
-    return mol
-
 def preprocess(df):
     df['REAGENT'] = df['REAGENT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
     df['REACTANT'] = df['REACTANT'].apply(lambda x: canonicalize(x) if x != ' ' else ' ')
@@ -254,19 +244,7 @@ if CFG.debug:
     valid_ds = valid_ds[:int(len(valid_ds)/4)].reset_index(drop=True)
         
     
-def get_logger(filename=OUTPUT_DIR+'train'):
-    from logging import getLogger, INFO, StreamHandler, FileHandler, Formatter
-    logger = getLogger(__name__)
-    logger.setLevel(INFO)
-    handler1 = StreamHandler()
-    handler1.setFormatter(Formatter("%(message)s"))
-    handler2 = FileHandler(filename=f"{filename}.log")
-    handler2.setFormatter(Formatter("%(message)s"))
-    logger.addHandler(handler1)
-    logger.addHandler(handler2)
-    return logger
-
-LOGGER = get_logger()
+LOGGER = get_logger(OUTPUT_DIR+'train')
 
 #load tokenizer
 if CFG.download_pretrained_model:
@@ -363,37 +341,6 @@ class RegressionModel(nn.Module):
         output = self.fc5(output)
         return output
     
-    
-class AverageMeter(object):
-    def __init__(self):
-        self.reset()
-        
-    def reset(self):
-        self.val = 0
-        self.avg = 0
-        self.sum = 0
-        self.count = 0
-        
-    def update(self, val, n=1):
-        self.val = val
-        self.sum += val*n
-        self.count += n
-        self.avg = self.sum/self.count
-        
-
-def asMinutes(s):
-    m = math.floor(s/60)
-    s -= m*60
-    return '%dm %ds' % (m, s)
-
-
-def timeSince(since, percent):
-    now = time.time()
-    s = now - since
-    es = s/(percent)
-    rs = es - s
-    return '%s (remain %s)' % (asMinutes(s), asMinutes(rs))
-
 
 def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device):
     model.train()

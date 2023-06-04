@@ -1,6 +1,9 @@
 import subprocess
 from rdkit import Chem
 import pandas as pd
+import sys
+sys.path.append('../')
+from utils import canonicalize
 
 subprocess.run("mkdir data", shell=True)
 subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1H4kOZpUayA-xSp0HNYRW4YXUcRhM9lhD'", shell=True)
@@ -13,11 +16,6 @@ subprocess.run("gzip -dr .", shell=True)
 subprocess.run("mv *.smi data", shell=True)
 subprocess.run("mv *.txt data", shell=True)
 subprocess.run("mv *.tsv data", shell=True)
-
-
-def canonicalize(mol):
-    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
-    return mol
 
 
 lst = set([])

@@ -14,7 +14,9 @@ import argparse
 from torch.utils.data import Dataset, DataLoader
 from rdkit import Chem
 import rdkit
-
+import sys
+sys.path.append('../')
+from utils import seed_everything
 
 
 def parse_args():
@@ -93,13 +95,6 @@ OUTPUT_DIR = CFG.output_dir
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
 
 tokenizer = AutoTokenizer.from_pretrained(CFG.model_name_or_path, return_tensors='pt')

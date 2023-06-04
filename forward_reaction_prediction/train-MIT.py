@@ -18,6 +18,9 @@ import argparse
 from sklearn.model_selection import train_test_split
 from datasets.utils.logging import disable_progress_bar
 disable_progress_bar()
+import sys
+sys.path.append('../')
+from utils import seed_everything, canonicalize, space_clean
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -172,14 +175,7 @@ CFG = parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
-seed_everything(seed=CFG.seed)  
+seed_everything(seed=CFG.seed) 
 
 
 train = pd.read_csv(CFG.train_data_path)

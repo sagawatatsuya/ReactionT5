@@ -46,26 +46,29 @@ Please note that if your GPU memory size is small, you may encounter an out-of-m
 # Restore uncategorized data
 Many reactions in ORD involve uncategorized compounds, indicating the presence of compounds with unidentified roles in these reactions. To fully utilize ORD's data, we trained ClassificationT5 which classifies uncategorized compounds as reactants or reagetns.
 
-data creation
+create train data from the ORD dataset in the following notebook
 ```
 cd compound_classification
 create_dataset.ipynb
 ```
 
-Train ClassificationT5
+train ClassificationT5
 ```
-create_dataset.ipynb
+python train.py
+```
+
+predict and restore uncategorized data
+```
+python nodata-prediction.py
+python create-file-from-prediction.py
 ```
 
 
-
-
-
+# Reaction pretraining
 
 ### Yield prediction
-You can predict yields of chemical reactions from their inputs (reactants, products, and catalysts). By executing following command, you can finetune yield prediction 
 ```
-cd yield_prediction/
+cd ../yield_prediction/
 python train.py     
     --data_path='all_ord_reaction_uniq_with_attr_v3.tsv'
     --pretrained_model_name_or_path='sagawa/CompoundT5'
@@ -84,7 +87,7 @@ python train.py
 ### Product prediction
 You can predict products of reactions only from reactants. However, we found inputting reactants, catalysts, reagents, solvents, and NoData(their classification is unknown) can achive better results. By execting following command, you can do multi-input product prediction.
 ```
-cd forward_reaction_prediction/
+cd ../forward_reaction_prediction/
 python train.py \
     --model='deberta' \
     --epochs=20 \

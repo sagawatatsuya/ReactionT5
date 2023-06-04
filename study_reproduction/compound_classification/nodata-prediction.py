@@ -1,7 +1,5 @@
 import os
-import gc
 import random
-import itertools
 import warnings
 warnings.filterwarnings('ignore')
 import numpy as np
@@ -18,15 +16,13 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 import torch.nn.functional as F
 import torch.nn as nn
-from torch.optim import AdamW
 import pickle
-import time
-import math
-from sklearn.preprocessing import MinMaxScaler
 from datasets.utils.logging import disable_progress_bar
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
 disable_progress_bar()
+import sys
+sys.path.append('../../')
+from utils import seed_everything, canonicalize, space_clean, get_logger, AverageMeter, asMinutes, timeSince
 
 class CFG():
     data_path = 'nodata.csv'
@@ -48,38 +44,12 @@ class CFG():
     batch_scheduler=True
     print_freq=100
     use_apex=False
-    output_dir = './'
+    output_file = ''
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-OUTPUT_DIR = CFG.output_dir
-if not os.path.exists(OUTPUT_DIR):
-    os.makedirs(OUTPUT_DIR)
-
-def seed_everything(seed=42):
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
 seed_everything(seed=CFG.seed)  
 
-
-
-def get_logger(filename=OUTPUT_DIR+'train'):
-    from logging import getLogger, INFO, StreamHandler, FileHandler, Formatter
-    logger = getLogger(__name__)
-    logger.setLevel(INFO)
-    handler1 = StreamHandler()
-    handler1.setFormatter(Formatter("%(message)s"))
-    handler2 = FileHandler(filename=f"{filename}.log")
-    handler2.setFormatter(Formatter("%(message)s"))
-    logger.addHandler(handler1)
-    logger.addHandler(handler2)
-    return logger
-
-LOGGER = get_logger()
 
 #load tokenizer
 try: # load pretrained tokenizer from local directory
@@ -203,11 +173,16 @@ for inputs in valid_loader:
         inputs[k] = v.to(device)
     with torch.no_grad():
         y_preds = model(inputs)
-#         preds += torch.argmax(y_preds, dim=1).tolist()
         preds.append(y_preds.tolist())
 
-# valid_ds['pred'] = preds
-valid_ds.to_csv('prediction.csv', index=False)
-import pickle
 with open('pred.pkl', 'bw') as f:
     pickle.dump(preds, f)
+    
+    
+lis = []
+for p in pred:
+    lis += p
+lis = np.array(lis)
+pred = lis[:, 1] > 0.97
+valid_ds['pred'] = pred
+valid_ds.to_csv('nodata-prediction.csv', index=False)
