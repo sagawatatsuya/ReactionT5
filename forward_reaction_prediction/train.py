@@ -10,7 +10,7 @@ from tqdm.auto import tqdm
 import torch
 import tokenizers
 import transformers
-from transformers import AutoTokenizer, EncoderDecoderModel, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
+from transformers import AutoTokenizer, EncoderDecoderModel, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer, EarlyStoppingCallback
 import datasets
 from datasets import load_dataset, load_metric, Dataset, DatasetDict
 import sentencepiece
@@ -307,7 +307,7 @@ args = Seq2SeqTrainingArguments(
     load_best_model_at_end=True
 )
 
-from transformers import EarlyStoppingCallback
+
 trainer = Seq2SeqTrainer(
     model,
     args,

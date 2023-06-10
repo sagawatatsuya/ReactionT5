@@ -29,7 +29,8 @@ from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, precis
 disable_progress_bar()
 import sys
 sys.path.append('../../')
-from utils import seed_everything, canonicalize, space_clean, get_logger, AverageMeter, asMinutes, timeSince
+from utils import seed_everything, canonicalize, space_clean, get_logger, AverageMeter, asMinutes, timeSince, get_optimizer_params
+from models import ClassificationT5
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -61,6 +62,7 @@ CFG = parse_args()
 CFG.batch_scheduler = True
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+CFG.device = device
 
 OUTPUT_DIR = CFG.output_dir
 if not os.path.exists(OUTPUT_DIR):
@@ -94,10 +96,9 @@ try: # load pretrained tokenizer from local directory
 except: # load pretrained tokenizer from huggingface model hub
     tokenizer = AutoTokenizer.from_pretrained(CFG.pretrained_model_name_or_path, return_tensors='pt')
 tokenizer.add_tokens(['>', '<', 'P','Pd', 'Na', 'K', 'Al', 'Cu', 'Si', 'Zn', 'Mn', 'Li', 'Mg', 'Fe', 'Ba', 'Pt', 'Ag', 'Yb', '6', 'e'])
-# tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['CATALYST:', 'REACTANT:', 'REAGENT:', 'SOLVENT:', 'NoData:','PRODUCT:']})
-# tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'PRODUCT:', 'NoData:']})
 tokenizer.save_pretrained(OUTPUT_DIR+'tokenizer/')
 CFG.tokenizer = tokenizer
+
 def prepare_input(cfg, text):
     inputs = cfg.tokenizer(text, add_special_tokens=True, max_length=CFG.max_len, padding='max_length', return_offsets_mapping=False, truncation=True, return_attention_mask=True)
     for k, v in inputs.items():
@@ -120,70 +121,6 @@ class TrainDataset(Dataset):
         label = torch.tensor(self.labels[item], dtype=torch.float)
         
         return inputs, label
-    
-       
-class RegressionModel(nn.Module):
-    def __init__(self, cfg, config_path=None, pretrained=False):
-        super().__init__()
-        self.cfg = cfg
-        if config_path is None:
-            self.config = AutoConfig.from_pretrained(cfg.pretrained_model_name_or_path, output_hidden_states=True)
-        else:
-            self.config = torch.load(config_path)
-        if pretrained:
-            if 't5' in cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained(CFG.pretrained_model_name_or_path)
-            else:
-                self.model = AutoModel.from_pretrained(CFG.pretrained_model_name_or_path)
-        else:
-            if 't5' in cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/ZINC-t5')
-            else:
-                self.model = AutoModel.from_config(self.config)
-        self.model.resize_token_embeddings(len(cfg.tokenizer))
-        self.fc_dropout1 = nn.Dropout(cfg.fc_dropout)
-        self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
-        self.fc_dropout2 = nn.Dropout(cfg.fc_dropout)
-        
-        self.fc2 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
-        self.fc3 = nn.Linear(self.config.hidden_size//2*2, self.config.hidden_size)
-        self.fc4 = nn.Linear(self.config.hidden_size, self.config.hidden_size)
-        self.fc5 = nn.Linear(self.config.hidden_size, 2)
-
-        self._init_weights(self.fc1)
-        self._init_weights(self.fc2)
-        self._init_weights(self.fc3)
-        self._init_weights(self.fc4)
-        self._init_weights(self.fc5)
-        
-    def _init_weights(self, module):
-        if isinstance(module, nn.Linear):
-            module.weight.data.normal_(mean=0.0, std=0.01)
-            if module.bias is not None:
-                module.bias.data.zero_()
-        elif isinstance(module, nn.Embedding):
-            module.weight.data.normal_(mean=0.0, std=0.01)
-            if module.padding_idx is not None:
-                module.weight.data[module.padding_idx].zero_()
-        elif isinstance(module, nn.LayerNorm):
-            module.bias.data.zero_()
-            module.weight.data.fill_(1.0)
-        
-    def forward(self, inputs):
-        encoder_outputs = self.model.encoder(**inputs)
-        encoder_hidden_states = encoder_outputs[0]
-        outputs = self.model.decoder(input_ids=torch.full((inputs['input_ids'].size(0),1),
-                                            self.config.decoder_start_token_id,
-                                            dtype=torch.long,
-                                            device=device), encoder_hidden_states=encoder_hidden_states)
-        last_hidden_states = outputs[0]
-        output1 = self.fc1(self.fc_dropout1(last_hidden_states).view(-1, self.config.hidden_size))
-        output2 = self.fc2(encoder_hidden_states[:, 0, :].view(-1, self.config.hidden_size))
-        output = self.fc3(self.fc_dropout2(torch.hstack((output1, output2))))
-        output = self.fc4(output)
-        output = self.fc5(output)
-#         return F.softmax(output)
-        return output
 
 
 def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, device):
@@ -279,19 +216,9 @@ def train_loop(train_ds, valid_ds):
     train_loader = DataLoader(train_dataset, batch_size=CFG.batch_size, shuffle=True, num_workers=CFG.num_workers, pin_memory=True, drop_last=True)
     valid_loader = DataLoader(valid_dataset, batch_size=CFG.batch_size, shuffle=False, num_workers=CFG.num_workers, pin_memory=True, drop_last=False)
     
-    model = RegressionModel(CFG, config_path=None, pretrained=True)
+    model = ClassificationT5(CFG, config_path=None, pretrained=True, phase='train')
     torch.save(model.config, OUTPUT_DIR+'config.pth')
     model.to(device)
-    
-    def get_optimizer_params(model, encoder_lr, decoder_lr, weight_decay=0.0):
-        param_optimizer = list(model.named_parameters())
-        no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
-        optimizer_parameters = [
-            {'params': [p for n, p in model.model.named_parameters() if not any(nd in n for nd in no_decay)], 'lr': encoder_lr, 'weight_decay': weight_decay},
-            {'params': [p for n, p in model.model.named_parameters() if any(nd in n for nd in no_decay)], 'lr': encoder_lr, 'weight_decay': 0.0},
-            {'params': [p for n, p in model.named_parameters() if 'model' not in n], 'lr': decoder_lr, 'weight_decay': 0.0}
-        ]
-        return optimizer_parameters
     
     optimizer_parameters = get_optimizer_params(model, encoder_lr=CFG.lr, decoder_lr=CFG.lr, weight_decay=CFG.weight_decay)
     optimizer = AdamW(optimizer_parameters, lr=CFG.lr, eps=CFG.eps, betas=(0.9, 0.999))
