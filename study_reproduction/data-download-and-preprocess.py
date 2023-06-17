@@ -1,18 +1,21 @@
 import subprocess
-from rdkit import Chem
-import pandas as pd
+from rdkit import RDLogger, Chem
+RDLogger.DisableLog('rdApp.*')
 import sys
+import warnings
+warnings.filterwarnings('ignore')
+import numpy as np
+import pandas as pd
 sys.path.append('../')
-from utils import canonicalize
+from utils import canonicalize, remove_atom_mapping
 
 subprocess.run("mkdir data", shell=True)
-subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1H4kOZpUayA-xSp0HNYRW4YXUcRhM9lhD'", shell=True)
-subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1DrDEjFNkU1YeubYw94k4K0Sek2xx1Sg1'", shell=True)
-subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1NPpxUgPiCd_XPC37WvD6crZ5phRxB-ie'", shell=True)
-subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1aJevXiOF8A6t9tMbfq2bmqoIsBfMyPAZ'", shell=True)
-subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1ygYs8dy1-vxD1Vx6Ux7ftrXwZctFjpV3'", shell=True)
-subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m'", shell=True)
-subprocess.run("gzip -dr .", shell=True)
+subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1ZPsoUYb4HcxFzK_ac9rb_pQj7oO3Gagh'", shell=True)
+subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1XwkxxHiaWFbSNhGyxnv6hAliutIMNrIp'", shell=True)
+subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1yIwUH_OhER9nuMo9HjBhBmyc6zvmrSPA'", shell=True)
+subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1skFRirstIUijhieshvJEScBD2aB3H1YU'", shell=True)
+subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1snkL0YPQOEVr-7JuwuR-HlCECV_Zwp7l'", shell=True)
+subprocess.run("gdown 'https://drive.google.com/uc?export=download&id=1Qbsl8_CmdIK_iNNY8F6wATVnDQNSW9Tc'", shell=True)
 subprocess.run("mv *.smi data", shell=True)
 subprocess.run("mv *.txt data", shell=True)
 subprocess.run("mv *.tsv data", shell=True)
@@ -42,9 +45,69 @@ for smiles in tx['smiles']:
 df = pd.DataFrame({'smiles': list(lst)})
 df.to_csv('../data/pubchem-10m-canonicalized.csv', index=False)
 
+    
+df = pd.read_csv('../data/all_ord_reaction_uniq_with_attr_v1.tsv', sep='\t', names=['id', 'input', 'product', 'condition'])
 
-df = pd.read_csv('../data/all_ord_reaction_uniq.tsv', sep='\t', names=['id', 'product', 'reactant'])
-df['product'] = df['product'].apply(lambda x: canonicalize(x))
-df['reactant'] = df['reactant'].apply(lambda x: canonicalize(x))
-df.drop(['id'], inplace=True, axis=1)
-df.to_csv('../data/all_ord_reaction_uniq_canonicalized.csv', index=False)
+
+def data_split(row):
+    dic = {'CATALYST': [], 'REACTANT': [], 'REAGENT': [], 'SOLVENT': [], 'INTERNAL_STANDARD': [], 'NoData': []}
+    inp_cat = ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData']
+    inp = row['input']
+    if type(inp) == str:
+        for item in inp.split('.'):
+            for cat in inp_cat:
+                if cat in item:
+                    dic[cat].append(item[item.find(':')+1:])
+                    break
+    for k, v in dic.items():
+        dic[k] = '.'.join(dic[k])
+
+    pro = row['product']
+    if type(pro) == str:
+        pro = pro.replace('.PRODUCT', 'PRODUCT')
+        pro_lis = []
+        for item in pro.split('PRODUCT:'):
+            if item != '':
+                pro_lis.append(item)
+        dic['PRODUCT'] = '.'.join(pro_lis)
+    else:
+        dic['PRODUCT'] = None
+    
+    con = row['condition']
+    if type(con) == str:
+        if 'YIELD' in con and 'TEMP' in con:
+            pos = con.find('.T')
+            for item, cat in zip([con[:pos], con[pos:]], ['YIELD', 'TEMP']):   
+                dic[cat] = float(item[item.find(':')+1:])
+        elif 'YIELD' in con:
+            dic['YIELD'] = float(con[con.find(':')+1:])
+            dic['TEMP'] = None
+        elif 'TEMP' in con:
+            dic['YIELD'] = None
+            dic['TEMP'] = float(con[con.find(':')+1:])
+        else:
+            print(con)
+    else:
+        for cat in ['YIELD', 'TEMP']:
+            dic[cat] = None
+    return list(dic.values())
+
+
+dic = {'CATALYST': [], 'REACTANT': [], 'REAGENT': [], 'SOLVENT': [], 'INTERNAL_STANDARD': [], 'NoData': [], 'PRODUCT': [],'YIELD': [], 'TEMP': []}
+cat = ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT', 'INTERNAL_STANDARD', 'NoData','PRODUCT', 'YIELD', 'TEMP']
+for idx, row in df.iterrows():
+    lst = data_split(row)
+    for i in range(len(lst)):
+        dic[cat[i]].append(lst[i]) 
+cleaned_df = pd.DataFrame(dic)
+
+cleaned_df['CATALYST'] = cleaned_df['CATALYST'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+cleaned_df['REACTANT'] = cleaned_df['REACTANT'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+cleaned_df['REAGENT'] = cleaned_df['REAGENT'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+cleaned_df['SOLVENT'] = cleaned_df['SOLVENT'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+cleaned_df['INTERNAL_STANDARD'] = cleaned_df['INTERNAL_STANDARD'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+cleaned_df['NoData'] = cleaned_df['NoData'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+cleaned_df['PRODUCT'] = cleaned_df['PRODUCT'].apply(lambda x: remove_atom_mapping(x) if type(x) == str else None)
+
+
+cleaned_df.to_csv('../data/all_ord_reaction_uniq_with_attr_v3.csv', index=False)

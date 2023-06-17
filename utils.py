@@ -25,6 +25,13 @@ def canonicalize(mol):
     return mol
 
 
+def remove_atom_mapping(smi):
+    mol = Chem.MolFromSmiles(smi)
+    [a.SetAtomMapNum(0) for a in mol.GetAtoms()]
+    smi = Chem.MolToSmiles(mol)
+    return canonicalize(smi)
+
+
 def get_logger(filename='train'):
     from logging import getLogger, INFO, StreamHandler, FileHandler, Formatter
     logger = getLogger(__name__)

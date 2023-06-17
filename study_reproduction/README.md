@@ -20,9 +20,9 @@ conda install -c conda-forge optuna
 ```
 This will install all the necessary libraries for the project.
 
-The original data used for pre-training and fine-tuning is uploaded to Google Drive and can be found at the following links:
-・[ZINC](https://drive.google.com/drive/folders/1lSPCqh31zxTVEhuiPde7W3rZG8kPgp-z)  
-・[ORD](https://drive.google.com/file/d/1BEk2GWhNU-Azj9hm77Z2wufsPN49wN0m/view)  
+The original data used for this study is uploaded to Google Drive and can be found at the following links:
+・[ZINC](https://drive.google.com/drive/folders/1SgM35D14JUqgNILxaiRQYbZoyooFOF-3)  
+・[ORD](https://drive.google.com/file/d/1Qbsl8_CmdIK_iNNY8F6wATVnDQNSW9Tc/view?usp=drive_link)  
 The pre-processed data is also available on [Hugging Face Hub](https://huggingface.co/sagawa) and can be used directly. 
 
 To download the data, you can run the following command:
@@ -40,7 +40,7 @@ Run the following command to conduct compound pretraining. In compound pretraini
 cd compound_pretraining/CompoundT5
 sh run.sh
 ```
-Please note that if your GPU memory size is small, you may encounter an out-of-memory error during T5 pre-training. If this occurs, you can try reducing the batch size or you can try putting XLA_PYTHON_CLIENT_MEM_FRACTION=.8 before python ./new_run_t5_mlm_flax.py this reduces GPU memory preallocation.
+Please note that if your GPU memory size is small, you may encounter an out-of-memory error during T5 pre-training. If this occurs, you can try reducing the batch size or you can try putting XLA_PYTHON_CLIENT_MEM_FRACTION=.8 before python ./new_run_t5_mlm_flax.py in run.sh file. This reduces GPU memory preallocation.
 
 
 # Restore uncategorized data
@@ -65,41 +65,25 @@ python create-file-from-prediction.py
 
 
 # Reaction pretraining
+We conducted two types of reaction pretraining: yield prediction and product prediction. Run the following commands to conduct reaction pretraining. In product prediction, we add originally uncategorized but reconstructed compound data. This enables ReactionT5 to be more generalized and applied to rare and difficult reactions.
 
 ### Yield prediction
 ```
 cd ../yield_prediction/
-python train.py     
-    --data_path='all_ord_reaction_uniq_with_attr_v3.tsv'
-    --pretrained_model_name_or_path='sagawa/CompoundT5'
-    --model='t5'
-    --epochs=100
-    --batch_size=50
-    --max_len=400
-    --num_workers=4
-    --weight_decay=0.05
-    --gradient_accumulation_steps=1
-    --batch_scheduler
-    --print_freq=100
+python train.py \
+    --data_path='../data/all_ord_reaction_uniq_with_attr_v3.csv' \
+    --epochs=100 \
+    --batch_size=50 \
     --output_dir='./'
 ```
 
 ### Product prediction
-You can predict products of reactions only from reactants. However, we found inputting reactants, catalysts, reagents, solvents, and NoData(their classification is unknown) can achive better results. By execting following command, you can do multi-input product prediction.
 ```
 cd ../forward_reaction_prediction/
 python train.py \
-    --model='deberta' \
-    --epochs=20 \
-    --lr=1e-7 \
-    --batch_size=16 \
-    --max_len=512 \
-    --weight_decay=0.01 \
-    --evaluation_strategy='epoch' \
-    --save_strategy='epoch' \
-    --logging_strategy='epoch' \
-    --save_total_limit=1 \
-    --data_path='all_ord_reaction_uniq_with_attr_v3.tsv' \
-    --disable_tqdm \
-    --pretrained_model_name_or_path='sagawa/ZINC-deberta'
+    --epochs=100 \
+    --batch_size=32 \
+    --data_path='../data/all_ord_reaction_uniq_with_attr_v3.csv' \
+    --use_reconstructed_data \
+    --pretrained_model_name_or_path='sagawa/CompoundT5'
 ```

@@ -34,7 +34,7 @@ from models import ClassificationT5
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, default="data_for_classification_binary.csv", required=False)
+    parser.add_argument("--data_path", type=str, default="../../data/data_for_classification_binary.csv", required=False)
     parser.add_argument("--pretrained_model_name_or_path", default="sagawa/CompoundT5", type=str, required=False)
     parser.add_argument("--model_name_or_path", type=str, required=False)
     parser.add_argument("--debug", action='store_true', default=False, required=False)
@@ -79,8 +79,8 @@ df['target'] += 1
 train_ds = df[df['fold'] != 0].drop(['fold'], axis=1)
 valid_ds = df[df['fold'] == 0].drop(['fold'], axis=1)
 
-train_ds.to_csv('classification-input-train.csv', index=False)
-valid_ds.to_csv('classification-input-valid.csv', index=False)
+train_ds.to_csv('../../data/classification-input-train.csv', index=False)
+valid_ds.to_csv('../../data/classification-input-valid.csv', index=False)
 
 train_ds = pd.concat([train_ds, train_ds[train_ds['target'] == 1].sample(n=len(train_ds[train_ds['target'] == 1])*100, replace=True)])
 

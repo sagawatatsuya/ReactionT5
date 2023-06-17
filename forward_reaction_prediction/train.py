@@ -60,7 +60,7 @@ def parse_args():
     parser.add_argument(
         "--lr", 
         type=float, 
-        default=2e-5, 
+        default=1e-3, 
         required=False,
         help="Learning rate."
     )
@@ -74,14 +74,14 @@ def parse_args():
     parser.add_argument(
         "--input_max_len",
         type=int, 
-        default=128, 
+        default=400, 
         required=False,
         help="Max input token length."
     )
     parser.add_argument(
         "--target_max_len",
         type=int, 
-        default=128, 
+        default=150, 
         required=False,
         help="Max target token length."
     )
@@ -130,7 +130,7 @@ def parse_args():
         "--logging_steps", 
         type=int, 
         required=False,
-        default="500",
+        default="epoch",
         help="Number of steps between two logging"
     )
     parser.add_argument(
@@ -173,6 +173,7 @@ def parse_args():
     return parser.parse_args()
     
 CFG = parse_args()
+CFG.disable_tqdm = True
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -182,7 +183,7 @@ seed_everything(seed=CFG.seed)
 df = pd.read_csv(CFG.data_path)
 df = df[~df['PRODUCT'].isna()]
 if CFG.use_reconstructed_data:
-    df2 = pd.read_csv('reconstructed-nodata.csv')
+    df2 = pd.read_csv('../data/reconstructed-nodata.csv')
     df = pd.concat([df, df2]).sample(frac=1).reset_index(drop=True)
 for col in ['CATALYST', 'REACTANT', 'REAGENT', 'SOLVENT','PRODUCT']:
     df[col] = df[col].fillna(' ')

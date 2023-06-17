@@ -26,7 +26,7 @@ from utils import seed_everything, canonicalize, space_clean, get_logger, Averag
 from models import ClassificationT5
 
 class CFG():
-    data_path = 'nodata.csv'
+    data_path = '../../data/nodata.csv'
     pretrained_model_name_or_path='./tokenizer'
     debug = True
     model = 't5'
@@ -124,4 +124,4 @@ for p in pred:
 lis = np.array(lis)
 pred = lis[:, 1] > 0.97
 valid_ds['pred'] = pred
-valid_ds.to_csv('nodata-prediction.csv', index=False)
+valid_ds.to_csv('../../data/nodata-prediction.csv', index=False)

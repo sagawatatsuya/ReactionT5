@@ -8,9 +8,7 @@ import numpy as np
 import pandas as pd
 from tqdm.auto import tqdm
 import tokenizers
-import transformers
 from transformers import AutoTokenizer, AutoConfig, AutoModel, T5EncoderModel, get_linear_schedule_with_warmup, T5ForConditionalGeneration
-import datasets
 from datasets import load_dataset, load_metric
 import sentencepiece
 import argparse
@@ -19,7 +17,6 @@ from torch.utils.data import Dataset, DataLoader
 import torch.nn.functional as F
 import torch.nn as nn
 from torch.optim import AdamW
-import pickle
 import time
 import math
 from sklearn.preprocessing import MinMaxScaler
@@ -53,7 +50,8 @@ def parse_args():
     parser.add_argument(
         "--pretrained_model_name_or_path", 
         type=str, 
-        required=True,
+        default="sagawa/CompoundT5",
+        required=False,
         help="The name of a pretrained model or path to a model which you want to use for training. You can use your local models or models uploaded to hugging face."
     )
     parser.add_argument(
@@ -94,14 +92,14 @@ def parse_args():
     parser.add_argument(
         "--max_len",
         type=int, 
-        default=512, 
+        default=400, 
         required=False,
         help="Max input token length."
     )
     parser.add_argument(
         "--num_workers", 
         type=int, 
-        default=1, 
+        default=4, 
         required=False,
         help="Number of workers used for training."
     )
@@ -122,7 +120,7 @@ def parse_args():
     parser.add_argument(
         "--weight_decay", 
         type=float, 
-        default=0.01, 
+        default=0.05, 
         required=False,
         help="weight_decay used for optimizer"
     )
@@ -186,7 +184,7 @@ def parse_args():
     return parser.parse_args()
 
 CFG = parse_args()
-
+CFG.batch_scheduler = True
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 CFG.device = device

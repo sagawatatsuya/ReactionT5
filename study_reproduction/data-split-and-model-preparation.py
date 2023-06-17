@@ -176,18 +176,6 @@ def parse_args():
 CFG = parse_args()
 
 
-# ORD data
-# Prepare train, validation and test data
-all = pd.read_csv('../data/all_ord_reaction_uniq_canonicalized.csv')
-
-train, test = train_test_split(all, test_size=int(len(all)*0.1))
-train, val = train_test_split(train, test_size=int(len(all)*0.1))
-
-train.to_csv('../data/all_ord_reaction_uniq_canonicalized-train.csv', index=False)
-val.to_csv('../data/all_ord_reaction_uniq_canonicalized-valid.csv', index=False)
-test.to_csv('../data/all_ord_reaction_uniq_canonicalized-test.csv', index=False)
-
-
 # PubChem10m data
 # Initialize a dataset
 dataset = load_dataset('csv',data_files='../data/pubchem-10m-canonicalized.csv')

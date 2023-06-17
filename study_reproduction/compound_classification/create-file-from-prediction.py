@@ -19,12 +19,12 @@ from utils import seed_everything
 seed_everything(seed=42)  
 
 
-df = pd.read_csv('nodata-prediction.csv')
+df = pd.read_csv('../../data/nodata-prediction.csv')
 dic = {}
 for idx, row in df.iterrows():
     dic[row['smiles']] = row['pred']
     
-df_all = pd.read_csv('../../all_ord_reaction_uniq_with_attr_v3.tsv')
+df_all = pd.read_csv('../../data/all_ord_reaction_uniq_with_attr_v3.csv')
 df_all = df_all[~df_all['PRODUCT'].isna()]
 df_all = df_all[df_all['REACTANT'].isna()].reset_index(drop=True)
 
@@ -52,6 +52,6 @@ df_after = pd.DataFrame(np.array(dfs).reshape(-1, 2), columns=names)
 
 df_after[['PRODUCT', 'YIELD', 'TEMP', 'NoData']] = df_all[['PRODUCT', 'YIELD', 'TEMP', 'NoData']]
 
-df_after.to_csv('reconstructed-nodata.csv', index=False)
+df_after.to_csv('../../data/reconstructed-nodata.csv', index=False)
 
 print('finish')
