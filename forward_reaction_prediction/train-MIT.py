@@ -122,7 +122,7 @@ def parse_args():
         "--save_steps", 
         type=int, 
         required=False,
-        default="500",
+        default=500,
         help="Number of steps between two saving"
     )
     parser.add_argument(
@@ -136,7 +136,7 @@ def parse_args():
         "--logging_steps", 
         type=int, 
         required=False,
-        default="500",
+        default=500,
         help="Number of steps between two logging"
     )
     parser.add_argument(
