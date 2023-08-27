@@ -20,10 +20,28 @@ def space_clean(row):
     return row
 
     
-def canonicalize(mol):
-    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
-    return mol
+def canonicalize(smiles):
+    try:
+        new_smiles = Chem.MolToSmiles(Chem.MolFromSmiles(smiles), canonical=True)
+    except:
+        new_smiles = None
+    return new_smiles
 
+
+def uncanonicalize(smiles):
+    try:
+        new_smiles = []
+        for smiles_i in smiles.split('.'):
+            mol = Chem.MolFromSmiles(smiles_i)
+            atom_indices = list(range(mol.GetNumAtoms()))
+            random.shuffle(atom_indices)
+            new_smiles_i = Chem.MolToSmiles(mol, rootedAtAtom=atom_indices[0], canonical=False)
+            new_smiles.append(new_smiles_i)
+        smiles = '.'.join(new_smiles)
+    except:
+        smiles = None
+    return smiles
+    
 
 def remove_atom_mapping(smi):
     mol = Chem.MolFromSmiles(smi)
