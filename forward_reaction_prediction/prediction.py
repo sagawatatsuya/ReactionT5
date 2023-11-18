@@ -141,7 +141,8 @@ if 'csv' not in CFG.input_data:
 elif 'csv' in CFG.input_data:
     input_data = pd.read_csv(CFG.input_data)
     if CFG.debug:
-        input_data = input_data[:10]
+        input_data = input_data.sample(n=20000).reset_index(drop=True)
+        input_data.to_csv('sampled.csv', index=False)
 
     
     def prepare_input(cfg, text):
