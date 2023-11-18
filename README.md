@@ -74,3 +74,15 @@ python finetuning.py \
     --output_dir='output/'
 ```
 
+## Citation
+arxiv link: https://arxiv.org/abs/2311.06708
+```
+@misc{sagawa2023reactiont5,  
+      title={ReactionT5: a large-scale pre-trained model towards application of limited reaction data}, 
+      author={Tatsuya Sagawa and Ryosuke Kojima},  
+      year={2023},  
+      eprint={2311.06708},  
+      archivePrefix={arXiv},  
+      primaryClass={physics.chem-ph}  
+}
+```
