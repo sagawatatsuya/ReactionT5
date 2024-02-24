@@ -103,3 +103,14 @@ def get_optimizer_params(model, encoder_lr, decoder_lr, weight_decay=0.0):
         {'params': [p for n, p in model.named_parameters() if 'model' not in n], 'lr': decoder_lr, 'weight_decay': 0.0}
     ]
     return optimizer_parameters
+
+
+def to_cpu(obj):
+    if torch.is_tensor(obj):
+        return obj.to('cpu')
+    elif isinstance(obj, dict):
+        return {k: to_cpu(v) for k, v in obj.items()}
+    elif isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set) or isinstance(obj, torch.Tensor):
+        return [to_cpu(v) for v in obj]
+    else:
+        return obj

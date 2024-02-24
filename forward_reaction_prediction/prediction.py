@@ -16,7 +16,7 @@ from rdkit import Chem
 import rdkit
 import sys
 sys.path.append('../')
-from utils import seed_everything
+from utils import seed_everything, to_cpu
 
 
 def parse_args():
@@ -173,6 +173,7 @@ elif 'csv' in CFG.input_data:
         for k, v in inputs.items():
             inputs[k] = v[0].to(device)
         output = model.generate(**inputs, min_length=6, max_length=109, num_beams=CFG.num_beams, num_return_sequences=CFG.num_return_sequences, return_dict_in_generate=True, output_scores=True)
+        output = to_cpu(output)
         outputs.append(output)
 
     if CFG.num_beams > 1:
