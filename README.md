@@ -30,7 +30,7 @@ python prediction.py \
     --input_data="../data/forward_reaction_prediction_demo_input.csv" \
     --num_beams=5 \
     --num_return_sequences=5 \
-    --batch_size=2 \
+    --batch_size=16 \
     --output_dir="./"
 ```
 
