@@ -20,7 +20,11 @@ from datasets.utils.logging import disable_progress_bar
 disable_progress_bar()
 import sys
 sys.path.append('../')
-from utils import seed_everything
+
+from rdkit import Chem
+from rdkit import RDLogger 
+RDLogger.DisableLog('rdApp.*') 
+from utils import seed_everything, canonicalize, space_clean
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -169,10 +173,18 @@ def parse_args():
         required=False,
         help="Set seed for reproducibility."
     )
+    parser.add_argument(
+        "--sampling_num",
+        type=int,
+        default=-1,
+        required=False,
+        help="Number of samples used for training. If you want to use all samples, set -1."
+    )
 
     return parser.parse_args()
     
 CFG = parse_args()
+CFG.disable_tqdm = True
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -180,6 +192,8 @@ seed_everything(seed=CFG.seed)
 
 
 train = pd.read_csv(CFG.train_data_path)
+if CFG.sampling_num > 0:
+    train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(drop=True)
 valid = pd.read_csv(CFG.valid_data_path)
 
 
@@ -206,8 +220,19 @@ def preprocess_function(examples):
     model_inputs['labels'] = labels['input_ids']
     return model_inputs
 
+
+def canonicalize(mol):
+    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
+    return mol
+def canonicalize2(mol):
+    try:
+        return canonicalize(mol)
+    except:
+        return ''
+
+
 def compute_metrics(eval_preds):
-    metric = load_metric('sacrebleu')
+    metric = load_metric('accuracy')
     preds, labels = eval_preds
     if isinstance(preds, tuple):
         preds = preds[0]
@@ -217,11 +242,16 @@ def compute_metrics(eval_preds):
     labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
     decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
 
-    decoded_preds = [pred.strip() for pred in decoded_preds]
-    decoded_labels = [[label.strip()] for label in decoded_labels]
+    decoded_preds = [canonicalize2(pred.strip().replace(' ', '')) for pred in decoded_preds]
+    decoded_labels = [[canonicalize2(label.strip().replace(' ', ''))] for label in decoded_labels]
 
-    result = metric.compute(predictions=decoded_preds, references=decoded_labels)
-    return {'bleu': result['score']}
+    # result = metric.compute(predictions=decoded_preds, references=decoded_labels)
+    score = 0
+    for i in range(len(decoded_preds)):
+        if decoded_preds[i] == decoded_labels[i][0]:
+            score += 1
+    score /= len(decoded_preds)
+    return {'accuracy': score}
 
 
 #load tokenizer
@@ -235,7 +265,7 @@ tokenized_datasets = dataset.map(
     preprocess_function,
     batched=True,
     remove_columns=dataset['train'].column_names,
-    load_from_cache_file=False
+    # load_from_cache_file=False
 )
 
 data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
@@ -244,9 +274,10 @@ args = Seq2SeqTrainingArguments(
     CFG.model,
     evaluation_strategy=CFG.evaluation_strategy,
     save_strategy=CFG.save_strategy,
+    logging_strategy=CFG.logging_strategy,
     learning_rate=CFG.lr,
     per_device_train_batch_size=CFG.batch_size,
-    per_device_eval_batch_size=CFG.batch_size,
+    per_device_eval_batch_size=CFG.batch_size*256,
     weight_decay=CFG.weight_decay,
     save_total_limit=CFG.save_total_limit,
     num_train_epochs=CFG.epochs,
@@ -256,7 +287,8 @@ args = Seq2SeqTrainingArguments(
     push_to_hub=False,
     load_best_model_at_end=True
 )
-
+model.config.eval_beams=5
+model.config.max_length=150
 trainer = Seq2SeqTrainer(
     model,
     args,

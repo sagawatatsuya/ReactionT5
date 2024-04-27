@@ -230,8 +230,18 @@ def preprocess_function(examples):
     model_inputs['labels'] = labels['input_ids']
     return model_inputs
 
+def canonicalize(mol):
+    mol = Chem.MolToSmiles(Chem.MolFromSmiles(mol),True)
+    return mol
+def canonicalize2(mol):
+    try:
+        return canonicalize(mol)
+    except:
+        return ''
+
+
 def compute_metrics(eval_preds):
-    metric = load_metric('sacrebleu')
+    metric = load_metric('accuracy')
     preds, labels = eval_preds
     if isinstance(preds, tuple):
         preds = preds[0]
@@ -241,11 +251,16 @@ def compute_metrics(eval_preds):
     labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
     decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
 
-    decoded_preds = [pred.strip() for pred in decoded_preds]
-    decoded_labels = [[label.strip()] for label in decoded_labels]
+    decoded_preds = [canonicalize2(pred.strip().replace(' ', '')) for pred in decoded_preds]
+    decoded_labels = [[canonicalize2(label.strip().replace(' ', ''))] for label in decoded_labels]
 
-    result = metric.compute(predictions=decoded_preds, references=decoded_labels)
-    return {'bleu': result['score']}
+    # result = metric.compute(predictions=decoded_preds, references=decoded_labels)
+    score = 0
+    for i in range(len(decoded_preds)):
+        if decoded_preds[i] == decoded_labels[i][0]:
+            score += 1
+    score /= len(decoded_preds)
+    return {'accuracy': score}
 
 
 #load tokenizer
@@ -260,9 +275,9 @@ tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_
 #load model
 if CFG.model == 't5':
     try: # load pretrained model from local directory
-        model = AutoModelForSeq2SeqLM.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path), from_flax=True)
+        model = AutoModelForSeq2SeqLM.from_pretrained(os.path.abspath(CFG.pretrained_model_name_or_path))
     except: # load pretrained model from huggingface model hub
-        model = AutoModelForSeq2SeqLM.from_pretrained(CFG.pretrained_model_name_or_path, from_flax=True)
+        model = AutoModelForSeq2SeqLM.from_pretrained(CFG.pretrained_model_name_or_path)
     model.resize_token_embeddings(len(tokenizer))
 elif CFG.model == 'deberta':
     try: # load pretrained model from local directory
@@ -308,7 +323,8 @@ args = Seq2SeqTrainingArguments(
     load_best_model_at_end=True
 )
 
-
+model.config.eval_beams=5
+model.config.max_length=150
 trainer = Seq2SeqTrainer(
     model,
     args,
