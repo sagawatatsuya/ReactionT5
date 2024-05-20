@@ -11,7 +11,7 @@ In this repository, we will show how to use ReactionT5 for product prediction an
 Reaction T5 is based on the transformers library. In addition, RDKit is used for validity check of predicted products. To install these and other necessary libraries, use the following commands:
 ```
 pip install rdkit
-pip install pytorch
+pip install torch
 pip install tokenizers==0.12.1
 pip install transformers==4.21.0
 pip install datasets
